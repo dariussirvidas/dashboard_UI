@@ -2,7 +2,7 @@ import React from 'react';
 
 
 
-function About() {
+function Sidebar() {
     return(
         <div>
             <h1>This is a sad attempt to use OMDB api </h1>
@@ -10,4 +10,4 @@ function About() {
     );
 }
 
-export default About;
+export default Sidebar;
