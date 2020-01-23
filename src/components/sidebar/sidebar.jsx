@@ -1,4 +1,5 @@
 import React from 'react';
+import './sidebar.scss'
 
 
 
@@ -7,6 +8,7 @@ function Sidebar() {
         <>
             <div>
                 <h1>This is a sad attempt to use SIDEBAR</h1>
+                
             </div>
         </>
     );
