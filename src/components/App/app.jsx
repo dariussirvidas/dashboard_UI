@@ -3,42 +3,49 @@ import './app.scss';
 import {BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams} from "react-router-dom";
 
 import Main from '../main/main';
-import Sidebar from "../sidebar/sidebar";
+import Menu from "../Menu/Menu";
 import Footer from "../footer/footer";
 
 
-import RoutingTest from "../routingTest/routingTest";
-
 function App() {
-    const [domainArray, setDomainArray] = useState(['google', 'twitter', 'facebook', 'pinterest', 'glitch', 'lalfdsmakdnakalala']);
+    const [serviceList, setServiceList] = useState();
+    const [hasServicesError, setServicesErrors] = useState(false);
 
-    const endpoint ="40.85.76.116/api/users/ping?hostname=";
+    async function fetchServices() {
+        const res = await fetch("http://40.85.76.116/api/api/services");
+        res
+            .json()
+            .then(res => setServiceList(res))
+            .catch(err => setServicesErrors(err));
+    }
 
-    const addDomain = () => {
-        setDomainArray([
-            ...domainArray, 'newDomain'
-        ])
-    };
+    const [portalList, setPortalsList] = useState();
+    const [hasPortalsError, setPortalsErrors] = useState(false);
+
+    async function fetchPortals() {
+        const res = await fetch("http://40.85.76.116/api/api/portals");
+        res
+            .json()
+            .then(res => setPortalsList(res))
+            .catch(err => setPortalsErrors(err));
+    }
+
+    useEffect(() => {
+        fetchPortals();
+        fetchServices();
+    }, []);
 
     return (
         <>
             <Router>
-
-
-
-                <Sidebar/>
-
-                <button onClick={addDomain}>
-                    BUTTON
-                </button>
+                <Menu/>
 
                 <Main
-                    endpoint={endpoint}
-                    domains={domainArray}
+                    portals={portalList}
+                    services={serviceList}
                 />
 
                 <Footer/>
-
             </Router>
         </>
     );

@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-
+import DomainList from "../domainList/domainList";
 import {
     BrowserRouter as Router,
     Switch,
@@ -9,10 +9,7 @@ import {
     useParams
 } from "react-router-dom";
 
-
 function Main(props) {
-
-
     return (
         <>
             <div>
@@ -31,36 +28,29 @@ function Main(props) {
                     </li>
                 </ul>
 
-
-                <ul>
-                    {props.domains.map(item => (
-                        <li>
-                            <StickerTest
-                            domainName = {item}
-                            endpoint = {props.endpoint}
-                            />
-
-
-                        </li>
-
-                    ))}
-
-
-                </ul>
-
-
                 {/*Switch will only render the first matched <Route/> child.*/}
                 <Switch>
 
                     <Route path="/about">
                         <p>this is the about page</p>
                     </Route>
+
                     <Route path="/topics">
                         <ExampleComponentStructure/>
                     </Route>
+
                     <Route path="/domains">
-                        {/*{DomainList(fakeDomainArray)}*/}
+
+                        {
+                            Boolean(props.portals) === true && Boolean(props.services) === true &&
+                            <DomainList
+                                services={props.services}
+                                portals={props.portals}
+                            />
+                        }
+
                     </Route>
+
                     <Route path="/">
                         <p>home page</p>
                     </Route>
@@ -69,33 +59,6 @@ function Main(props) {
             </div>
         </>
     );
-}
-
-const StickerTest = (props) => {
-    const [hasError, setErrors] = useState(false);
-    const [pingResult, setPingResult] = useState({});
-
-    async function fetchData() {
-        const res = await fetch(props.endpoint+props.domainName);
-        res
-            .json()
-            .then(res => setPingResult(res))
-            .catch(err => setErrors(err));
-    }
-
-
-
-    useEffect(() => {
-        fetchData();
-    });
-
-    return (
-        <>
-            {props.endpoint}
-            {props.domainName}
-
-        </>
-    )
 }
 
 function ExampleComponentStructure() {
