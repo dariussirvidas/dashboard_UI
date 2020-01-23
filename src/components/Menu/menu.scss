@@ -4,6 +4,7 @@ body {
   background-color: #f4f4f4;
 }
 .Logo{
+  float:left;
   padding-left: 25px;
   padding-top: 6px;
   width: 222px;
@@ -119,11 +120,12 @@ a {
   top: 0;
 }
 
-/* 90em = 1440px */
+/* 129rem = 2056px for ultra-wide monitors */
+/* 90rem = 1440px for regular monitors*/
 
-@media (min-width: 90rem) {
+@media (min-width: 170rem) {
   .header li {
-    float: left;
+    float: right;
   }
   .header li a {
     padding: 20px 30px;
@@ -135,5 +137,8 @@ a {
   }
   .header .menu-icon {
     display: none;
+    float:right;
   }
 }
+
+
