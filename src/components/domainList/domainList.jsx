@@ -48,6 +48,9 @@ const SingleDomain = (d, type) => {
                     <button onClick={deleteDomain}>
                         DELETE ME
                     </button>
+                    <button>
+                        EDIT ME
+                    </button>
                 </div>
                 <p>
 
