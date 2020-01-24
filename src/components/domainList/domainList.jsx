@@ -6,11 +6,11 @@ function DomainList(props) {
         <>
             <AddDomain/>
             <p>this is the domain list: </p>
-            <p>portals:</p>
+            <h2>portals:</h2>
             {props.portals.map((item) => {
                 return SingleDomain(item, 'portals', props.callbackReFetchDomains)
             })}
-            <p>services:</p>
+            <h2>services:</h2>
             {props.services.map((item) => {
                 return SingleDomain(item, 'services', props.callbackReFetchDomains)
             })}
@@ -26,14 +26,13 @@ const SingleDomain = (d, type, callbackFetch) => {
         // get a callback when the server responds
         xhr.addEventListener('load', () => {
             // update the state of the component with the result here
-            console.log("response text: ", xhr.responseText)
+            console.log("delete (PUT) response text: ", xhr.responseText)
         });
         // open the request with the verb and the url
-        console.log('http://40.85.76.116/api/api/services/' + d.id);
-        xhr.open('DELETE', 'http://40.85.76.116/api/api/' + type + '/' + d.id);
+        xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/del/' + d.id);
         xhr.setRequestHeader("Content-type", "application/json");
         // send the request
-        xhr.send(JSON.stringify(), );
+        xhr.send();
 
         // callbackFetch();
 
@@ -41,24 +40,28 @@ const SingleDomain = (d, type, callbackFetch) => {
 
     return (
         <>
-            <div className="bg-info">
-                <p>{d.url}</p>
-                <p>{d.admin_Email}</p>
-                <p>{d.interval_Ms} ms</p>
-                <p>id: {d.id}</p>
+            {
+                // checks if the domain is flagged as deleted, if it is not, render it
+                d.deleted === false &&
+                <div className="bg-info">
+                    <p>{d.url}</p>
+                    <p>{d.admin_Email}</p>
+                    <p>{d.interval_Ms} ms</p>
+                    <p>id: {d.id}</p>
 
-                <div>
-                    <button onClick={deleteDomain}>
-                        DELETE ME
-                    </button>
-                    <button>
-                        EDIT ME
-                    </button>
+                    <div>
+                        <button onClick={deleteDomain}>
+                            DELETE ME
+                        </button>
+                        <button>
+                            EDIT ME
+                        </button>
+                    </div>
+                    <p>
+
+                    </p>
                 </div>
-                <p>
-
-                </p>
-            </div>
+            }
         </>
     )
 };
@@ -67,7 +70,7 @@ const AddDomain = (d) => {
     const dummyData = {
         Url: "www.testDomain99.com",
         Admin_Email: "anotherTest3@gmail.com",
-        Interval_Ms: Math.round(Math.random()*1000),
+        Interval_Ms: Math.round(Math.random() * 1000),
         Deleted: false
     };
 
@@ -81,7 +84,7 @@ const AddDomain = (d) => {
             console.log("response text: ", xhr.responseText)
         });
         // open the request with the verb and the url
-        xhr.open('POST', 'http://40.85.76.116/api/api/'+type);
+        xhr.open('POST', 'http://40.85.76.116/api/' + type);
         xhr.setRequestHeader("Content-type", "application/json");
         // send the request
         xhr.send(JSON.stringify(dummyData))
@@ -91,13 +94,13 @@ const AddDomain = (d) => {
         <>
             <div>
                 <div>
-                    <button onClick={submitData('portals')}>
+                    <button onClick={() => { submitData('portals') }}>
                         send
                     </button>
                     goes to portals
                 </div>
                 <div>
-                    <button onClick={submitData('services')}>
+                    <button onClick={() => { submitData('services') }}>
                         send
                     </button>
                     goes to services

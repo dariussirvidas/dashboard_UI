@@ -12,7 +12,7 @@ function App() {
     const [hasServicesError, setServicesErrors] = useState(false);
 
     async function fetchServices() {
-        const res = await fetch("http://40.85.76.116/api/api/services");
+        const res = await fetch("http://40.85.76.116/api/services/");
         res
             .json()
             .then(res => setServiceList(res))
@@ -23,7 +23,7 @@ function App() {
     const [hasPortalsError, setPortalsErrors] = useState(false);
 
     async function fetchPortals() {
-        const res = await fetch("http://40.85.76.116/api/api/portals");
+        const res = await fetch("http://40.85.76.116/api/portals");
         res
             .json()
             .then(res => setPortalsList(res))
