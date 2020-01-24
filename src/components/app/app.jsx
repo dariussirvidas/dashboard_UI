@@ -35,12 +35,18 @@ function App() {
         fetchServices();
     }, []);
 
+    function reFetchDomains(){
+        fetchPortals();
+        fetchServices();
+        console.log("refetching!")
+    }
     return (
         <>
             <Router>
                 <Menu/>
 
                 <Main
+                    callbackReFetchDomains={reFetchDomains}
                     portals={portalList}
                     services={serviceList}
                 />

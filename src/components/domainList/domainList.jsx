@@ -8,20 +8,20 @@ function DomainList(props) {
             <p>this is the domain list: </p>
             <p>portals:</p>
             {props.portals.map((item) => {
-                return SingleDomain(item, 'portals')
+                return SingleDomain(item, 'portals', props.callbackReFetchDomains)
             })}
             <p>services:</p>
             {props.services.map((item) => {
-                return SingleDomain(item, 'services')
+                return SingleDomain(item, 'services', props.callbackReFetchDomains)
             })}
         </>
     )
 }
 
-const SingleDomain = (d, type) => {
+const SingleDomain = (d, type, callbackFetch) => {
     function deleteDomain() {
         // create a new XMLHttpRequest
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
         // get a callback when the server responds
         xhr.addEventListener('load', () => {
@@ -33,7 +33,10 @@ const SingleDomain = (d, type) => {
         xhr.open('DELETE', 'http://40.85.76.116/api/api/' + type + '/' + d.id);
         xhr.setRequestHeader("Content-type", "application/json");
         // send the request
-        xhr.send(JSON.stringify())
+        xhr.send(JSON.stringify(), );
+
+        // callbackFetch();
+
     }
 
     return (

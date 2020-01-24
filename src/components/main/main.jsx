@@ -46,6 +46,7 @@ function Main(props) {
                             <DomainList
                                 services={props.services}
                                 portals={props.portals}
+                                callbackReFetchDomains={props.callbackReFetchDomains}
                             />
                         }
 
