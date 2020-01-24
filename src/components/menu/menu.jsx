@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import menu from './menu.scss';
 import FestoLogo from '../.././Content/FestoLogo.png'
 
 class Menu extends Component {
