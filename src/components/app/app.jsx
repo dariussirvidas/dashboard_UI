@@ -3,7 +3,7 @@ import './app.scss';
 import {BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams} from "react-router-dom";
 
 import Main from '../main/main';
-import Menu from "../Menu/Menu";
+import Menu from "../menu/menu";
 import Footer from "../footer/footer";
 
 
