@@ -10,6 +10,10 @@ body {
   width: 222px;
   height: 50px;
 }
+.headerText{
+margin-left:200px;
+grid-column: span 2;
+}
 
 a {
   color: #000;
@@ -19,8 +23,10 @@ a {
 
 .header {
   background-color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 2fr  2fr 1fr;
   box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
-  position: fixed;
+  position: sticky;
   width: 100%;
   z-index: 3;
 }
@@ -31,6 +37,8 @@ a {
   list-style: none;
   overflow: hidden;
   background-color: #fff;
+  grid-column: start 3;
+  grid-column: end 4;
 }
 
 .header li a {
@@ -38,6 +46,8 @@ a {
   padding: 20px 20px;
   border-right: 1px solid #f4f4f4;
   text-decoration: none;
+  grid-column: start 3;
+  grid-column: end 4;
 }
 
 .header li a:hover,
@@ -52,6 +62,8 @@ a {
   clear: both;
   max-height: 0;
   transition: max-height .2s ease-out;
+  grid-column: start 3;
+  
 }
 
 /* menu icon */
@@ -59,10 +71,10 @@ a {
 .header .menu-icon {
   cursor: pointer;
   display: inline-block;
-  float: right;
   padding: 28px 20px;
   position: relative;
   user-select: none;
+  grid-column: start 4;
 }
 
 .header .menu-icon .navicon {
@@ -123,7 +135,7 @@ a {
 /* 129rem = 2056px for ultra-wide monitors */
 /* 90rem = 1440px for regular monitors*/
 
-@media (min-width: 170rem) {
+@media (min-width: 90rem) {
   .header li {
     float: right;
   }

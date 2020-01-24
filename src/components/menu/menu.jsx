@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
 import FestoLogo from '../.././Content/FestoLogo.png'
+import menu from './menu.scss';
 
 class Menu extends Component {
     render() {
         return (
             <div className="header">
                 <img className="Logo" src={FestoLogo} alt="Festo"/>
+                <h1 className="headerText">Monitoring Dashboard</h1>
                 <input className="menu-btn" type="checkbox" id="menu-btn"/>
                 <label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
                 <ul className="menu">
