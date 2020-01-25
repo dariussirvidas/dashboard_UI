@@ -9,7 +9,10 @@ import {
     useParams
 } from "react-router-dom";
 
+
+
 function Main(props) {
+
     return (
         <>
             <div>
@@ -46,6 +49,7 @@ function Main(props) {
                             <DomainList
                                 services={props.services}
                                 portals={props.portals}
+                                callbackReFetchDomains={props.callbackReFetchDomains}
                             />
                         }
 

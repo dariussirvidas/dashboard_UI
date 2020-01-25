@@ -6,16 +6,16 @@ import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
 
-
 function App() {
     const [serviceList, setServiceList] = useState();
     const [hasServicesError, setServicesErrors] = useState(false);
 
     async function fetchServices() {
-        const res = await fetch("http://40.85.76.116/api/api/services");
+        console.log("fetching services!");
+        const res = await fetch("http://40.85.76.116/api/services/");
         res
             .json()
-            .then(res => setServiceList(res))
+            .then(res => setServiceList(res),)
             .catch(err => setServicesErrors(err));
     }
 
@@ -23,17 +23,37 @@ function App() {
     const [hasPortalsError, setPortalsErrors] = useState(false);
 
     async function fetchPortals() {
-        const res = await fetch("http://40.85.76.116/api/api/portals");
+        const res = await fetch("http://40.85.76.116/api/portals");
         res
             .json()
             .then(res => setPortalsList(res))
             .catch(err => setPortalsErrors(err));
     }
 
+    async function pingDomain(d, type) {
+        fetch("http://40.85.76.116/api/ping/" + type + "/" + d.id)
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson);
+            });
+    }
+
     useEffect(() => {
         fetchPortals();
         fetchServices();
+        // pingDomain({
+        //         id: 331,
+        //     },
+        //     'service');
     }, []);
+
+    function reFetchDomains() {
+        fetchPortals();
+        fetchServices();
+        console.log("refetching!")
+    }
 
     return (
         <>
@@ -41,6 +61,7 @@ function App() {
                 <Menu/>
 
                 <Main
+                    callbackReFetchDomains={reFetchDomains}
                     portals={portalList}
                     services={serviceList}
                 />
