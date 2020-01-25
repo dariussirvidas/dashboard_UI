@@ -3,9 +3,6 @@ import './domainList.scss';
 
 function DomainList(props) {
 
-    // need to find a proper way to ping all the domains and render them out...
-
-
     return (
         <>
 
@@ -23,9 +20,7 @@ function DomainList(props) {
     )
 }
 
-
 const SingleDomain = (d, type, callbackFetch) => {
-
 
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [domainPing, setDomainPing] = useState();
@@ -44,7 +39,6 @@ const SingleDomain = (d, type, callbackFetch) => {
             .then(res => console.log(res))
             .catch(err => setDomainPingError(err));
     }
-
 
     return (
         <>
@@ -123,12 +117,6 @@ const AddDomain = (domainData) => {
     };
 
     function handleSubmit(event) {
-        event.preventDefault();
-        console.log(event.target.domain_type.value);
-        console.log(event.target.Url_.value);
-        console.log(event.target.AdminEmail.value);
-        console.log(event.target.IntervalMs.value);
-
         let dataForSending = {
             Url: event.target.Url_.value,
             Admin_Email: event.target.AdminEmail.value,
