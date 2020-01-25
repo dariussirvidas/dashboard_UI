@@ -5,22 +5,6 @@ function DomainList(props) {
 
     // need to find a proper way to ping all the domains and render them out...
 
-    // const [servicesPingList, setServicesPingList] = useState();
-    // const [servicesPingError, setServicesPingError] = useState();
-    //
-    // async function pingServiceDomain(id) {
-    //     console.log("fetching services!");
-    //     const res = await fetch("http://40.85.76.116/api/ping/service/" + id);
-    //     res
-    //         .json()
-    //         .then(res => setServicesPingList(res))
-    //         .then(res => console.log(res))
-    //         .catch(err => setServicesPingError(err));
-    // }
-    //
-    // useEffect(() => {
-    //     console.log(pingServiceDomain( 334     ));
-    // }, []);
 
     return (
         <>
@@ -29,7 +13,6 @@ function DomainList(props) {
             <p>this is the domain list: </p>
             <h2>portals:</h2>
             {props.portals.map((item) => {
-
                 return SingleDomain(item, 'portals', props.callbackReFetchDomains)
             })}
             <h2>services:</h2>
@@ -43,7 +26,22 @@ function DomainList(props) {
 
 const SingleDomain = (d, type, callbackFetch) => {
 
-    // need to find a way to properly ping and THEN render the ping time
+    const [domainPing, setDomainPing] = useState();
+    const [domainPingError, setDomainPingError] = useState();
+
+    useEffect(() => {
+        pingDomain(d);
+    }, []);
+
+    async function pingDomain(d) {
+        const res = await fetch("http://40.85.76.116/api/ping/service/" + d.id);
+        res
+            .json()
+            .then(res => setDomainPing(res))
+            .then(res => console.log(res))
+            .catch(err => setDomainPingError(err));
+    }
+
 
     return (
         <>
@@ -57,7 +55,8 @@ const SingleDomain = (d, type, callbackFetch) => {
                     <p>id: {d.id}</p>
 
                     {
-                        <p>ping time: {d.ping}</p>
+                        domainPing &&
+                        <p>ping time: {domainPing.latencyMS}</p>
                     }
 
                     <div>
