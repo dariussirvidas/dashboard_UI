@@ -30,23 +30,14 @@ function App() {
             .catch(err => setPortalsErrors(err));
     }
 
-    async function pingDomain(d, type) {
-        fetch("http://40.85.76.116/api/ping/" + type + "/" + d.id)
-            .then((response) => {
-                return response.json();
-            })
-            .then((myJson) => {
-                console.log(myJson);
-            });
-    }
+
+    const [servicesPingList, setServicesPingList] = useState();
+    const [servicesPingError, setServicesPingError] = useState();
+
 
     useEffect(() => {
         fetchPortals();
         fetchServices();
-        // pingDomain({
-        //         id: 331,
-        //     },
-        //     'service');
     }, []);
 
     function reFetchDomains() {
