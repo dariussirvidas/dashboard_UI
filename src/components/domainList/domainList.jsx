@@ -26,11 +26,14 @@ function DomainList(props) {
 
 const SingleDomain = (d, type, callbackFetch) => {
 
+
+    // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [domainPing, setDomainPing] = useState();
     const [domainPingError, setDomainPingError] = useState();
 
     useEffect(() => {
-        pingDomain(d);
+        if (d.deleted === false)
+            pingDomain(d);
     }, []);
 
     async function pingDomain(d) {
@@ -54,6 +57,7 @@ const SingleDomain = (d, type, callbackFetch) => {
                     <p>{d.interval_Ms} ms</p>
                     <p>id: {d.id}</p>
 
+                    {/*only renders the ping time after it is fetched*/}
                     {
                         domainPing &&
                         <p>ping time: {domainPing.latencyMS}</p>
@@ -118,30 +122,40 @@ const AddDomain = (domainData) => {
         Interval_Ms: Math.round(Math.random() * 1000),
     };
 
+    function handleSubmit(event) {
+        event.preventDefault();
+        console.log(event.target.domain_type.value);
+        console.log(event.target.Url_.value);
+        console.log(event.target.AdminEmail.value);
+        console.log(event.target.IntervalMs.value);
+
+        let dataForSending = {
+            Url: event.target.Url_.value,
+            Admin_Email: event.target.AdminEmail.value,
+            Interval_Ms: parseInt(event.target.IntervalMs.value)
+        };
+        console.log("full object for sending:" , dataForSending);
+        submitData(event.target.domain_type.value, dataForSending);
+        event.preventDefault();
+    }
+
     return (
         <>
             <div>
-                <div>
-                    <input type="text" placeholder="Url (www.domain.com)"/>
-                    <input type="text" placeholder="Email (user@mail.com)"/>
-                    <input type="number" placeholder="Interval Ms (1000)"/>
-                </div>
-                <div>
-                    <button onClick={() => {
-                        submitData('portals', domainData)
-                    }}>
-                        send
-                    </button>
-                    goes to portals
-                </div>
-                <div>
-                    <button onClick={() => {
-                        submitData('services', domainData)
-                    }}>
-                        send
-                    </button>
-                    goes to services
-                </div>
+                <form onSubmit={handleSubmit}>
+                    <legend>Add Domain:</legend>
+                    <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>
+                    <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
+                    <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
+                    <select required name="domain_type" id="domain-select">
+                        <option disabled value="">--Please choose an option--</option>
+                        <option value="portals">portal</option>
+                        <option value="services">service</option>
+                    </select>
+                    <p><input type="submit" value="submit"/></p>
+
+                </form>
+
             </div>
         </>
     )
