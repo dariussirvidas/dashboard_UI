@@ -2,12 +2,34 @@ import React, {Component, useState, useEffect} from 'react';
 import './domainList.scss';
 
 function DomainList(props) {
+
+    // need to find a proper way to ping all the domains and render them out...
+
+    // const [servicesPingList, setServicesPingList] = useState();
+    // const [servicesPingError, setServicesPingError] = useState();
+    //
+    // async function pingServiceDomain(id) {
+    //     console.log("fetching services!");
+    //     const res = await fetch("http://40.85.76.116/api/ping/service/" + id);
+    //     res
+    //         .json()
+    //         .then(res => setServicesPingList(res))
+    //         .then(res => console.log(res))
+    //         .catch(err => setServicesPingError(err));
+    // }
+    //
+    // useEffect(() => {
+    //     console.log(pingServiceDomain( 334     ));
+    // }, []);
+
     return (
         <>
+
             <AddDomain/>
             <p>this is the domain list: </p>
             <h2>portals:</h2>
             {props.portals.map((item) => {
+
                 return SingleDomain(item, 'portals', props.callbackReFetchDomains)
             })}
             <h2>services:</h2>
@@ -18,25 +40,10 @@ function DomainList(props) {
     )
 }
 
+
 const SingleDomain = (d, type, callbackFetch) => {
-    function deleteDomain() {
-        // create a new XMLHttpRequest
-        let xhr = new XMLHttpRequest();
 
-        // get a callback when the server responds
-        xhr.addEventListener('load', () => {
-            // update the state of the component with the result here
-            console.log("delete (PUT) response text: ", xhr.responseText)
-        });
-        // open the request with the verb and the url
-        xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/del/' + d.id);
-        xhr.setRequestHeader("Content-type", "application/json");
-        // send the request
-        xhr.send();
-
-        // callbackFetch();
-
-    }
+    // need to find a way to properly ping and THEN render the ping time
 
     return (
         <>
@@ -49,8 +56,14 @@ const SingleDomain = (d, type, callbackFetch) => {
                     <p>{d.interval_Ms} ms</p>
                     <p>id: {d.id}</p>
 
+                    {
+                        <p>ping time: {d.ping}</p>
+                    }
+
                     <div>
-                        <button onClick={deleteDomain}>
+                        <button onClick={() => {
+                            deleteDomain(d, type)
+                        }}>
                             DELETE ME
                         </button>
                         <button>
@@ -66,41 +79,66 @@ const SingleDomain = (d, type, callbackFetch) => {
     )
 };
 
-const AddDomain = (d) => {
+function deleteDomain(d, type) {
+    // create a new XMLHttpRequest
+    let xhr = new XMLHttpRequest();
+
+    // get a callback when the server responds
+    xhr.addEventListener('load', () => {
+        // update the state of the component with the result here
+        console.log("delete (PUT) response text: ", xhr.responseText)
+    });
+    // open the request with the verb and the url
+    xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/del/' + d.id);
+    xhr.setRequestHeader("Content-type", "application/json");
+    // send the request
+    xhr.send();
+    // callbackFetch();
+}
+
+function submitData(type, data) {
+    // create a new XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // get a callback when the server responds
+    xhr.addEventListener('load', () => {
+        // update the state of the component with the result here
+        console.log("response text: ", xhr.responseText)
+    });
+    // open the request with the verb and the url
+    xhr.open('POST', 'http://40.85.76.116/api/' + type);
+    xhr.setRequestHeader("Content-type", "application/json");
+    // send the request
+    xhr.send(JSON.stringify(data))
+}
+
+const AddDomain = (domainData) => {
     const dummyData = {
         Url: "www.testDomain99.com",
         Admin_Email: "anotherTest3@gmail.com",
         Interval_Ms: Math.round(Math.random() * 1000),
-        Deleted: false
     };
-
-    function submitData(type) {
-        // create a new XMLHttpRequest
-        var xhr = new XMLHttpRequest();
-
-        // get a callback when the server responds
-        xhr.addEventListener('load', () => {
-            // update the state of the component with the result here
-            console.log("response text: ", xhr.responseText)
-        });
-        // open the request with the verb and the url
-        xhr.open('POST', 'http://40.85.76.116/api/' + type);
-        xhr.setRequestHeader("Content-type", "application/json");
-        // send the request
-        xhr.send(JSON.stringify(dummyData))
-    }
 
     return (
         <>
             <div>
                 <div>
-                    <button onClick={() => { submitData('portals') }}>
+                    <input type="text" placeholder="Url (www.domain.com)"/>
+                    <input type="text" placeholder="Email (user@mail.com)"/>
+                    <input type="number" placeholder="Interval Ms (1000)"/>
+                </div>
+                <div>
+                    <button onClick={() => {
+                        submitData('portals', domainData)
+                    }}>
                         send
                     </button>
                     goes to portals
                 </div>
                 <div>
-                    <button onClick={() => { submitData('services') }}>
+                    <button onClick={() => {
+                        submitData('services', domainData)
+                    }}>
                         send
                     </button>
                     goes to services
@@ -108,6 +146,6 @@ const AddDomain = (d) => {
             </div>
         </>
     )
-}
+};
 
 export default DomainList;

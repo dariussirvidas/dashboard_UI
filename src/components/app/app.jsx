@@ -6,16 +6,16 @@ import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
 
-
 function App() {
     const [serviceList, setServiceList] = useState();
     const [hasServicesError, setServicesErrors] = useState(false);
 
     async function fetchServices() {
+        console.log("fetching services!");
         const res = await fetch("http://40.85.76.116/api/services/");
         res
             .json()
-            .then(res => setServiceList(res))
+            .then(res => setServiceList(res),)
             .catch(err => setServicesErrors(err));
     }
 
@@ -30,16 +30,31 @@ function App() {
             .catch(err => setPortalsErrors(err));
     }
 
+    async function pingDomain(d, type) {
+        fetch("http://40.85.76.116/api/ping/" + type + "/" + d.id)
+            .then((response) => {
+                return response.json();
+            })
+            .then((myJson) => {
+                console.log(myJson);
+            });
+    }
+
     useEffect(() => {
         fetchPortals();
         fetchServices();
+        // pingDomain({
+        //         id: 331,
+        //     },
+        //     'service');
     }, []);
 
-    function reFetchDomains(){
+    function reFetchDomains() {
         fetchPortals();
         fetchServices();
         console.log("refetching!")
     }
+
     return (
         <>
             <Router>
