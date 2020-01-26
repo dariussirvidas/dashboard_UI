@@ -6,9 +6,8 @@ function DomainList(props) {
 
     return (
         <>
-
             <AddDomain
-            callbackFetch={props.callbackReFetchDomains}
+                callbackFetch={props.callbackReFetchDomains}
             />
             <p>this is the domain list: </p>
             <h2>portals:</h2>
@@ -35,6 +34,7 @@ function SingleDomain(props) {
     const [domainPing, setDomainPing] = useState();
     const [domainPingError, setDomainPingError] = useState();
 
+    // only bothers to ping if the domain isnt deleted
     useEffect(() => {
         if (props.d.deleted === false)
             pingDomain(props.d);
@@ -68,13 +68,13 @@ function SingleDomain(props) {
 
                     <div>
                         <button onClick={() => {
-                            deleteDomain(props.d, props.type,
-                                props.callbackFetch
-                            )
+                            deleteDomain(props.d, props.type, props.callbackFetch)
                         }}>
                             DELETE ME
                         </button>
-                        <button>
+                        <button onClick={() => {
+                            editDomain(props.d, props.type, props.callbackFetch)
+                        }}>
                             EDIT ME
                         </button>
                     </div>
@@ -83,6 +83,18 @@ function SingleDomain(props) {
                     </p>
                 </div>
             }
+        </>
+    )
+}
+
+const [domainPing, setDomainPing] = useState();
+
+function editDomain(d, type, callbackFetch) {
+
+    console.log('boop');
+    return(
+        <>
+            <p>hi</p>
         </>
     )
 }
@@ -98,11 +110,13 @@ function deleteDomain(d, type, callbackFetch) {
     });
 
     // calls the callback function (re-fetch domain list) if successful
-    xhr.onload = function() {
+    xhr.onload = function () {
         if (xhr.readyState === 4) {
             if (xhr.status === 200) {
+                // insert success popup here
                 callbackFetch.apply();
             } else {
+                // insert failure popup here
                 console.error(xhr.statusText);
             }
         }
@@ -115,7 +129,6 @@ function deleteDomain(d, type, callbackFetch) {
     xhr.send();
 
 }
-
 
 
 export default DomainList;

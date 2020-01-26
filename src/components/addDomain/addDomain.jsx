@@ -1,11 +1,7 @@
 import React from "react";
+import './addDomain.scss';
 
 function AddDomain(props) {
-    const dummyData = {
-        Url: "www.testDomain99.com",
-        Admin_Email: "anotherTest3@gmail.com",
-        Interval_Ms: Math.round(Math.random() * 1000),
-    };
 
     function handleSubmit(event) {
         let dataForSending = {
@@ -42,7 +38,7 @@ function AddDomain(props) {
 
 function submitData(type, data, callbackFetch) {
     // create a new XMLHttpRequest
-    var xhr = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
 
     // get a callback when the server responds
     xhr.addEventListener('load', () => {
