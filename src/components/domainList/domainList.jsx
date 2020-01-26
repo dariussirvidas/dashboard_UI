@@ -10,25 +10,31 @@ function DomainList(props) {
             <p>this is the domain list: </p>
             <h2>portals:</h2>
             {props.portals.map((item) => {
-                return SingleDomain(item, 'portals', props.callbackReFetchDomains)
+                return <SingleDomain d={item}
+                                     type={'portals'}
+                                     callbackFetch={props.callbackReFetchDomains}
+                />
             })}
             <h2>services:</h2>
             {props.services.map((item) => {
-                return SingleDomain(item, 'services', props.callbackReFetchDomains)
+                return <SingleDomain d={item}
+                                     type={'services'}
+                                     callbackFetch={props.callbackReFetchDomains}
+                />
             })}
         </>
     )
 }
 
-const SingleDomain = (d, type, callbackFetch) => {
+function SingleDomain(props) {
 
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [domainPing, setDomainPing] = useState();
     const [domainPingError, setDomainPingError] = useState();
 
     useEffect(() => {
-        if (d.deleted === false)
-            pingDomain(d);
+        if (props.d.deleted === false)
+            pingDomain(props.d);
     }, []);
 
     async function pingDomain(d) {
@@ -44,12 +50,12 @@ const SingleDomain = (d, type, callbackFetch) => {
         <>
             {
                 // checks if the domain is flagged as deleted, if it is not, render it
-                d.deleted === false &&
+                props.d.deleted === false &&
                 <div className="bg-info">
-                    <p>{d.url}</p>
-                    <p>{d.admin_Email}</p>
-                    <p>{d.interval_Ms} ms</p>
-                    <p>id: {d.id}</p>
+                    <p>{props.d.url}</p>
+                    <p>{props.d.admin_Email}</p>
+                    <p>{props.d.interval_Ms} ms</p>
+                    <p>id: {props.d.id}</p>
 
                     {/*only renders the ping time after it is fetched*/}
                     {
@@ -59,7 +65,7 @@ const SingleDomain = (d, type, callbackFetch) => {
 
                     <div>
                         <button onClick={() => {
-                            deleteDomain(d, type)
+                            deleteDomain(props.d, props.type)
                         }}>
                             DELETE ME
                         </button>
@@ -74,7 +80,7 @@ const SingleDomain = (d, type, callbackFetch) => {
             }
         </>
     )
-};
+}
 
 function deleteDomain(d, type) {
     // create a new XMLHttpRequest
@@ -122,7 +128,7 @@ const AddDomain = (domainData) => {
             Admin_Email: event.target.AdminEmail.value,
             Interval_Ms: parseInt(event.target.IntervalMs.value)
         };
-        console.log("full object for sending:" , dataForSending);
+        console.log("full object for sending:", dataForSending);
         submitData(event.target.domain_type.value, dataForSending);
         event.preventDefault();
     }
