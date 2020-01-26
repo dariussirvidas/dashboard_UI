@@ -10,6 +10,13 @@ body {
   width: 222px;
   height: 50px;
 }
+
+@media only screen and (max-width: 1256px) {
+  .headerText {
+    display: none;
+  }
+}
+
 .headerText{
 margin-left:200px;
 grid-column: span 2;

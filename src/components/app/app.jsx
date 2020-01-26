@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Switch, Route, Link, useRouteMatch, useParams} 
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
+import Sticker from "../sticker/sticker";
 
 function App() {
     const [serviceList, setServiceList] = useState();
@@ -57,7 +58,7 @@ function App() {
                     portals={portalList}
                     services={serviceList}
                 />
-
+                <Sticker/>
                 <Footer/>
             </Router>
         </>

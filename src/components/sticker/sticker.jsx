@@ -1,13 +1,19 @@
 import React from 'react';
+import sticker from './sticker.scss';
 
 
 function Sticker() {
     return(
-        <>
-            <div>
-                <h1>This is a sad attempt to use Sticker</h1>
-            </div>
-        </>
+        <div className="tile">
+            <h3>
+                Service name
+            </h3>
+            <ul>
+                <li> Unordered</li>
+                <li> list</li>
+                <li> items</li>
+            </ul>
+        </div>
     );
 }
 
