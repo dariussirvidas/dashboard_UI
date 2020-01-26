@@ -41,9 +41,10 @@ function App() {
     }, []);
 
     function reFetchDomains() {
+        console.log("refetching!")
         fetchPortals();
         fetchServices();
-        console.log("refetching!")
+
     }
 
     return (

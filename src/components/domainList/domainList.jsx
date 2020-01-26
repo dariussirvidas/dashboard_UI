@@ -1,12 +1,15 @@
-import React, {Component, useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import './domainList.scss';
+import AddDomain from "../addDomain/addDomain";
 
 function DomainList(props) {
 
     return (
         <>
 
-            <AddDomain/>
+            <AddDomain
+            callbackFetch={props.callbackReFetchDomains}
+            />
             <p>this is the domain list: </p>
             <h2>portals:</h2>
             {props.portals.map((item) => {
@@ -65,7 +68,9 @@ function SingleDomain(props) {
 
                     <div>
                         <button onClick={() => {
-                            deleteDomain(props.d, props.type)
+                            deleteDomain(props.d, props.type,
+                                props.callbackFetch
+                            )
                         }}>
                             DELETE ME
                         </button>
@@ -82,7 +87,7 @@ function SingleDomain(props) {
     )
 }
 
-function deleteDomain(d, type) {
+function deleteDomain(d, type, callbackFetch) {
     // create a new XMLHttpRequest
     let xhr = new XMLHttpRequest();
 
@@ -91,68 +96,26 @@ function deleteDomain(d, type) {
         // update the state of the component with the result here
         console.log("delete (PUT) response text: ", xhr.responseText)
     });
+
+    // calls the callback function (re-fetch domain list) if successful
+    xhr.onload = function() {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                callbackFetch.apply();
+            } else {
+                console.error(xhr.statusText);
+            }
+        }
+    };
+
     // open the request with the verb and the url
     xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/del/' + d.id);
     xhr.setRequestHeader("Content-type", "application/json");
     // send the request
     xhr.send();
-    // callbackFetch();
+
 }
 
-function submitData(type, data) {
-    // create a new XMLHttpRequest
-    var xhr = new XMLHttpRequest();
 
-    // get a callback when the server responds
-    xhr.addEventListener('load', () => {
-        // update the state of the component with the result here
-        console.log("response text: ", xhr.responseText)
-    });
-    // open the request with the verb and the url
-    xhr.open('POST', 'http://40.85.76.116/api/' + type);
-    xhr.setRequestHeader("Content-type", "application/json");
-    // send the request
-    xhr.send(JSON.stringify(data))
-}
-
-const AddDomain = (domainData) => {
-    const dummyData = {
-        Url: "www.testDomain99.com",
-        Admin_Email: "anotherTest3@gmail.com",
-        Interval_Ms: Math.round(Math.random() * 1000),
-    };
-
-    function handleSubmit(event) {
-        let dataForSending = {
-            Url: event.target.Url_.value,
-            Admin_Email: event.target.AdminEmail.value,
-            Interval_Ms: parseInt(event.target.IntervalMs.value)
-        };
-        console.log("full object for sending:", dataForSending);
-        submitData(event.target.domain_type.value, dataForSending);
-        event.preventDefault();
-    }
-
-    return (
-        <>
-            <div>
-                <form onSubmit={handleSubmit}>
-                    <legend>Add Domain:</legend>
-                    <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>
-                    <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
-                    <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
-                    <select required name="domain_type" id="domain-select">
-                        <option disabled value="">--Please choose an option--</option>
-                        <option value="portals">portal</option>
-                        <option value="services">service</option>
-                    </select>
-                    <p><input type="submit" value="submit"/></p>
-
-                </form>
-
-            </div>
-        </>
-    )
-};
 
 export default DomainList;
