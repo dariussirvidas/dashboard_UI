@@ -11,19 +11,41 @@ function DomainList(props) {
             />
             <p>this is the domain list: </p>
             <h2>portals:</h2>
-            {props.portals.map((item) => {
-                return <SingleDomain d={item}
-                                     type={'portals'}
-                                     callbackFetch={props.callbackReFetchDomains}
-                />
-            })}
+            {
+                // checks for errors, if there are any, do not render domains
+                props.portalsError === false &&
+                props.portals.map((item) => {
+                    return <SingleDomain d={item}
+                                         type={'portals'}
+                                         callbackFetch={props.callbackReFetchDomains}
+                                         apiEndpoint={props.apiEndpoint}
+                    />
+                })
+            }
+            {
+                props.portalsError === true &&
+                <p>
+                    portals could not be fetched
+                </p>
+            }
             <h2>services:</h2>
-            {props.services.map((item) => {
-                return <SingleDomain d={item}
-                                     type={'services'}
-                                     callbackFetch={props.callbackReFetchDomains}
-                />
-            })}
+            {
+                // checks for errors, if there are any, do not render domains
+                props.servicesError === false &&
+                props.services.map((item) => {
+                    return <SingleDomain d={item}
+                                         type={'services'}
+                                         callbackFetch={props.callbackReFetchDomains}
+                                         apiEndpoint={props.apiEndpoint}
+                    />
+                })
+            }
+            {
+                props.servicesError === true &&
+                <p>
+                    services could not be fetched
+                </p>
+            }
         </>
     )
 }
@@ -42,7 +64,7 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d) {
-        const res = await fetch("http://40.85.76.116/api/ping/service/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/service/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -86,10 +108,41 @@ function SingleDomain(props) {
         };
 
         // open the request with the verb and the url
-        xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/' + id);
+        xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/' + id);
         xhr.setRequestHeader("Content-type", "application/json");
         // send the request
         xhr.send(JSON.stringify(data))
+    }
+
+    function deleteDomain(d, type, callbackFetch) {
+        // create a new XMLHttpRequest
+        let xhr = new XMLHttpRequest();
+
+        // get a callback when the server responds
+        xhr.addEventListener('load', () => {
+            // update the state of the component with the result here
+            console.log("delete (PUT) response text: ", xhr.responseText)
+        });
+
+        // calls the callback function (re-fetch domain list) if successful
+        xhr.onload = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // insert success popup here
+                    callbackFetch.apply();
+                } else {
+                    // insert failure popup here
+                    console.error(xhr.statusText);
+                }
+            }
+        };
+
+        // open the request with the verb and the url
+        xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
+        xhr.setRequestHeader("Content-type", "application/json");
+        // send the request
+        xhr.send();
+
     }
 
 
@@ -174,36 +227,7 @@ function editDomain(d, type, editBox, callbackFetch) {
     )
 }
 
-function deleteDomain(d, type, callbackFetch) {
-    // create a new XMLHttpRequest
-    let xhr = new XMLHttpRequest();
 
-    // get a callback when the server responds
-    xhr.addEventListener('load', () => {
-        // update the state of the component with the result here
-        console.log("delete (PUT) response text: ", xhr.responseText)
-    });
-
-    // calls the callback function (re-fetch domain list) if successful
-    xhr.onload = function () {
-        if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-                // insert success popup here
-                callbackFetch.apply();
-            } else {
-                // insert failure popup here
-                console.error(xhr.statusText);
-            }
-        }
-    };
-
-    // open the request with the verb and the url
-    xhr.open('PUT', 'http://40.85.76.116/api/' + type + '/del/' + d.id);
-    xhr.setRequestHeader("Content-type", "application/json");
-    // send the request
-    xhr.send();
-
-}
 
 
 export default DomainList;
