@@ -87,7 +87,6 @@ function SingleDomain(props) {
     )
 }
 
-const [domainPing, setDomainPing] = useState();
 
 function editDomain(d, type, callbackFetch) {
 
