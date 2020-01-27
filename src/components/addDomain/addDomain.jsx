@@ -1,6 +1,7 @@
 import React from "react";
 import './addDomain.scss';
 
+
 function AddDomain(props) {
 
     function handleSubmit(event) {

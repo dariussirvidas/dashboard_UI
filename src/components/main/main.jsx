@@ -9,8 +9,6 @@ import {
     useParams
 } from "react-router-dom";
 
-
-
 function Main(props) {
 
     return (
@@ -47,9 +45,12 @@ function Main(props) {
                         {
                             Boolean(props.portals) === true && Boolean(props.services) === true &&
                             <DomainList
-                                services={props.services}
-                                portals={props.portals}
+                                apiEndpoint={props.apiEndpoint}
                                 callbackReFetchDomains={props.callbackReFetchDomains}
+                                portals={props.portals}
+                                portalsError={props.portalsError}
+                                services={props.services}
+                                servicesError={props.servicesError}
                             />
                         }
 
