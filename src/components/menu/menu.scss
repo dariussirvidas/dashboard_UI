@@ -1,25 +1,53 @@
+@import "../_ux_design_colors.scss";
+@import "../_ux_design_fonts.scss";
+
+
 body {
   margin: 0;
   font-family: Helvetica, sans-serif;
   background-color: #f4f4f4;
 }
-.Logo{
-  float:left;
-  padding-left: 25px;
-  padding-top: 6px;
-  width: 222px;
-  height: 50px;
+.Table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 90%;
+  border: 1px solid #ddd;
+}
+.TableDiv{
+  overflow-x:auto;
 }
 
-@media only screen and (max-width: 1256px) {
+.Logo {
+  float: left;
+  padding-left: 40px;
+  margin-top: 17px;
+  width: 181px;
+  height: 32px;
+}
+
+@media only screen and (max-width: 1400px) {
   .headerText {
     display: none;
   }
 }
 
-.headerText{
-margin-left:200px;
-grid-column: span 2;
+.headerText.cl-h1 {
+  font-family: $fnt-mpr;
+  margin-top: 10px;
+  margin-left: 200px;
+  grid-column: span 2;
+}
+.headerUser.cl-h1{
+  font-family: $fnt-mpr;
+  margin-top: 10px;
+  margin-right: 200px;
+  grid-column: start 1;
+
+}
+@media only screen and (max-width: 1400px){
+  .headerUser{
+    display: none;
+  }
 }
 
 a {
@@ -31,8 +59,8 @@ a {
 .header {
   background-color: #fff;
   display: grid;
-  grid-template-columns: 1fr 2fr  2fr 1fr;
-  box-shadow: 1px 1px 4px 0 rgba(0,0,0,.1);
+  grid-template-columns: 1fr 2fr 2fr 1fr;
+  box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, .1);
   position: sticky;
   width: 100%;
   z-index: 3;
@@ -44,8 +72,8 @@ a {
   list-style: none;
   overflow: hidden;
   background-color: #fff;
-  grid-column: start 3;
-  grid-column: end 4;
+  //grid-column: start 3;
+  //grid-column: end 9;
 }
 
 .header li a {
@@ -53,8 +81,8 @@ a {
   padding: 20px 20px;
   border-right: 1px solid #f4f4f4;
   text-decoration: none;
-  grid-column: start 3;
-  grid-column: end 4;
+  //grid-column: start 3;
+  //grid-column: end 4;
 }
 
 .header li a:hover,
@@ -68,9 +96,11 @@ a {
 .header .menu {
   clear: both;
   max-height: 0;
+
   transition: max-height .2s ease-out;
-  grid-column: start 3;
-  
+  grid-column: start 1;
+
+
 }
 
 /* menu icon */
@@ -79,6 +109,7 @@ a {
   cursor: pointer;
   display: inline-block;
   padding: 28px 20px;
+  margin-right: 50px;
   position: relative;
   user-select: none;
   grid-column: start 4;
@@ -142,9 +173,9 @@ a {
 /* 129rem = 2056px for ultra-wide monitors */
 /* 90rem = 1440px for regular monitors*/
 
-@media (min-width: 90rem) {
+@media (min-width: 130rem) {
   .header li {
-    float: right;
+    float: left;
   }
   .header li a {
     padding: 20px 30px;
@@ -156,8 +187,24 @@ a {
   }
   .header .menu-icon {
     display: none;
-    float:right;
+    float: right;
   }
 }
+
+
+
+.container {
+  display: inline-block;
+  cursor: pointer;
+}
+
+.bar1, .bar2, .bar3 {
+  width: 35px;
+  height: 5px;
+  background-color: #333;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
 
 

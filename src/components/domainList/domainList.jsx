@@ -10,57 +10,59 @@ function DomainList(props) {
                 callbackFetch={props.callbackReFetchDomains}
             />
 
-            <table align="center">
-                <tr>
-                    <th>Service name</th>
-                    <th>Service type</th>
-                    <th>URL</th>
-                    <th>Active</th>
-                    <th>Emails</th>
-                    <th>Check interval (S)</th>
-                    <th>Maintance</th>
-                </tr>
+            <div className="TableDiv">
+                <table className="Table" align="center">
+                    <tr>
+                        <th>Service name</th>
+                        <th>Service type</th>
+                        <th>URL</th>
+                        <th>Active</th>
+                        <th>Emails</th>
+                        <th>Check interval (S)</th>
+                        <th>Maintenance</th>
+                    </tr>
 
-                {
-                    // checks for errors, if there are any, do not render domains
-                    props.portalsError === false &&
-                    props.portals.map((item) => {
-                        return <SingleDomain d={item}
-                                             type={'portals'}
-                                             callbackFetch={props.callbackReFetchDomains}
-                                             apiEndpoint={props.apiEndpoint}
-                        />
-                    })
-                }
+                    {
+                        // checks for errors, if there are any, do not render domains
+                        props.portalsError === false &&
+                        props.portals.map((item) => {
+                            return <SingleDomain d={item}
+                                                 type={'portals'}
+                                                 callbackFetch={props.callbackReFetchDomains}
+                                                 apiEndpoint={props.apiEndpoint}
+                            />
+                        })
+                    }
 
-                {
-                    props.portalsError === true &&
-                    <p>
-                        portals could not be fetched
-                    </p>
-                }
-
-
-                {
-                    // checks for errors, if there are any, do not render domains
-                    props.servicesError === false &&
-                    props.services.map((item) => {
-                        return <SingleDomain d={item}
-                                             type={'services'}
-                                             callbackFetch={props.callbackReFetchDomains}
-                                             apiEndpoint={props.apiEndpoint}
-                        />
-                    })
-                }
+                    {
+                        props.portalsError === true &&
+                        <p>
+                            portals could not be fetched
+                        </p>
+                    }
 
 
-                {
-                    props.servicesError === true &&
-                    <p>
-                        services could not be fetched
-                    </p>
-                }
-            </table>
+                    {
+                        // checks for errors, if there are any, do not render domains
+                        props.servicesError === false &&
+                        props.services.map((item) => {
+                            return <SingleDomain d={item}
+                                                 type={'services'}
+                                                 callbackFetch={props.callbackReFetchDomains}
+                                                 apiEndpoint={props.apiEndpoint}
+                            />
+                        })
+                    }
+
+
+                    {
+                        props.servicesError === true &&
+                        <p>
+                            services could not be fetched
+                        </p>
+                    }
+                </table>
+            </div>
         </>
     )
 }
@@ -79,7 +81,7 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type +  "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
