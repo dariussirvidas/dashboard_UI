@@ -32,6 +32,7 @@
   color: $clr-black;
   padding: 12px;
   border-radius: 50%;
+  border: none;
   &:hover {
     background-color: mix($clr-black, $clr-gr-1, 10%);
     color: mix($clr-black, $clr-white, 10%);

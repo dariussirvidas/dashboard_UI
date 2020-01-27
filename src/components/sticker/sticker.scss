@@ -1,18 +1,62 @@
-h3
-{
-  color:dodgerblue;
-  margin-top: 0px;
+@import "../_ux_design_colors.scss";
+@import "../_ux_design_fonts.scss";
+
+// When pinged and ok
+.tile-success {
+  background-color: $clr-success;
+  width: 250px;
+  height: 200px;
+  line-height: 1;
+  border: 1px solid $clr-aterul;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 10px;
+  margin-right: 20px;
+  vertical-align: top;
 }
-.tile
-{
+
+// When pinged and not ok
+.tile-fail {
+  background-color: $clr-fail;
+  width: 250px;
+  height: 200px;
+  line-height: 1;
+  border: 1px solid $clr-aterul;
+  border-radius: 5px;
+  display: inline-block;
+  padding: 10px;
+  margin-right: 20px;
+  vertical-align: top;
+}
+p.cl-copy-14 {
+  text-align: center;
+}
+/*
+.tile-wh {
+  background-color: $clr-white;
   width: 250px;
   height: 150px;
-  border: 1px solid lightgrey;
+  line-height: 0.3;
+  border: 1px solid $clr-aterul;
   display: inline-block;
   padding: 10px;
   margin: 20px;
   vertical-align: top;
 }
-ul {
-  list-style-type: none;
+
+.btn-indicator {
+  background-color: $clr-spc-1;
+  cursor: not-allowed;
+  pointer-events: none;
+  float: right;
+  padding: 73px 5px;
+  outline: none;
+  border: 1px solid $clr-black;
+  margin-bottom: 30px;
+  margin-right: 226px;
+  margin-top: -134px;
 }
+p.cl-copy-14 {
+  text-align: center;
+}
+*/
