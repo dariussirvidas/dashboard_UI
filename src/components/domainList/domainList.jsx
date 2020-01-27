@@ -6,16 +6,12 @@ function DomainList(props) {
 
     return (
         <>
-
             <AddDomain
                 callbackFetch={props.callbackReFetchDomains}
             />
+
             <table align="center">
                 <tr>
-            {
-                // checks for errors, if there are any, do not render domains
-                props.portalsError === false &&
-                props.portals.map((item) => {
                     <th>Service name</th>
                     <th>Service type</th>
                     <th>URL</th>
@@ -25,39 +21,47 @@ function DomainList(props) {
                     <th>Maintance</th>
                 </tr>
 
-            </table>
-                    return <SingleDomain d={item}
-                                         type={'portals'}
-                                         callbackFetch={props.callbackReFetchDomains}
-                                         apiEndpoint={props.apiEndpoint}
-                    />
-                })
-            }
-            {
-                props.portalsError === true &&
-                <p>
-                    portals could not be fetched
-                </p>
-            }
-            {
-                // checks for errors, if there are any, do not render domains
-                props.servicesError === false &&
-                props.services.map((item) => {
-                    return <SingleDomain d={item}
-                                         type={'services'}
-                                         callbackFetch={props.callbackReFetchDomains}
-                                         apiEndpoint={props.apiEndpoint}
-                    />
-                })
-            }
-            {
-                props.servicesError === true &&
-                <p>
-                    services could not be fetched
-                </p>
-            }
-        </>
+                {
+                    // checks for errors, if there are any, do not render domains
+                    props.portalsError === false &&
+                    props.portals.map((item) => {
+                        return <SingleDomain d={item}
+                                             type={'portals'}
+                                             callbackFetch={props.callbackReFetchDomains}
+                                             apiEndpoint={props.apiEndpoint}
+                        />
+                    })
+                }
 
+                {
+                    props.portalsError === true &&
+                    <p>
+                        portals could not be fetched
+                    </p>
+                }
+
+
+                {
+                    // checks for errors, if there are any, do not render domains
+                    props.servicesError === false &&
+                    props.services.map((item) => {
+                        return <SingleDomain d={item}
+                                             type={'services'}
+                                             callbackFetch={props.callbackReFetchDomains}
+                                             apiEndpoint={props.apiEndpoint}
+                        />
+                    })
+                }
+
+
+                {
+                    props.servicesError === true &&
+                    <p>
+                        services could not be fetched
+                    </p>
+                }
+            </table>
+        </>
     )
 }
 
@@ -71,11 +75,11 @@ function SingleDomain(props) {
     // only bothers to ping if the domain isnt deleted
     useEffect(() => {
         if (props.d.deleted === false)
-            pingDomain(props.d);
+            pingDomain(props.d, props.type);
     }, []);
 
-    async function pingDomain(d) {
-        const res = await fetch(props.apiEndpoint + "api/ping/service/" + d.id);
+    async function pingDomain(d, type) {
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type +  "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -160,36 +164,38 @@ function SingleDomain(props) {
     return (
         <>
             {
+                // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
-                    <tr align="center">
-                        <td>{props.d.url}</td>
-                        <td>{props.type}</td>
-                        <td>{props.d.url}</td>
-                        <td><input type="checkbox"/></td>
-                        <td>{props.d.admin_Email}</td>
-                        <td>{props.d.interval_Ms} ms</td>
-                        {/*only renders the ping time after it is fetched*/}
-                        {
-                            domainPing &&
-                            <td>ping time: {domainPing.latencyMS}</td>
-                        }
-                        <td><a href="#" onClick={() => {
+                <tr align="center">
+                    <td>{props.d.url}</td>
+                    <td>{props.type}</td>
+                    <td>{props.d.url}</td>
+                    <td><input type="checkbox"/></td>
+                    <td>{props.d.admin_Email}</td>
+                    <td>{props.d.interval_Ms} ms</td>
+
+                    {/*only renders the ping time after it is fetched*/}
+                    {
+                        domainPing &&
+                        <td>ping time: {domainPing.latencyMS}</td>
+                    }
+
+                    <div>
+                        <td>
+                            <a href="#" onClick={() => {
+                                deleteDomain(props.d, props.type, props.callbackFetch)
+                            }}>
+                                Delete
+                            </a>
+                        </td>
                         {
                             editBox === false &&
 
                             <div>
-                                <button onClick={() => {
-                                    setEditBox(true);
-                        }}>Edit</a></td>
-                        {/*<td><a href="#" onClick={() => {*/}
-                        {/*    deleteDomain(props.d, props.type, props.callbackFetch)*/}
-                        {/*}}*/}
-                                }}>
-                                    EDIT ME
-                                </button>
+                                <td><a href="#" onClick={() => {
+                                    setEditBox(true)
+                                }}>Edit</a></td>
                             </div>
-                        {/*>Delete</a></td>*/}
-                    </tr>
                         }
 
                         {
@@ -218,79 +224,7 @@ function SingleDomain(props) {
                             </div>
                         }
                     </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                // // checks if the domain is flagged as deleted, if it is not, render it
-                // props.d.deleted === false &&
-                // <div className="box">
-                //     <h3 className="serviceName">{props.d.url}</h3>
-                //     <ul>
-                //         <li>{props.d.admin_Email}</li>
-                //         <li>{props.d.interval_Ms} ms</li>
-                //         <li>id: {props.d.id}</li>
-                //         {/*only renders the ping time after it is fetched*/}
-                //         {
-                //             domainPing &&
-                //             <li>ping time: {domainPing.latencyMS}</li>
-                //         }
-                //     </ul>
-                //     <hr/>
-                //     <div>
-                //         <button onClick={() => {
-                //             deleteDomain(props.d, props.type, props.callbackFetch)
-                //         }}>
-                //             DELETE ME
-                //         </button>
-                //         <button onClick={() => {
-                //             editDomain(props.d, props.type, props.callbackFetch)
-                //         }}>
-                //             EDIT ME
-                //         </button>
-                //     </div>
-                // </div>
-
-
-                // props.d.deleted === false &&
-                // <div className="bg-info">
-                //     <p>{props.d.url}</p>
-                //     <p>{props.d.admin_Email}</p>
-                //     <p>{props.d.interval_Ms} ms</p>
-                //     <p>id: {props.d.id}</p>
-                //
-                //     {/*only renders the ping time after it is fetched*/}
-                //     {
-                //         domainPing &&
-                //         <p>ping time: {domainPing.latencyMS}</p>
-                //     }
-                //
-                //     <div>
-                //         <button onClick={() => {
-                //             deleteDomain(props.d, props.type, props.callbackFetch)
-                //         }}>
-                //             DELETE ME
-                //         </button>
-                //         <button onClick={() => {
-                //             editDomain(props.d, props.type, props.callbackFetch)
-                //         }}>
-                //             EDIT ME
-                //         </button>
-                //     </div>
-                //     <p>
-                //
-                //     </p>
-                // </div>
+                </tr>
             }
         </>
     )
@@ -306,8 +240,6 @@ function editDomain(d, type, editBox, callbackFetch) {
         </>
     )
 }
-
-
 
 
 export default DomainList;
