@@ -1,0 +1,38 @@
+@import "../_ux_design_colors.scss";
+@import "../_ux_design_fonts.scss";
+
+///////////////////////////////////
+
+.textlink-1 {
+  color: $clr-hero;
+  &:hover {
+    color: mix($clr-black, $clr-hero, 10%);
+  }
+  &:active {
+    color: mix($clr-black, $clr-hero, 20%);
+  }
+}
+.textlink-disabled {
+  color: $clr-aterul;
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.textlink-2 {
+  color: $clr-black;
+  &:hover {
+    color: mix($clr-black, $clr-hero, 10%);
+  }
+  &:active {
+    color: mix($clr-black, $clr-hero, 20%);
+  }
+}
+.textlink-3 {
+  color: $clr-canul;
+  &:hover {
+    color: mix($clr-black, $clr-hero, 10%);
+  }
+  &:active {
+    color: mix($clr-black, $clr-hero, 20%);
+  }
+}

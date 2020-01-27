@@ -1,0 +1,105 @@
+@import "../_ux_design_colors.scss";
+@import "../_ux_design_fonts.scss";
+
+//Button styles
+
+//Button Interaction Grey
+
+.btn-grey {
+  background-color: $clr-gr-1;
+  color: $clr-black;
+  padding: 12px 48px;
+  border-radius: 7px;
+  &:hover {
+    background-color: mix($clr-black, $clr-gr-1, 10%);
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-gr-1, 20%);
+  }
+}
+
+.btn-grey-disabled {
+  background-color: $clr-gr-1;
+  color: $clr-black;
+  padding: 12px 48px;
+  border-radius: 7px;
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn-grey-round {
+  background-color: $clr-gr-1;
+  color: $clr-black;
+  padding: 12px;
+  border-radius: 50%;
+  &:hover {
+    background-color: mix($clr-black, $clr-gr-1, 10%);
+    color: mix($clr-black, $clr-white, 10%);
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-gr-1, 20%);
+    color: mix($clr-black, $clr-white, 20%);
+  }
+}
+
+.btn-grey-round-disabled {
+  background-color: $clr-gr-1;
+  color: $clr-black;
+  padding: 12px;
+  border-radius: 50%;
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+//Button Interaction Hero
+
+.btn-hero {
+  background-color: $clr-hero;
+  color: $clr-white;
+  padding: 12px 48px;
+  border-radius: 7px;
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%);
+    color: mix($clr-black, $clr-white, 10%);
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 20%);
+    color: mix($clr-black, $clr-white, 20%);
+  }
+}
+
+.btn-hero-disabled {
+  background-color: $clr-canul;
+  color: $clr-black;
+  padding: 12px 48px;
+  border-radius: 7px;
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.btn-hero-round {
+  background-color: $clr-hero;
+  color: $clr-white;
+  padding: 12px;
+  border-radius: 50%;
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%);
+    color: mix($clr-black, $clr-white, 10%);
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 20%);
+    color: mix($clr-black, $clr-white, 20%);
+  }
+}
+
+.btn-hero-round-disabled {
+  background-color: $clr-canul;
+  color: $clr-black;
+  padding: 12px;
+  border-radius: 50%;
+  opacity: 0.3;
+  cursor: not-allowed;
+  pointer-events: none;
+}

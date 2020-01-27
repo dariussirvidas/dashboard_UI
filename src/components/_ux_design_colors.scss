@@ -12,63 +12,30 @@ $clr-sucanul: rgb(229, 232, 235);
 // Black & White
 
 $clr-black: #333333;
-$clr-white: #FFFFFF;
+$clr-white: #ffffff;
 
 // Hero Color
 
-$clr-hero: #0091DC; //text has to be white with this color
+$clr-hero: #0091dc; //text has to be white with this color
 
 //Only use for icons and diagrams
 
-$clr-icdg-1: #B6BEC6;
-$clr-icdg-2: #C8E6FA;
+$clr-icdg-1: #b6bec6;
+$clr-icdg-2: #c8e6fa;
 
 // Layout Colors
 
-$clr-gr-1: #D8DCE1;
-$clr-gr-2: #E5E8EB;
-$clr-gr-3: #F2F3F5;
+$clr-gr-1: #d8dce1;
+$clr-gr-2: #e5e8eb;
+$clr-gr-3: #f2f3f5;
 
 // Special Colors
 
-$clr-spc-1: #80CA3D;
-$clr-spc-2: #FFD600;
-$clr-spc-3: #FF6900; //text has to be white with this color
-$clr-spc-4: #D50000; // text has to be white with this color
+$clr-spc-1: #80ca3d;
+$clr-spc-2: #ffd600;
+$clr-spc-3: #ff6900; //text has to be white with this color
+$clr-spc-4: #d50000; // text has to be white with this color
 
 /*-------------------------
 CLASSES
 --------------------------*/
-
-//Button Interaction Grey
-
-.btn-grey {
-    background-color: $clr-gr-1;
-    &:hover {
-       background-color: mix($clr-black, $clr-gr-1, 10%);
-    }
-    &:active {
-        background-color: mix($clr-black, $clr-gr-1, 20%);
-    }
-}
-
-//Button Interaction Hero
-
-.btn-hero {
-    background-color: $clr-hero;
-    color: $clr-white;
-    &:hover {
-       background-color: mix($clr-black, $clr-hero, 10%);
-       color: mix($clr-black, $clr-white, 10%);
-    }
-    &:active {
-        background-color: mix($clr-black, $clr-hero, 20%);
-        color: mix($clr-black, $clr-white, 20%);
-        
-    }
-}
-
-
-
-
-
