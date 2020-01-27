@@ -5,6 +5,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
+import Sticker from "../sticker/sticker";
 
 function App() {
     const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
@@ -74,6 +75,7 @@ function App() {
                     services={serviceList}
                     servicesError={hasServicesError}
                 />
+                <Sticker/>
                 <Footer/>
             </Router>
         </>
