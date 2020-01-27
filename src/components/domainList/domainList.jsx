@@ -81,7 +81,7 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type + "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) +  "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
