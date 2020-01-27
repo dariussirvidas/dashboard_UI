@@ -8,88 +8,80 @@
 
 // Defining fonts
 @font-face {
-    font-family: 'MetaPro';
-    font-style: normal;
-    font-weight: 400;
-    src:
-      local('MetaPro'),
-      local('MetaPro-Regular'),
-      url(../assets/fonts/MetaPro-Regular.ttf) format('ttf');  
-  }
+  font-family: "MetaPro";
+  font-style: normal;
+  font-weight: 400;
+  src: local("MetaPro"), local("MetaPro-Regular"),
+    url(../assets/fonts/MetaPro-Regular.ttf) format("ttf");
+}
 
 @font-face {
-    font-family: 'MetaPro';
-    font-style: normal;
-    font-weight: 700;
-    src:
-      local('MetaPro'),
-      local('MetaPro-Bold'),
-      url(../assets/fonts/MetaPro-Bold.ttf) format('ttf');  
-  }
+  font-family: "MetaPro";
+  font-style: normal;
+  font-weight: 700;
+  src: local("MetaPro"), local("MetaPro-Bold"),
+    url(../assets/fonts/MetaPro-Bold.ttf) format("ttf");
+}
 
-  html {
-    font-family: 'MetaPro', sans-serif;
-  }
+html {
+  font-family: "MetaPro", sans-serif;
+}
 
 //Variables
 
-$fnt-mpr: 'MetaPro-Regular';
-$fnt-mpb: 'MetaPro-Bold';
+$fnt-mpr: "MetaPro-Regular";
+$fnt-mpb: "MetaPro-Bold";
 
-  //Classes
+//Classes
 
-  .cl-h1 {
-    font-family: $fnt-mpb;
-    color: $clr-black;
-    font-size: 32px;
-    text-align: left;
+.cl-h1 {
+  font-family: $fnt-mpb;
+  color: $clr-black;
+  font-size: 32px;
+  text-align: left;
+}
 
-  }
+.cl-intro {
+  font-family: $fnt-mpb;
+  color: $clr-icdg-1;
+  font-weight: bold;
+  font-size: 24px;
+  text-align: left;
+}
 
-  .cl-intro {
-    font-family: $fnt-mpb;
-    color: $clr-icdg-1;
-    font-weight: bold;
-    font-size: 24px;
-    text-align: left;
-  }
+.cl-h2 {
+  font-family: $fnt-mpr;
+  color: $clr-black;
+  font-size: 16px;
+  text-align: left;
+}
 
-  .cl-h2 {
-    font-family: $fnt-mpr;
-    color: $clr-black;
-    font-size: 16px;
-    text-align: left;
-  }
+.cl-h3 {
+  font-family: $fnt-mpb;
+  color: $clr-black;
+  font-weight: bold;
+  font-size: 16px;
+  text-align: left;
+}
 
-  .cl-h3 {
-    font-family: $fnt-mpb;
-    color: $clr-black;
-    font-weight: bold;
-    font-size: 16px;
-    text-align: left;
-  }
+.cl-copy-16 {
+  font-family: $fnt-mpr;
+  color: $clr-black;
+  font-size: 16px;
+  text-align: left;
+}
 
-  .cl-copy-16 {
-    font-family: $fnt-mpr;
-    color: $clr-black;
-    font-size: 16px;
-    text-align: left;
-  }
+.cl-copy-14 {
+  font-family: $fnt-mpr;
+  color: $clr-black;
+  font-size: 14px;
+  text-align: left;
+  padding-top: 15px;
+}
 
-  .cl-copy-14 {
-    font-family: $fnt-mpr;
-    color: $clr-black;
-    font-size: 14px;
-    text-align: left;
-  }
-
-  .cl-copy-12 {
-    font-family: $fnt-mpr;
-    color: $clr-black;
-    font-size: 12px;
-    text-align: left;
-  }
-
-
-
-  
+.cl-copy-12 {
+  font-family: $fnt-mpr;
+  color: $clr-black;
+  font-size: 12px;
+  text-align: left;
+}
