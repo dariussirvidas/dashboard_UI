@@ -96,7 +96,7 @@ function SingleService(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) + "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/domain" + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
