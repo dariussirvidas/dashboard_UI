@@ -57,14 +57,81 @@ function Main(props) {
                     </Route>
 
                     <Route path="/">
-                        <p>home page</p>
+                        <StickerList apiEndpoint={props.apiEndpoint}
+                                     callbackReFetchDomains={props.callbackReFetchDomains}
+                                     portals={props.portals}
+                                     portalsError={props.portalsError}
+                                     services={props.services}
+                                     servicesError={props.servicesError}/>
                     </Route>
-
                 </Switch>
             </div>
         </>
     );
 }
+
+function StickerList(props) {
+    return (
+        <>
+            {
+                Boolean(props.portals) === true && Boolean(props.services) === true &&
+                props.portals.map((item) => {
+                    return (
+                        <SingleService
+                            item={item}
+                            type={'portals'}
+                            apiEndpoint={props.apiEndpoint}
+                        />
+                    )
+                })
+            }
+
+        </>
+    )
+}
+
+function SingleService(props) {
+    const [domainPing, setDomainPing] = useState();
+    const [domainPingError, setDomainPingError] = useState();
+
+    useEffect(() => {
+        console.log("useeffect");
+        if (props.item.deleted === false){
+            pingDomain(props.item, props.type);
+            console.log("praejo if'a")
+        }
+    }, []);
+
+    async function pingDomain(d, type) {
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) + "/" + d.id);
+        res
+            .json()
+            .then(res => setDomainPing(res))
+            .then(res => console.log(res))
+            .catch(err => setDomainPingError(err));
+    }
+
+    return (
+        <>
+            {
+                props.item.deleted === false && props.item.active === true &&
+                <div className="tile-success">
+                    <h3 className="cl-h3">Service name {props.item.url}</h3>
+                    <p className="cl-copy-14">Response time:
+                        {
+                            domainPing &&
+                            <>{domainPing.latencyMS}</>
+                        }
+                    </p>
+                    <p className="cl-copy-14">Last Failure: {props.item.last_Fail}</p>
+                    <p className="cl-copy-14">Next Check in: {props.item.interval_Ms} </p>
+                </div>
+            }
+        </>
+    )
+
+}
+
 
 function ExampleComponentStructure() {
 
