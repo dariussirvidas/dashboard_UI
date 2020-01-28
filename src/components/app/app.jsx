@@ -75,8 +75,8 @@ function App() {
                     services={serviceList}
                     servicesError={hasServicesError}
                 />
-                <Sticker/>
-                <Footer/>
+
+                {/*<Footer/>*/}
             </Router>
         </>
     );
