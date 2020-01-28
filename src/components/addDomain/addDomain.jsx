@@ -8,7 +8,8 @@ function AddDomain(props) {
         let dataForSending = {
             Url: event.target.Url_.value,
             Admin_Email: event.target.AdminEmail.value,
-            Interval_Ms: parseInt(event.target.IntervalMs.value)
+            Interval_Ms: parseInt(event.target.IntervalMs.value),
+            Active: true
         };
         console.log("full object for sending:", dataForSending);
         submitData(event.target.domain_type.value, dataForSending, props.callbackFetch);
