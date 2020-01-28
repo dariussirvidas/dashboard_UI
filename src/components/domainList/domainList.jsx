@@ -223,7 +223,9 @@ function SingleDomain(props) {
 
                                 <form onSubmit={handleSubmit}>
                                     <legend>Edit Domain:</legend>
-                                    <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>
+                                    <p>Service Name <input name="Service_name" type="text" placeholder="Service Name"></input></p>
+                                    <p>Service URL <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input></p>
+                                    
                                     <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
                                     <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
                                     <select required name="domain_type" id="domain-select">
