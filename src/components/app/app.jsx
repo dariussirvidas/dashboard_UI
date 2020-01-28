@@ -72,7 +72,6 @@ function App() {
                     callbackReFetchDomains={reFetchDomains}
                     domain={portalList}
                     portalsError={hasPortalsError}
-                    services={serviceList}
                     servicesError={hasServicesError}
                 />
 

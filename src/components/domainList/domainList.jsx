@@ -25,7 +25,7 @@ function DomainList(props) {
                     {
                         // checks for errors, if there are any, do not render domains
                         props.portalsError === false &&
-                        props.portals.map((item) => {
+                        props.domain.map((item) => {
                             return <SingleDomain d={item}
                                                  type={'domain'}
                                                  callbackFetch={props.callbackReFetchDomains}
@@ -43,6 +43,7 @@ function DomainList(props) {
 
 
                     {/*uzkomentavau, nes fetchina du kartus tapati domain, greiciausiai reikes istrinti - Donatas*/}
+                    {/*{*/}
                     {/*    // checks for errors, if there are any, do not render domains*/}
                     {/*    props.servicesError === false &&*/}
                     {/*    props.services.map((item) => {*/}
@@ -80,7 +81,7 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) + "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/domain"  + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -179,7 +180,7 @@ function SingleDomain(props) {
                 // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
                 <tr align="center">
-                    <td>{props.d.url}</td>
+                    <td>{props.d.service_Name}</td>
                     <td>{props.type}</td>
                     <td>{props.d.url}</td>
                     <td><input type="checkbox"/></td>

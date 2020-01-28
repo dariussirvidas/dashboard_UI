@@ -9,7 +9,7 @@ class Menu extends Component {
     render() {
         return (
             <div className="header">
-                <img className="Logo" src={FestoLogo} alt="Festo"/>
+                <Link to="/"><img className="Logo" src={FestoLogo} alt="Festo"/></Link>
                 <h1 className="headerText cl-h1">Monitoring Dashboard</h1>
                 <h1 className="headerUser cl-h1"> User: user567</h1>
                 <input className="menu-btn" type="checkbox" id="menu-btn"/>

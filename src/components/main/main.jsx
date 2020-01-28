@@ -41,13 +41,13 @@ function Main(props) {
 
                     <Route path="/domains">
                         {
-                            Boolean(props.portals) === true && Boolean(props.services) === true &&
+                            Boolean(props.domain) === true && Boolean(props.domain) === true &&
                             <DomainList
                                 apiEndpoint={props.apiEndpoint}
                                 callbackReFetchDomains={props.callbackReFetchDomains}
-                                portals={props.portals}
+                                domain={props.domain}
                                 portalsError={props.portalsError}
-                                services={props.services}
+                                domain={props.domain}
                                 servicesError={props.servicesError}
                             />
                         }
