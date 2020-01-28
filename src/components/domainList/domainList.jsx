@@ -81,7 +81,7 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) +  "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -131,36 +131,47 @@ function SingleDomain(props) {
         xhr.send(JSON.stringify(data))
     }
 
-    function deleteDomain(d, type, callbackFetch) {
-        // create a new XMLHttpRequest
-        let xhr = new XMLHttpRequest();
 
-        // get a callback when the server responds
-        xhr.addEventListener('load', () => {
-            // update the state of the component with the result here
-            console.log("delete (PUT) response text: ", xhr.responseText)
-        });
-
-        // calls the callback function (re-fetch domain list) if successful
-        xhr.onload = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    // insert success popup here
-                    callbackFetch.apply();
-                } else {
-                    // insert failure popup here
-                    console.error(xhr.statusText);
-                }
+    async function deleteDomain(d, type, callbackFetch) {
+        const response = await fetch(props.apiEndpoint + 'api/' + type + '/del/' + d.id, {
+                method: 'PUT'
             }
-        };
-
-        // open the request with the verb and the url
-        xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
-        xhr.setRequestHeader("Content-type", "application/json");
-        // send the request
-        xhr.send();
-
+        );
+        const data = await response.json();
+        await callbackFetch();
+        return data;
     }
+
+    // function deleteDomain(d, type, callbackFetch) {
+    //     // create a new XMLHttpRequest
+    //     let xhr = new XMLHttpRequest();
+    //
+    //     // get a callback when the server responds
+    //     xhr.addEventListener('load', () => {
+    //         // update the state of the component with the result here
+    //         console.log("delete (PUT) response text: ", xhr.responseText)
+    //     });
+    //
+    //     // calls the callback function (re-fetch domain list) if successful
+    //     xhr.onload = function () {
+    //         if (xhr.readyState === 4) {
+    //             if (xhr.status === 200) {
+    //                 // insert success popup here
+    //                 callbackFetch.apply();
+    //             } else {
+    //                 // insert failure popup here
+    //                 console.error(xhr.statusText);
+    //             }
+    //         }
+    //     };
+    //
+    //     // open the request with the verb and the url
+    //     xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
+    //     xhr.setRequestHeader("Content-type", "application/json");
+    //     // send the request
+    //     xhr.send();
+    //
+    // }
 
 
     return (
@@ -184,11 +195,11 @@ function SingleDomain(props) {
 
                     <div>
                         <td>
-                            <a href="#" onClick={() => {
+                            <p onClick={() => {
                                 deleteDomain(props.d, props.type, props.callbackFetch)
                             }}>
-                                Delete
-                            </a>
+                                DELETE
+                            </p>
                         </td>
                         {
                             editBox === false &&
