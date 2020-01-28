@@ -107,7 +107,7 @@ function SingleService(props) {
     return (
         <>
             {
-                props.item.deleted === false && props.item.active === false &&
+                props.item.deleted === false && props.item.active === true &&
                 <div className="tile-success">
                     <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
                     <p className="cl-copy-14">
