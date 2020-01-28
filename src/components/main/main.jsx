@@ -14,20 +14,20 @@ function Main(props) {
     return (
         <>
             <div>
-                <ul>
-                    <li>
-                        <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link to="/about">About</Link>
-                    </li>
-                    <li>
-                        <Link to="/topics">Topics</Link>
-                    </li>
-                    <li>
-                        <Link to="/domains">Domains</Link>
-                    </li>
-                </ul>
+                {/*<ul>*/}
+                {/*    <li>*/}
+                {/*        <Link to="/">Home</Link>*/}
+                {/*    </li>*/}
+                {/*    <li>*/}
+                {/*        <Link to="/about">About</Link>*/}
+                {/*    </li>*/}
+                {/*    <li>*/}
+                {/*        <Link to="/topics">Topics</Link>*/}
+                {/*    </li>*/}
+                {/*    <li>*/}
+                {/*        <Link to="/domains">Domains</Link>*/}
+                {/*    </li>*/}
+                {/*</ul>*/}
 
                 {/*Switch will only render the first matched <Route/> child.*/}
                 <Switch>
@@ -35,33 +35,28 @@ function Main(props) {
                     <Route path="/about">
                         <p>this is the about page</p>
                     </Route>
-
                     <Route path="/topics">
                         <ExampleComponentStructure/>
                     </Route>
 
                     <Route path="/domains">
-
                         {
-                            Boolean(props.portals) === true && Boolean(props.services) === true &&
+                            Boolean(props.domain) === true && Boolean(props.domain) === true &&
                             <DomainList
                                 apiEndpoint={props.apiEndpoint}
                                 callbackReFetchDomains={props.callbackReFetchDomains}
-                                portals={props.portals}
+                                domain={props.domain}
                                 portalsError={props.portalsError}
-                                services={props.services}
+                                domain={props.domain}
                                 servicesError={props.servicesError}
                             />
                         }
-
                     </Route>
-
                     <Route path="/">
                         <StickerList apiEndpoint={props.apiEndpoint}
                                      callbackReFetchDomains={props.callbackReFetchDomains}
-                                     portals={props.portals}
+                                     domain={props.domain}
                                      portalsError={props.portalsError}
-                                     services={props.services}
                                      servicesError={props.servicesError}/>
                     </Route>
                 </Switch>
@@ -74,12 +69,12 @@ function StickerList(props) {
     return (
         <>
             {
-                Boolean(props.portals) === true && Boolean(props.services) === true &&
-                props.portals.map((item) => {
+                Boolean(props.domain) === true && Boolean(props.domain) === true &&
+                props.domain.map((item) => {
                     return (
                         <SingleService
                             item={item}
-                            type={'portals'}
+                            type={'domain'}
                             apiEndpoint={props.apiEndpoint}
                         />
                     )
@@ -95,15 +90,13 @@ function SingleService(props) {
     const [domainPingError, setDomainPingError] = useState();
 
     useEffect(() => {
-        console.log("useeffect");
         if (props.item.deleted === false){
             pingDomain(props.item, props.type);
-            console.log("praejo if'a")
         }
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) + "/" + d.id);
+        const res = await fetch(props.apiEndpoint + "api/ping/domain" + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -116,8 +109,9 @@ function SingleService(props) {
             {
                 props.item.deleted === false && props.item.active === true &&
                 <div className="tile-success">
-                    <h3 className="cl-h3">Service name {props.item.url}</h3>
-                    <p className="cl-copy-14">Response time:
+                    <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
+                    <p className="cl-copy-14">
+                        Response time:
                         {
                             domainPing &&
                             <>{domainPing.latencyMS}</>

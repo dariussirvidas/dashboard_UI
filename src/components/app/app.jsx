@@ -30,7 +30,7 @@ function App() {
     }
 
     function fetchDomains(endpoint) {
-        fetchFromApi(endpoint + "api/portals")
+        fetchFromApi(endpoint + "api/domain")
             .then(data => {
                 setPortalsList(data)
             })
@@ -43,7 +43,7 @@ function App() {
                 setPortalsList("error");
             });
 
-        fetchFromApi(endpoint + "api/services")
+        fetchFromApi(endpoint + "api/domain")
             .then(data => {
                 setServiceList(data)
             })
@@ -70,13 +70,12 @@ function App() {
                 <Main
                     apiEndpoint={endpoint}
                     callbackReFetchDomains={reFetchDomains}
-                    portals={portalList}
+                    domain={portalList}
                     portalsError={hasPortalsError}
-                    services={serviceList}
                     servicesError={hasServicesError}
                 />
-                <Sticker/>
-                <Footer/>
+
+                {/*<Footer/>*/}
             </Router>
         </>
     );

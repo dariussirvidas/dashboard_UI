@@ -18,7 +18,7 @@ function AddDomain(props) {
 
     return (
         <>
-            <div>
+            <div className="container">
                 <form onSubmit={handleSubmit}>
                     <legend>Add Domain:</legend>
                     <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>

@@ -25,9 +25,9 @@ function DomainList(props) {
                     {
                         // checks for errors, if there are any, do not render domains
                         props.portalsError === false &&
-                        props.domain.map((item) => {
+                        props.portals.map((item) => {
                             return <SingleDomain d={item}
-                                                 type={'domain'}
+                                                 type={'portals'}
                                                  callbackFetch={props.callbackReFetchDomains}
                                                  apiEndpoint={props.apiEndpoint}
                             />
@@ -42,18 +42,18 @@ function DomainList(props) {
                     }
 
 
-                    {/*uzkomentavau, nes fetchina du kartus tapati domain, greiciausiai reikes istrinti - Donatas*/}
-                    {/*{*/}
-                    {/*    // checks for errors, if there are any, do not render domains*/}
-                    {/*    props.servicesError === false &&*/}
-                    {/*    props.services.map((item) => {*/}
-                    {/*        return <SingleDomain d={item}*/}
-                    {/*                             type={'domain'}*/}
-                    {/*                             callbackFetch={props.callbackReFetchDomains}*/}
-                    {/*                             apiEndpoint={props.apiEndpoint}*/}
-                    {/*        />*/}
-                    {/*    })*/}
-                    {/*}*/}
+                    {
+                        // checks for errors, if there are any, do not render domains
+                        props.servicesError === false &&
+                        props.services.map((item) => {
+                            return <SingleDomain d={item}
+                                                 type={'services'}
+                                                 callbackFetch={props.callbackReFetchDomains}
+                                                 apiEndpoint={props.apiEndpoint}
+                            />
+                        })
+                    }
+
 
                     {
                         props.servicesError === true &&
@@ -81,7 +81,11 @@ function SingleDomain(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/domain"  + "/" + d.id);
+<<<<<<< HEAD
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type + "/" + d.id);
+=======
+        const res = await fetch(props.apiEndpoint + "api/ping/" + type.slice(0, -1) +  "/" + d.id);
+>>>>>>> origin/develop
         res
             .json()
             .then(res => setDomainPing(res))
@@ -131,47 +135,36 @@ function SingleDomain(props) {
         xhr.send(JSON.stringify(data))
     }
 
+    function deleteDomain(d, type, callbackFetch) {
+        // create a new XMLHttpRequest
+        let xhr = new XMLHttpRequest();
 
-    async function deleteDomain(d, type, callbackFetch) {
-        const response = await fetch(props.apiEndpoint + 'api/' + type + '/del/' + d.id, {
-                method: 'PUT'
+        // get a callback when the server responds
+        xhr.addEventListener('load', () => {
+            // update the state of the component with the result here
+            console.log("delete (PUT) response text: ", xhr.responseText)
+        });
+
+        // calls the callback function (re-fetch domain list) if successful
+        xhr.onload = function () {
+            if (xhr.readyState === 4) {
+                if (xhr.status === 200) {
+                    // insert success popup here
+                    callbackFetch.apply();
+                } else {
+                    // insert failure popup here
+                    console.error(xhr.statusText);
+                }
             }
-        );
-        const data = await response.json();
-        await callbackFetch();
-        return data;
-    }
+        };
 
-    // function deleteDomain(d, type, callbackFetch) {
-    //     // create a new XMLHttpRequest
-    //     let xhr = new XMLHttpRequest();
-    //
-    //     // get a callback when the server responds
-    //     xhr.addEventListener('load', () => {
-    //         // update the state of the component with the result here
-    //         console.log("delete (PUT) response text: ", xhr.responseText)
-    //     });
-    //
-    //     // calls the callback function (re-fetch domain list) if successful
-    //     xhr.onload = function () {
-    //         if (xhr.readyState === 4) {
-    //             if (xhr.status === 200) {
-    //                 // insert success popup here
-    //                 callbackFetch.apply();
-    //             } else {
-    //                 // insert failure popup here
-    //                 console.error(xhr.statusText);
-    //             }
-    //         }
-    //     };
-    //
-    //     // open the request with the verb and the url
-    //     xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
-    //     xhr.setRequestHeader("Content-type", "application/json");
-    //     // send the request
-    //     xhr.send();
-    //
-    // }
+        // open the request with the verb and the url
+        xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
+        xhr.setRequestHeader("Content-type", "application/json");
+        // send the request
+        xhr.send();
+
+    }
 
 
     return (
@@ -180,7 +173,7 @@ function SingleDomain(props) {
                 // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
                 <tr align="center">
-                    <td>{props.d.service_Name}</td>
+                    <td>{props.d.url}</td>
                     <td>{props.type}</td>
                     <td>{props.d.url}</td>
                     <td><input type="checkbox"/></td>
@@ -195,11 +188,11 @@ function SingleDomain(props) {
 
                     <div>
                         <td>
-                            <p onClick={() => {
+                            <a href="#" onClick={() => {
                                 deleteDomain(props.d, props.type, props.callbackFetch)
                             }}>
-                                DELETE
-                            </p>
+                                Delete
+                            </a>
                         </td>
                         {
                             editBox === false &&
