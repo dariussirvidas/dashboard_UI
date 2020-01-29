@@ -12,7 +12,6 @@ function DomainList(props) {
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}
             />
-
             <div className="TableDiv">
                 <table className="Table" align="center">
                     <tr>
@@ -24,7 +23,6 @@ function DomainList(props) {
                         <th>Check interval (S)</th>
                         <th>Maintenance</th>
                     </tr>
-
                     {
                         // checks for errors, if there are any, do not render domains
                         props.hasDomainListError === false &&
@@ -37,7 +35,6 @@ function DomainList(props) {
                             />
                         })
                     }
-
                     {
                         props.hasDomainListError === true &&
                         <p>
@@ -53,24 +50,8 @@ function DomainList(props) {
 function SingleDomain(props) {
 
     // this is currently fetching one by one, very sluggish if theres a lot of domains
-    const [domainPing, setDomainPing] = useState();
-    const [domainPingError, setDomainPingError] = useState();
     const [editBox, setEditBox] = useState(false);
 
-    // only bothers to ping if the domain isnt deleted
-    useEffect(() => {
-        if (props.d.deleted === false)
-            pingDomain(props.d);
-    }, []);
-
-    async function pingDomain(d) {
-        const res = await fetch(props.endpoint + "api/ping/domain" + "/" + d.id);
-        res
-            .json()
-            .then(res => setDomainPing(res))
-            .then(res => console.log(res))
-            .catch(err => setDomainPingError(err));
-    }
 
     function handleSubmit(event) {
         let dataForSending = {
@@ -112,7 +93,6 @@ function SingleDomain(props) {
         xhr.send(JSON.stringify(data))
     }
 
-
     async function deleteDomain(d, callbackFetch) {
         const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
                 method: 'PUT'
@@ -134,19 +114,19 @@ function SingleDomain(props) {
                     <td>{props.d.url}</td>
                     <td>
                         <Checkbox
+                            endpoint={props.endpoint}
                             id={props.d.id}
                             active={props.d.active}
                             changeDomainList={props.changeDomainList}
+
+                            // temporarily passing down the whole domain, since PUT right now
+                            // requires the whole domain to work...
+
+                            domain={props.d}
                         />
                     </td>
                     <td>{props.d.notification_Email}</td>
                     <td>{props.d.interval_Ms} ms</td>
-
-                    {/*only renders the ping time after it is fetched*/}
-                    {
-                        domainPing &&
-                        <td>ping time: {domainPing.latencyMS}</td>
-                    }
 
                     <div>
                         <td>

@@ -33,19 +33,24 @@ function App() {
             });
     }
 
+    // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
     }, []);
 
+    // (re)fetches domainList
     function reFetchDomains() {
         console.log("refetching!");
         fetchDomains(endpoint);
     }
 
+    // appends the local domainList array with one new domain
     function appendDomainList(newDomain){
         console.log("append this:", newDomain);
         setDomainList([...domainList, newDomain]);
     }
+
+    // changes the local domainList active state for one domain
     function changeDomainList(id){
         domainList.find(domain => domain.id === id);
         let domainListCopy= domainList.slice();
