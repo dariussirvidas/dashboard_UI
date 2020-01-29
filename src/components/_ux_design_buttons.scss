@@ -8,8 +8,12 @@
 .btn-grey {
   background-color: $clr-gr-1;
   color: $clr-black;
-  padding: 12px 48px;
+  padding: 12px;
   border-radius: 7px;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  font-family: $fnt-mpr;
   &:hover {
     background-color: mix($clr-black, $clr-gr-1, 10%);
   }
@@ -21,8 +25,12 @@
 .btn-grey-disabled {
   background-color: $clr-gr-1;
   color: $clr-black;
-  padding: 12px 48px;
+  padding: 12px;
   border-radius: 7px;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  font-family: $fnt-mpr;
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -48,6 +56,9 @@
   color: $clr-black;
   padding: 12px;
   border-radius: 50%;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -58,8 +69,12 @@
 .btn-hero {
   background-color: $clr-hero;
   color: $clr-white;
-  padding: 12px 48px;
+  padding: 12px;
   border-radius: 7px;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  font-family: $fnt-mpr;
   &:hover {
     background-color: mix($clr-black, $clr-hero, 10%);
     color: mix($clr-black, $clr-white, 10%);
@@ -73,8 +88,12 @@
 .btn-hero-disabled {
   background-color: $clr-canul;
   color: $clr-black;
-  padding: 12px 48px;
+  padding: 12px;
   border-radius: 7px;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
+  font-family: $fnt-mpr;
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -85,6 +104,9 @@
   color: $clr-white;
   padding: 12px;
   border-radius: 50%;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
   &:hover {
     background-color: mix($clr-black, $clr-hero, 10%);
     color: mix($clr-black, $clr-white, 10%);
@@ -100,6 +122,9 @@
   color: $clr-black;
   padding: 12px;
   border-radius: 50%;
+  outline-style: none;
+  box-shadow: none;
+  border-color: transparent;
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
