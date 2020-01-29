@@ -114,7 +114,7 @@ p.cl-copy-14 {
     margin-bottom: 1%;
   }
 }
-@media only (min-width: 361px) and (max-width:700px) {
+@media only screen and (max-width:700px) {
   .tile-success {
     display: block;
     height: 20%;
@@ -133,8 +133,6 @@ p.cl-copy-14 {
     margin-right: 5%;
     margin-bottom: 5%;
   }
-
-
 }
 @media only screen and (max-width: 360px) {
   .tile-success {
