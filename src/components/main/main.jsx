@@ -48,6 +48,7 @@ function Main(props) {
                                 domainList={props.domainList}
                                 hasDomainListError={props.hasDomainListError}
                                 appendDomainList={props.appendDomainList}
+                                changeDomainList={props.changeDomainList}
                             />
                         }
                     </Route>

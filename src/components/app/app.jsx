@@ -46,6 +46,13 @@ function App() {
         console.log("append this:", newDomain);
         setDomainList([...domainList, newDomain]);
     }
+    function changeDomainList(id){
+        domainList.find(domain => domain.id === id);
+        let domainListCopy= domainList.slice();
+        let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === id);
+        domainListCopy[domainToBeChangedIndex].active = !(domainListCopy[domainToBeChangedIndex].active);
+        setDomainList(domainListCopy);
+    }
 
     return (
         <>
@@ -57,6 +64,7 @@ function App() {
                     domainList={domainList}
                     hasDomainListError={hasDomainListError}
                     appendDomainList={appendDomainList}
+                    changeDomainList={changeDomainList}
                 />
 
                 {/*<Footer/>*/}

@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import './domainList.scss';
 import AddDomain from "../addDomain/addDomain";
+import Checkbox from "../checkbox/checkbox";
 
 function DomainList(props) {
 
@@ -32,6 +33,7 @@ function DomainList(props) {
                                 d={item}
                                 callbackFetch={props.callbackReFetchDomains}
                                 endpoint={props.endpoint}
+                                changeDomainList={props.changeDomainList}
                             />
                         })
                     }
@@ -128,10 +130,16 @@ function SingleDomain(props) {
                 props.d.deleted === false &&
                 <tr align="center">
                     <td>{props.d.service_Name}</td>
-                    <td>{props.type}</td>
+                    <td>{props.d.service_Type}</td>
                     <td>{props.d.url}</td>
-                    <td><input type="checkbox"/></td>
-                    <td>{props.d.admin_Email}</td>
+                    <td>
+                        <Checkbox
+                            id={props.d.id}
+                            active={props.d.active}
+                            changeDomainList={props.changeDomainList}
+                        />
+                    </td>
+                    <td>{props.d.notification_Email}</td>
                     <td>{props.d.interval_Ms} ms</td>
 
                     {/*only renders the ping time after it is fetched*/}
