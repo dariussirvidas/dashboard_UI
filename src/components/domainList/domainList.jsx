@@ -8,6 +8,8 @@ function DomainList(props) {
         <>
             <AddDomain
                 callbackFetch={props.callbackReFetchDomains}
+                appendDomainList={props.appendDomainList}
+                endpoint={props.endpoint}
             />
 
             <div className="TableDiv">
@@ -24,41 +26,20 @@ function DomainList(props) {
 
                     {
                         // checks for errors, if there are any, do not render domains
-                        props.portalsError === false &&
-                        props.domain.map((item) => {
-                            return <SingleDomain d={item}
-                                                 type={'domain'}
-                                                 callbackFetch={props.callbackReFetchDomains}
-                                                 apiEndpoint={props.apiEndpoint}
+                        props.hasDomainListError === false &&
+                        props.domainList.map((item) => {
+                            return <SingleDomain
+                                d={item}
+                                callbackFetch={props.callbackReFetchDomains}
+                                endpoint={props.endpoint}
                             />
                         })
                     }
 
                     {
-                        props.portalsError === true &&
+                        props.hasDomainListError === true &&
                         <p>
-                            portals could not be fetched
-                        </p>
-                    }
-
-
-                    {/*uzkomentavau, nes fetchina du kartus tapati domain, greiciausiai reikes istrinti - Donatas*/}
-                    {/*{*/}
-                    {/*    // checks for errors, if there are any, do not render domains*/}
-                    {/*    props.servicesError === false &&*/}
-                    {/*    props.services.map((item) => {*/}
-                    {/*        return <SingleDomain d={item}*/}
-                    {/*                             type={'domain'}*/}
-                    {/*                             callbackFetch={props.callbackReFetchDomains}*/}
-                    {/*                             apiEndpoint={props.apiEndpoint}*/}
-                    {/*        />*/}
-                    {/*    })*/}
-                    {/*}*/}
-
-                    {
-                        props.servicesError === true &&
-                        <p>
-                            services could not be fetched
+                            domains could not be fetched
                         </p>
                     }
                 </table>
@@ -77,11 +58,11 @@ function SingleDomain(props) {
     // only bothers to ping if the domain isnt deleted
     useEffect(() => {
         if (props.d.deleted === false)
-            pingDomain(props.d, props.type);
+            pingDomain(props.d);
     }, []);
 
-    async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/domain"  + "/" + d.id);
+    async function pingDomain(d) {
+        const res = await fetch(props.endpoint + "api/ping/domain" + "/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -92,16 +73,15 @@ function SingleDomain(props) {
     function handleSubmit(event) {
         let dataForSending = {
             Url: event.target.Url_.value,
-            Admin_Email: event.target.AdminEmail.value,
+            Notification_Email: event.target.AdminEmail.value,
             Interval_Ms: parseInt(event.target.IntervalMs.value)
         };
         console.log("full object for sending:", dataForSending);
-        updateData(event.target.domain_type.value, dataForSending, props.callbackFetch, props.d.id);
+        updateData(dataForSending, props.callbackFetch, props.d.id);
         event.preventDefault();
     }
 
-
-    function updateData(type, data, callbackFetch, id) {
+    function updateData(data, callbackFetch, id) {
         // create a new XMLHttpRequest
         let xhr = new XMLHttpRequest();
 
@@ -123,17 +103,16 @@ function SingleDomain(props) {
                 }
             }
         };
-
         // open the request with the verb and the url
-        xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/' + id);
+        xhr.open('PUT', props.apiEndpoint + 'api/domain/' + id);
         xhr.setRequestHeader("Content-type", "application/json");
         // send the request
         xhr.send(JSON.stringify(data))
     }
 
 
-    async function deleteDomain(d, type, callbackFetch) {
-        const response = await fetch(props.apiEndpoint + 'api/' + type + '/del/' + d.id, {
+    async function deleteDomain(d, callbackFetch) {
+        const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
                 method: 'PUT'
             }
         );
@@ -141,38 +120,6 @@ function SingleDomain(props) {
         await callbackFetch();
         return data;
     }
-
-    // function deleteDomain(d, type, callbackFetch) {
-    //     // create a new XMLHttpRequest
-    //     let xhr = new XMLHttpRequest();
-    //
-    //     // get a callback when the server responds
-    //     xhr.addEventListener('load', () => {
-    //         // update the state of the component with the result here
-    //         console.log("delete (PUT) response text: ", xhr.responseText)
-    //     });
-    //
-    //     // calls the callback function (re-fetch domain list) if successful
-    //     xhr.onload = function () {
-    //         if (xhr.readyState === 4) {
-    //             if (xhr.status === 200) {
-    //                 // insert success popup here
-    //                 callbackFetch.apply();
-    //             } else {
-    //                 // insert failure popup here
-    //                 console.error(xhr.statusText);
-    //             }
-    //         }
-    //     };
-    //
-    //     // open the request with the verb and the url
-    //     xhr.open('PUT', props.apiEndpoint + 'api/' + type + '/del/' + d.id);
-    //     xhr.setRequestHeader("Content-type", "application/json");
-    //     // send the request
-    //     xhr.send();
-    //
-    // }
-
 
     return (
         <>
@@ -196,7 +143,7 @@ function SingleDomain(props) {
                     <div>
                         <td>
                             <p onClick={() => {
-                                deleteDomain(props.d, props.type, props.callbackFetch)
+                                deleteDomain(props.d, props.callbackFetch)
                             }}>
                                 DELETE
                             </p>
@@ -223,9 +170,11 @@ function SingleDomain(props) {
 
                                 <form onSubmit={handleSubmit}>
                                     <legend>Edit Domain:</legend>
-                                    <p>Service Name <input name="Service_name" type="text" placeholder="Service Name"></input></p>
-                                    <p>Service URL <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input></p>
-                                    
+                                    <p>Service Name <input name="Service_name" type="text"
+                                                           placeholder="Service Name"></input></p>
+                                    <p>Service URL <input name="Url_" type="text"
+                                                          placeholder="Url (www.domain.com)"></input></p>
+
                                     <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
                                     <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
                                     <select required name="domain_type" id="domain-select">

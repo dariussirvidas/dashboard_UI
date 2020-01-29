@@ -9,19 +9,8 @@ import Sticker from "../sticker/sticker";
 
 function App() {
     const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
-    const [serviceList, setServiceList] = useState();
-    const [hasServicesError, setServicesErrors] = useState(false);
-
-
-
-
-    const [portalList, setPortalsList] = useState();
-    const [hasPortalsError, setPortalsErrors] = useState(false);
-
-
-    const [servicesPingList, setServicesPingList] = useState();
-    const [servicesPingError, setServicesPingError] = useState();
-
+    const [domainList, setDomainList] = useState();
+    const [hasDomainListError, setHasDomainListError] = useState(false);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint);
@@ -32,25 +21,15 @@ function App() {
     function fetchDomains(endpoint) {
         fetchFromApi(endpoint + "api/domain")
             .then(data => {
-                setPortalsList(data)
+                setDomainList(data)
             })
             .catch(error => {
                 console.error("error while fetching domains:" + error);
-                setPortalsErrors(true);
+                setHasDomainListError(true);
 
                 // cia teoriskai bukai gal, bet imetu error stringa kad main elemente
                 // Boolean("error") resolvintusi kaip true ir renderintu toliau
-                setPortalsList("error");
-            });
-
-        fetchFromApi(endpoint + "api/domain")
-            .then(data => {
-                setServiceList(data)
-            })
-            .catch(error => {
-                console.error("error while fetching domains:" + error);
-                setServicesErrors(true);
-                setServiceList("error");
+                setDomainList("error");
             });
     }
 
@@ -63,16 +42,21 @@ function App() {
         fetchDomains(endpoint);
     }
 
+    function appendDomainList(newDomain){
+        console.log("append this:", newDomain);
+        setDomainList([...domainList, newDomain]);
+    }
+
     return (
         <>
             <Router>
                 <Menu/>
                 <Main
-                    apiEndpoint={endpoint}
+                    endpoint={endpoint}
                     callbackReFetchDomains={reFetchDomains}
-                    domain={portalList}
-                    portalsError={hasPortalsError}
-                    servicesError={hasServicesError}
+                    domainList={domainList}
+                    hasDomainListError={hasDomainListError}
+                    appendDomainList={appendDomainList}
                 />
 
                 {/*<Footer/>*/}
