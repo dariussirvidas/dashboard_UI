@@ -41,23 +41,23 @@ function Main(props) {
 
                     <Route path="/domains">
                         {
-                            Boolean(props.domain) === true && Boolean(props.domain) === true &&
+                            Boolean(props.domainList) &&
                             <DomainList
-                                apiEndpoint={props.apiEndpoint}
+                                endpoint={props.endpoint}
                                 callbackReFetchDomains={props.callbackReFetchDomains}
-                                domain={props.domain}
-                                portalsError={props.portalsError}
-                                domain={props.domain}
-                                servicesError={props.servicesError}
+                                domainList={props.domainList}
+                                hasDomainListError={props.hasDomainListError}
+                                appendDomainList={props.appendDomainList}
                             />
                         }
                     </Route>
                     <Route path="/">
-                        <StickerList apiEndpoint={props.apiEndpoint}
-                                     callbackReFetchDomains={props.callbackReFetchDomains}
-                                     domain={props.domain}
-                                     portalsError={props.portalsError}
-                                     servicesError={props.servicesError}/>
+                        <StickerList
+                            endpoint={props.endpoint}
+                            callbackReFetchDomains={props.callbackReFetchDomains}
+                            domainList={props.domainList}
+                            hasDomainListError={props.hasDomainListError}
+                        />
                     </Route>
                 </Switch>
             </div>
@@ -68,14 +68,14 @@ function Main(props) {
 function StickerList(props) {
     return (
         <>
+            {console.log("checkina")}
             {
-                Boolean(props.domain) === true && Boolean(props.domain) === true &&
-                props.domain.map((item) => {
+                Boolean(props.domainList) === true &&
+                props.domainList.map((item) => {
                     return (
                         <SingleService
                             item={item}
-                            type={'domain'}
-                            apiEndpoint={props.apiEndpoint}
+                            endpoint={props.endpoint}
                         />
                     )
                 })
@@ -96,7 +96,7 @@ function SingleService(props) {
     }, []);
 
     async function pingDomain(d, type) {
-        const res = await fetch(props.apiEndpoint + "api/ping/domain" + "/" + d.id);
+        const res = await fetch(props.endpoint + "api/ping/domain/" + d.id);
         res
             .json()
             .then(res => setDomainPing(res))
@@ -106,6 +106,7 @@ function SingleService(props) {
 
     return (
         <>
+            {console.log('stuff')}
             {
                 props.item.deleted === false && props.item.active === true &&
                 <div className="tile-success">
@@ -125,7 +126,6 @@ function SingleService(props) {
     )
 
 }
-
 
 function ExampleComponentStructure() {
 
