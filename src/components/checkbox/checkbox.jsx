@@ -2,17 +2,51 @@ import React, {Component} from 'react';
 
 function Checkbox(props) {
 
-    function changeActiveState(event){
-        console.log(event.target.checked);
-        props.changeDomainList(props.id);
-
-    }
-
-    return(
+    return (
         <>
             <input type="checkbox" checked={props.active} onClick={changeActiveState}></input>
         </>
-    )
+    );
+
+    function changeActiveState(event) {
+        console.log(event.target.checked);
+
+        // the following is temporary until PUT does not require the whole domain object anymore
+        let domainForSending = {...props.domain};
+        console.log(domainForSending);
+        console.log(JSON.stringify(domainForSending));
+        domainForSending.active = event.target.checked;
+
+        submitData(domainForSending);
+    }
+
+    function submitData(domainWithNewActiveState) {
+        fetchPut(domainWithNewActiveState)
+            .then((data) => {
+                console.log('magic data:', data);
+                props.changeDomainList(data)
+
+            })
+            .catch((error) => {
+                console.error("error while put'ing domains: " + error);
+            });
+    }
+
+    async function fetchPut(dataForSending) {
+        const response = await fetch(props.endpoint + "api/domain/" + props.id,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+            }
+        );
+        const data = await response.json();
+        return data;
+    }
+
 }
 
 

@@ -33,24 +33,28 @@ function App() {
             });
     }
 
+    // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
     }, []);
 
+    // (re)fetches domainList
     function reFetchDomains() {
         console.log("refetching!");
         fetchDomains(endpoint);
     }
 
+    // appends the local domainList array with one new domain
     function appendDomainList(newDomain){
         console.log("append this:", newDomain);
         setDomainList([...domainList, newDomain]);
     }
-    function changeDomainList(id){
-        domainList.find(domain => domain.id === id);
-        let domainListCopy= domainList.slice();
-        let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === id);
-        domainListCopy[domainToBeChangedIndex].active = !(domainListCopy[domainToBeChangedIndex].active);
+
+    // changes the local domainList active state for one domain
+    function changeDomainList(responseDomain){
+        let domainListCopy = domainList.slice();
+        let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === responseDomain.id);
+        domainListCopy[domainToBeChangedIndex] = responseDomain;
         setDomainList(domainListCopy);
     }
 
