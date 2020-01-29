@@ -11,22 +11,21 @@ function Checkbox(props) {
     function changeActiveState(event) {
         console.log(event.target.checked);
 
-
         // the following is temporary until PUT does not require the whole domain object anymore
         let domainForSending = {...props.domain};
         console.log(domainForSending);
         console.log(JSON.stringify(domainForSending));
         domainForSending.active = event.target.checked;
+
         submitData(domainForSending);
-
-
-        // props.changeDomainList(props.id);
     }
 
     function submitData(domainWithNewActiveState) {
         fetchPut(domainWithNewActiveState)
             .then((data) => {
-                props.changeDomainList(props.id)
+                console.log('magic data:', data);
+                props.changeDomainList(data)
+
             })
             .catch((error) => {
                 console.error("error while put'ing domains: " + error);

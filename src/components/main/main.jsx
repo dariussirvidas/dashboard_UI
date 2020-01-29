@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import DomainList from "../domainList/domainList";
+import "./main.scss";
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -91,7 +93,7 @@ function SingleService(props) {
     const [domainPingError, setDomainPingError] = useState();
 
     useEffect(() => {
-        if (props.item.deleted === false){
+        if (props.item.deleted === false) {
             pingDomain(props.item, props.type);
         }
     }, []);
@@ -102,21 +104,32 @@ function SingleService(props) {
             .json()
             .then(res => setDomainPing(res))
             .then(res => console.log(res))
+            .then(res => setDomainPingError())
             .catch(err => setDomainPingError(err));
     }
 
+
     return (
         <>
-            {console.log('stuff')}
+
             {
                 props.item.deleted === false && props.item.active === true &&
-                <div className="tile-success">
+                <div className={
+                    (domainPing === undefined && "waitingStyle ") +
+                    (domainPing !== undefined && "successStyle ") +
+                    (domainPing !== undefined && Object.entries(domainPing) === 0 && "failStyle")
+                }
+                >
                     <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
                     <p className="cl-copy-14">
                         Response time:
                         {
                             domainPing &&
-                            <>{domainPing.latencyMS}</>
+                            <>
+                                {domainPing.latencyMS}
+                                {console.log("domainpingerror: ", domainPingError)}
+                            </>
+
                         }
                     </p>
                     <p className="cl-copy-14">Last Failure: {props.item.last_Fail}</p>
