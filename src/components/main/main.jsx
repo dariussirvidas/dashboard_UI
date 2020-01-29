@@ -89,8 +89,8 @@ function StickerList(props) {
 }
 
 function SingleService(props) {
-    const [domainPing, setDomainPing] = useState();
-    const [domainPingError, setDomainPingError] = useState();
+    const [domainPing, setDomainPing] = useState({status: "No response yet"});
+    const [domainPingError, setDomainPingError] = useState("false");
 
     useEffect(() => {
         if (props.item.deleted === false) {
@@ -104,8 +104,7 @@ function SingleService(props) {
             .json()
             .then(res => setDomainPing(res))
             .then(res => console.log(res))
-            .then(res => setDomainPingError())
-            .catch(err => setDomainPingError(err));
+            .catch(err => setDomainPingError(true));
     }
 
 
@@ -115,9 +114,9 @@ function SingleService(props) {
             {
                 props.item.deleted === false && props.item.active === true &&
                 <div className={
-                    (domainPing === undefined && "waitingStyle ") +
-                    (domainPing !== undefined && "successStyle ") +
-                    (domainPing !== undefined && Object.entries(domainPing) === 0 && "failStyle")
+                    "tile-unclear " +
+                    (domainPing.status === "TimedOut" && "tile-fail ") + " " +
+                    (domainPing.status === "Success" && "tile-success ")
                 }
                 >
                     <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
