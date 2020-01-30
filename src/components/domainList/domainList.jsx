@@ -279,6 +279,139 @@ function SingleDomain(props) {
                             </div>
                         }
 
+                        {/*Rycio versija work in progress*/}
+                        {/*{*/}
+                        {/*    editBox === true &&*/}
+                        {/*    <div>*/}
+                        {/*        <button*/}
+                        {/*            onClick={() => {*/}
+                        {/*                setEditBox(false);*/}
+                        {/*            }}*/}
+                        {/*        >*/}
+                        {/*            go back*/}
+                        {/*        </button>*/}
+                        {/*        ​*/}
+                        {/*        <form onSubmit={handleSubmit}>*/}
+                        {/*            <legend>Edit Domain:</legend>*/}
+                        {/*            <p>*/}
+                        {/*                Service Name{" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Service_name"*/}
+                        {/*                    type="text"*/}
+                        {/*                    placeholder="Service Name"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Service URL{" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Url_"*/}
+                        {/*                    type="text"*/}
+                        {/*                    placeholder="Url (www.domain.com)"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Service Type*/}
+                        {/*                <select>*/}
+                        {/*                    <option value="webapp">WebApp</option>*/}
+                        {/*                    <option value="rest">Service - REST</option>*/}
+                        {/*                    <option value="soap">Service - SOAP</option>*/}
+                        {/*                </select>*/}
+                        {/*            </p>*/}
+
+
+                        {/*            <p>*/}
+                        {/*                Method*/}
+                        {/*                <select>*/}
+                        {/*                    <option value="post">POST</option>*/}
+                        {/*                    <option value="get">GET</option>*/}
+                        {/*                </select>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Basic auth{" "}*/}
+                        {/*                <input type="checkbox" name="auth">*/}
+
+                        {/*                </input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                User{" "}*/}
+                        {/*                <input name="User" type="text" placeholder="User"></input>*/}
+                        {/*            </p>*/}
+
+
+                        {/*            <p>*/}
+                        {/*                Password{" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Password"*/}
+                        {/*                    type="password"*/}
+                        {/*                    placeholder="Password"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Parameters{" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Parameters"*/}
+                        {/*                    type="text"*/}
+                        {/*                    placeholder="Add your parameters"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Email to notify{" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Email"*/}
+                        {/*                    type="email"*/}
+                        {/*                    placeholder="name@mail.com"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+                        {/*            <p>*/}
+                        {/*                Check interval (S){" "}*/}
+                        {/*                <input*/}
+                        {/*                    name="Check_interval"*/}
+                        {/*                    type="text"*/}
+                        {/*                    placeholder="Time(s)"*/}
+                        {/*                ></input>*/}
+                        {/*            </p>*/}
+
+                        {/*            <p>*/}
+                        {/*                Active{" "}*/}
+                        {/*                <input type="checkbox" name="active" value="active">*/}
+
+                        {/*                </input>*/}
+                        {/*            </p>*/}
+
+
+                        {/*            <button type="button" className="btn-hero">*/}
+                        {/*                Test service*/}
+                        {/*            </button>*/}
+                        {/*            <button type="button" className="btn-hero">*/}
+                        {/*                Save*/}
+                        {/*            </button>*/}
+                        {/*            <button type="button" className="btn-hero">*/}
+                        {/*                Cancel*/}
+                        {/*            </button>*/}
+
+                        {/*            <input*/}
+                        {/*                name="AdminEmail"*/}
+                        {/*                type="text"*/}
+                        {/*                placeholder="Email (user@mail.com)"*/}
+                        {/*            ></input>*/}
+                        {/*            <input*/}
+                        {/*                name="IntervalMs"*/}
+                        {/*                type="number"*/}
+                        {/*                placeholder="Interval Ms (1000)"*/}
+                        {/*            ></input>*/}
+                        {/*            <select required name="domain_type" id="domain-select">*/}
+                        {/*                <option disabled value="">*/}
+                        {/*                    --Please choose an option--*/}
+                        {/*                </option>*/}
+                        {/*                <option value="portals">portal</option>*/}
+                        {/*                <option value="services">service</option>*/}
+                        {/*            </select>*/}
+                        {/*            <p>*/}
+                        {/*                <input type="submit" value="submit"/>*/}
+                        {/*            </p>*/}
+                        {/*        </form>*/}
+                        {/*    </div>*/}
+                        {/*}*/}
                     </div>
                 </tr>
             }
