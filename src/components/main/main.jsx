@@ -10,6 +10,7 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
+import Sticker from "../sticker/sticker";
 
 function Main(props) {
 
@@ -142,28 +143,11 @@ function SingleService(props) {
         <>
             {
                 props.item.deleted === false && props.item.active === true &&
-                <div className={
-                    "tile-unclear " +
-                    (domainPing.status === "TimedOut" && "tile-fail ") + " " +
-                    (domainPing.status === "Success" && "tile-success ")
-                }
-                >
-                    <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
-                    <p className="cl-copy-14">
-                        Response time:
-                        {
-                            domainPing &&
-                            <>
-                                {domainPing.latencyMS}
-                                {console.log("domainpingerror: ", domainPingError)}
-                            </>
-
-                        }
-                    </p>
-                    {/*<p className="cl-copy-14">Response code: {domainPingResponseCode}</p>*/}
-                    <p className="cl-copy-14">Last Failure: {props.item.last_Fail}</p>
-                    <p className="cl-copy-14">Next Check in: {props.item.interval_Ms} </p>
-                </div>
+                <Sticker
+                    item={props.item}
+                    domainPing={domainPing}
+                    domainPingError={domainPingError}
+                />
             }
         </>
     )
