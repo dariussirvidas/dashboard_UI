@@ -52,54 +52,56 @@ function SingleDomain(props) {
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [editBox, setEditBox] = useState(false);
 
-
     function handleSubmit(event) {
         let dataForSending = {
-            Url: event.target.Url_.value,
-            Notification_Email: event.target.AdminEmail.value,
-            Interval_Ms: parseInt(event.target.IntervalMs.value)
+            url: event.target.Url_.value,
+            notification_Email: event.target.AdminEmail.value,
+            interval_Ms: parseInt(event.target.IntervalMs.value),
+            service_Type: event.target.domain_type.value,
+            service_Name: event.target.Url_.value,
+            parameters: "placeholder parameters",
+            active: true
         };
         console.log("full object for sending:", dataForSending);
-        updateData(dataForSending, props.callbackFetch, props.d.id);
+        console.log("BOOP");
+        // submitData(props.endpoint, props.appendDomainList, dataForSending);
         event.preventDefault();
     }
 
-    function updateData(data, callbackFetch, id) {
-        // create a new XMLHttpRequest
-        let xhr = new XMLHttpRequest();
+//
+// async function fetchPut(endpoint, dataForSending) {
+//     const response = await fetch(endpoint,
+//         {
+//             method: 'PUT',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//                 // 'Content-Type': 'application/x-www-form-urlencoded',
+//             },
+//             body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+//         }
+//     );
+//     const data = await response.json();
+//     return data;
+// }
+//
+// function submitData(endpoint, callbackAppendDomainList, dataForSending) {
+//     fetchPut(endpoint + "api/domain/", dataForSending)
+//         .then((data) => {
+//             callbackAppendDomainList(data)
+//         })
+//
+//         .catch((error) => {
+//             console.error("error while fetching domains:" + error);
+//         });
+// }
 
-        // get a callback when the server responds
-        xhr.addEventListener('load', () => {
-            // update the state of the component with the result here
-            console.log("response text: ", xhr.responseText)
-        });
-
-        // calls the callback function (re-fetch domain list) if successful
-        xhr.onload = function () {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 204) {
-                    // insert success popup here
-                    callbackFetch.apply();
-                } else {
-                    // insert failure popup here
-                    console.error(xhr.statusText + 'this means its failed' + xhr.status);
-                }
-            }
-        };
-        // open the request with the verb and the url
-        xhr.open('PUT', props.apiEndpoint + 'api/domain/' + id);
-        xhr.setRequestHeader("Content-type", "application/json");
-        // send the request
-        xhr.send(JSON.stringify(data))
-    }
-
-    async function deleteDomain(d, callbackFetch) {
+    async function deleteDomain(d, changeDomainList) {
         const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
                 method: 'PUT'
             }
         );
         const data = await response.json();
-        await callbackFetch();
+        await changeDomainList(data);
         return data;
     }
 
@@ -131,7 +133,7 @@ function SingleDomain(props) {
                     <div>
                         <td>
                             <p onClick={() => {
-                                deleteDomain(props.d, props.callbackFetch)
+                                deleteDomain(props.d, props.changeDomainList)
                             }}>
                                 DELETE
                             </p>
@@ -148,133 +150,26 @@ function SingleDomain(props) {
 
                         {
                             editBox === true &&
+
                             <div>
-                                <button
-                                    onClick={() => {
-                                        setEditBox(false);
-                                    }}
-                                >
+                                <button onClick={() => {
+                                    setEditBox(false);
+                                }}>
                                     go back
                                 </button>
-                                ​
+
                                 <form onSubmit={handleSubmit}>
                                     <legend>Edit Domain:</legend>
-                                    <p>
-                                        Service Name{" "}
-                                        <input
-                                            name="Service_name"
-                                            type="text"
-                                            placeholder="Service Name"
-                                        ></input>
-                                    </p>
-                                    <p>
-                                        Service URL{" "}
-                                        <input
-                                            name="Url_"
-                                            type="text"
-                                            placeholder="Url (www.domain.com)"
-                                        ></input>
-                                    </p>
-                                    <p>
-                                        Service Type
-                                        <select>
-                                            <option value="webapp">WebApp</option>
-                                            <option value="rest">Service - REST</option>
-                                            <option value="soap">Service - SOAP</option>
-                                        </select>
-                                    </p>
-
-
-                                    <p>
-                                        Method
-                                        <select>
-                                            <option value="post">POST</option>
-                                            <option value="get">GET</option>
-                                        </select>
-                                    </p>
-                                    <p>
-                                        Basic auth{" "}
-                                        <input type="checkbox" name="auth">
-
-                                        </input>
-                                    </p>
-                                    <p>
-                                        User{" "}
-                                        <input name="User" type="text" placeholder="User"></input>
-                                    </p>
-
-
-                                    <p>
-                                        Password{" "}
-                                        <input
-                                            name="Password"
-                                            type="password"
-                                            placeholder="Password"
-                                        ></input>
-                                    </p>
-                                    <p>
-                                        Parameters{" "}
-                                        <input
-                                            name="Parameters"
-                                            type="text"
-                                            placeholder="Add your parameters"
-                                        ></input>
-                                    </p>
-                                    <p>
-                                        Email to notify{" "}
-                                        <input
-                                            name="Email"
-                                            type="email"
-                                            placeholder="name@mail.com"
-                                        ></input>
-                                    </p>
-                                    <p>
-                                        Check interval (S){" "}
-                                        <input
-                                            name="Check_interval"
-                                            type="text"
-                                            placeholder="Time(s)"
-                                        ></input>
-                                    </p>
-
-                                    <p>
-                                        Active{" "}
-                                        <input type="checkbox" name="active" value="active">
-
-                                        </input>
-                                    </p>
-
-
-                                    <button type="button" className="btn-hero">
-                                        Test service
-                                    </button>
-                                    <button type="button" className="btn-hero">
-                                        Save
-                                    </button>
-                                    <button type="button" className="btn-hero">
-                                        Cancel
-                                    </button>
-
-                                    <input
-                                        name="AdminEmail"
-                                        type="text"
-                                        placeholder="Email (user@mail.com)"
-                                    ></input>
-                                    <input
-                                        name="IntervalMs"
-                                        type="number"
-                                        placeholder="Interval Ms (1000)"
-                                    ></input>
+                                    <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>
+                                    <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
+                                    <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
                                     <select required name="domain_type" id="domain-select">
-                                        <option disabled value="">
-                                            --Please choose an option--
-                                        </option>
+                                        <option disabled value="">--Please choose an option--</option>
                                         <option value="portals">portal</option>
                                         <option value="services">service</option>
                                     </select>
-                                    <p>
-                                        <input type="submit" value="submit"/>
-                                    </p>
+                                    <p><input type="submit" value="submit"/></p>
+
                                 </form>
                             </div>
                         }
