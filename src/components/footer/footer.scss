@@ -1,18 +1,9 @@
-@import "../_ux_design_fonts.scss";
-@import "../_ux_design_colors.scss";
-@import "../_ux_design_buttons.scss";
-@import "../_ux_design_textlinks.scss";
+@import "../_ux_global_design.scss";
 
 // testing if fonts definition works by assigning this class to elements in footer.jsx
 
 // calls a class from global fonts sass file
 // use className="testing cl-h1" on element
-
-.testing.cl-h1 {
-}
-
-.testing.cl-copy-12 {
-}
 
 .eva.eva-shopping-cart-outline {
   margin-right: 5px;
@@ -20,8 +11,5 @@
 .eva.eva-shopping-cart {
   margin-right: 5px;
 }
-
-// this is probably not necessary, will update later
-$ft-base-class: ".cl-h1";
 
 // works all good
