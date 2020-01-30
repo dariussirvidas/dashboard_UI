@@ -52,6 +52,7 @@ function App() {
 
     // changes the local domainList active state for one domain
     function changeDomainList(responseDomain){
+        console.log("changing domainList");
         let domainListCopy = domainList.slice();
         let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === responseDomain.id);
         domainListCopy[domainToBeChangedIndex] = responseDomain;
