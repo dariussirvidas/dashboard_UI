@@ -5,7 +5,6 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
-import Sticker from "../sticker/sticker";
 
 function App() {
     const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
@@ -52,10 +51,15 @@ function App() {
 
     // changes the local domainList active state for one domain
     function changeDomainList(responseDomain){
+        console.log("changing domainList");
         let domainListCopy = domainList.slice();
         let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === responseDomain.id);
         domainListCopy[domainToBeChangedIndex] = responseDomain;
         setDomainList(domainListCopy);
+    }
+
+    function queryBackEnd(intervalMilliseconds){
+        setInterval(reFetchDomains, intervalMilliseconds);
     }
 
     return (
@@ -70,7 +74,7 @@ function App() {
                     appendDomainList={appendDomainList}
                     changeDomainList={changeDomainList}
                 />
-
+                {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>
         </>

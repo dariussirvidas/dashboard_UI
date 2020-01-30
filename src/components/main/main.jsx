@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import DomainList from "../domainList/domainList";
 import "./main.scss";
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,27 +9,13 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
+import StickerList from "../stickerList/stickerList";
 
 function Main(props) {
 
     return (
         <>
             <div>
-                {/*<ul>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/">Home</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/about">About</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/topics">Topics</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/domains">Domains</Link>*/}
-                {/*    </li>*/}
-                {/*</ul>*/}
-
                 {/*Switch will only render the first matched <Route/> child.*/}
                 <Switch>
 
@@ -60,6 +45,7 @@ function Main(props) {
                             callbackReFetchDomains={props.callbackReFetchDomains}
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
+                            changeDomainList={props.changeDomainList}
                         />
                     </Route>
                 </Switch>
@@ -68,77 +54,7 @@ function Main(props) {
     );
 }
 
-function StickerList(props) {
-    return (
-        <>
-            {console.log("checkina")}
-            {
-                Boolean(props.domainList) === true &&
-                props.domainList.map((item) => {
-                    return (
-                        <SingleService
-                            item={item}
-                            endpoint={props.endpoint}
-                        />
-                    )
-                })
-            }
 
-        </>
-    )
-}
-
-function SingleService(props) {
-    const [domainPing, setDomainPing] = useState({status: "No response yet"});
-    const [domainPingError, setDomainPingError] = useState("false");
-
-    useEffect(() => {
-        if (props.item.deleted === false) {
-            pingDomain(props.item, props.type);
-        }
-    }, []);
-
-    async function pingDomain(d, type) {
-        const res = await fetch(props.endpoint + "api/ping/domain/" + d.id);
-        res
-            .json()
-            .then(res => setDomainPing(res))
-            .then(res => console.log(res))
-            .catch(err => setDomainPingError(true));
-    }
-
-
-    return (
-        <>
-
-            {
-                props.item.deleted === false && props.item.active === true &&
-                <div className={
-                    "tile-unclear " +
-                    (domainPing.status === "TimedOut" && "tile-fail ") + " " +
-                    (domainPing.status === "Success" && "tile-success ")
-                }
-                >
-                    <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
-                    <p className="cl-copy-14">
-                        Response time:
-                        {
-                            domainPing &&
-                            <>
-                                {domainPing.latencyMS}
-                                {console.log("domainpingerror: ", domainPingError)}
-                            </>
-
-                        }
-                    </p>
-                    <p className="cl-copy-14">Last Failure: {props.item.last_Fail}</p>
-                    <p className="cl-copy-14">Next Check in: {props.item.interval_Ms} </p>
-                </div>
-            }
-        </>
-    )
-
-}
 
 function ExampleComponentStructure() {
 
