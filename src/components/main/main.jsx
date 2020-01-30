@@ -103,7 +103,7 @@ function SingleService(props) {
         res
             .json()
             .then(res => setDomainPing(res))
-            .then(res => console.log(res))
+            .then(res => console.log("res: ", res))
             .catch(err => setDomainPingError(true));
     }
 

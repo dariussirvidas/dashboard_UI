@@ -58,6 +58,10 @@ function App() {
         setDomainList(domainListCopy);
     }
 
+    function queryBackEnd(intervalMiliseconds){
+        setInterval(reFetchDomains, intervalMiliseconds);
+    }
+
     return (
         <>
             <Router>
@@ -70,7 +74,7 @@ function App() {
                     appendDomainList={appendDomainList}
                     changeDomainList={changeDomainList}
                 />
-
+                {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>
         </>
