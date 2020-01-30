@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import DomainList from "../domainList/domainList";
 import "./main.scss";
-
 import {
     BrowserRouter as Router,
     Switch,
@@ -10,7 +9,6 @@ import {
     useRouteMatch,
     useParams
 } from "react-router-dom";
-import Sticker from "../sticker/sticker";
 import StickerList from "../stickerList/stickerList";
 
 function Main(props) {
@@ -18,21 +16,6 @@ function Main(props) {
     return (
         <>
             <div>
-                {/*<ul>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/">Home</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/about">About</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/topics">Topics</Link>*/}
-                {/*    </li>*/}
-                {/*    <li>*/}
-                {/*        <Link to="/domains">Domains</Link>*/}
-                {/*    </li>*/}
-                {/*</ul>*/}
-
                 {/*Switch will only render the first matched <Route/> child.*/}
                 <Switch>
 
