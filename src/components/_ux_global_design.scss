@@ -132,7 +132,7 @@ BUTTONS
 .btn-grey {
     background-color: $clr-gr-1;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
     border-radius: 7px;
     outline-style: none;
     box-shadow: none;
@@ -148,7 +148,7 @@ BUTTONS
   .btn-grey-disabled {
     background-color: $clr-gr-1;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
     border-radius: 7px;
     outline-style: none;
     box-shadow: none;
@@ -161,7 +161,8 @@ BUTTONS
   .btn-grey-round {
     background-color: $clr-gr-1;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     border: none;
     &:hover {
@@ -176,7 +177,8 @@ BUTTONS
   .btn-grey-round-disabled {
     background-color: $clr-gr-1;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     outline-style: none;
     box-shadow: none;
@@ -191,7 +193,7 @@ BUTTONS
   .btn-hero {
     background-color: $clr-hero;
     color: $clr-white;
-    padding: 12px;
+    height: 48px;
     border-radius: 7px;
     outline-style: none;
     box-shadow: none;
@@ -210,7 +212,7 @@ BUTTONS
   .btn-hero-disabled {
     background-color: $clr-canul;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
     border-radius: 7px;
     outline-style: none;
     box-shadow: none;
@@ -224,7 +226,8 @@ BUTTONS
   .btn-hero-round {
     background-color: $clr-hero;
     color: $clr-white;
-    padding: 12px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     outline-style: none;
     box-shadow: none;
@@ -242,7 +245,8 @@ BUTTONS
   .btn-hero-round-disabled {
     background-color: $clr-canul;
     color: $clr-black;
-    padding: 12px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
     outline-style: none;
     box-shadow: none;
