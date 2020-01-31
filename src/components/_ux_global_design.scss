@@ -262,6 +262,7 @@ BUTTONS
  --------------------------*/ 
  .textlink-1 {
     color: $clr-hero;
+    cursor: pointer;
     &:hover {
       color: mix($clr-black, $clr-hero, 10%);
     }

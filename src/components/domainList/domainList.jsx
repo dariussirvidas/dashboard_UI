@@ -133,7 +133,7 @@ function SingleDomain(props) {
 
                     <div>
                         <td>
-                            <p onClick={() => {
+                            <p className="textlink-1" onClick={() => {
                                 deleteDomain(props.d, props.changeDomainList)
                             }}>
                                 DELETE
@@ -143,7 +143,7 @@ function SingleDomain(props) {
                             editBox === false &&
 
                             <div>
-                                <td><a onClick={() => {
+                                <td><a className="textlink-1" onClick={() => {
                                     setEditBox(true)
                                 }}>Edit</a></td>
                             </div>
@@ -171,7 +171,7 @@ function SingleDomain(props) {
                                     </select>
                                     <input name="Parameters" type="text" placeholder="Parameters"></input>
 
-                                    <p><input type="submit" value="submit"/></p>
+                                    <p><input type="submit" value="Submit"/></p>
                                 </form>
                             </div>
                         }
