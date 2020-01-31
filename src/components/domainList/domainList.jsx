@@ -52,48 +52,31 @@ function SingleDomain(props) {
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [editBox, setEditBox] = useState(false);
 
-    function handleSubmit(event) {
-        let dataForSending = {
-            url: event.target.Url_.value,
-            notification_Email: event.target.AdminEmail.value,
-            interval_Ms: parseInt(event.target.IntervalMs.value),
-            service_Type: event.target.domain_type.value,
-            service_Name: event.target.Url_.value,
-            parameters: "placeholder parameters",
-            active: true
-        };
-        console.log("full object for sending:", dataForSending);
-        console.log("BOOP");
-        // submitData(props.endpoint, props.appendDomainList, dataForSending);
-        event.preventDefault();
+    async function fetchPut(endpoint, dataForSending) {
+        const response = await fetch(endpoint,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+            }
+        );
+        const data = await response.json();
+        return data;
     }
 
-//
-// async function fetchPut(endpoint, dataForSending) {
-//     const response = await fetch(endpoint,
-//         {
-//             method: 'PUT',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//                 // 'Content-Type': 'application/x-www-form-urlencoded',
-//             },
-//             body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
-//         }
-//     );
-//     const data = await response.json();
-//     return data;
-// }
-//
-// function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-//     fetchPut(endpoint + "api/domain/", dataForSending)
-//         .then((data) => {
-//             callbackAppendDomainList(data)
-//         })
-//
-//         .catch((error) => {
-//             console.error("error while fetching domains:" + error);
-//         });
-// }
+    function submitData(endpoint, changeDomainList, dataForSending) {
+        fetchPut(endpoint + "api/domain/" + dataForSending.id, dataForSending)
+            .then((data) => {
+                changeDomainList(data)
+            })
+
+            .catch((error) => {
+                console.error("error while fetching domains:" + error);
+            });
+    }
 
     async function deleteDomain(d, changeDomainList) {
         const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
@@ -103,6 +86,24 @@ function SingleDomain(props) {
         const data = await response.json();
         await changeDomainList(data);
         return data;
+    }
+
+    function handleSubmit(event) {
+
+
+        let dataForSending = Object.assign({}, props.d);
+
+        dataForSending.url = event.target.Url_.value;
+        dataForSending.service_Name = event.target.Url_.value;
+        dataForSending.notification_Email = event.target.Email.value;
+        dataForSending.interval_Ms = parseInt(event.target.IntervalMs.value);
+        dataForSending.service_Type = event.target.domain_type.value;
+        dataForSending.parameters = event.target.Parameters.value;
+        // //
+        console.log("full object for sending:", dataForSending);
+        console.log("BOOP");
+        submitData(props.endpoint, props.changeDomainList, dataForSending);
+        event.preventDefault();
     }
 
     return (
@@ -142,7 +143,7 @@ function SingleDomain(props) {
                             editBox === false &&
 
                             <div>
-                                <td><a href="#" onClick={() => {
+                                <td><a onClick={() => {
                                     setEditBox(true)
                                 }}>Edit</a></td>
                             </div>
@@ -161,15 +162,16 @@ function SingleDomain(props) {
                                 <form onSubmit={handleSubmit}>
                                     <legend>Edit Domain:</legend>
                                     <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input>
-                                    <input name="AdminEmail" type="text" placeholder="Email (user@mail.com)"></input>
+                                    <input name="Email" type="text" placeholder="Email (user@mail.com)"></input>
                                     <input name="IntervalMs" type="number" placeholder="Interval Ms (1000)"></input>
                                     <select required name="domain_type" id="domain-select">
                                         <option disabled value="">--Please choose an option--</option>
                                         <option value="portals">portal</option>
                                         <option value="services">service</option>
                                     </select>
-                                    <p><input type="submit" value="submit"/></p>
+                                    <input name="Parameters" type="text" placeholder="Parameters"></input>
 
+                                    <p><input type="submit" value="submit"/></p>
                                 </form>
                             </div>
                         }
