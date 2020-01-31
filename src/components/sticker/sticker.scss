@@ -6,7 +6,7 @@
   
   background-color: $clr-success !important;
   width: 250px;
-  height: 200px;
+  height: 180px;
   line-height: 1;
   border: 1px solid $clr-aterul;
   border-radius: 5px;
@@ -16,7 +16,7 @@
   margin-top: 1%;
   margin-left: 1%;
   margin-right: 0.15%;
-  padding: 0.75%;
+  padding: 0.5%;
   white-space: normal;
   
 
@@ -26,7 +26,7 @@
 .tile-unclear {
   background-color: $clr-canul;
   width: 250px;
-  height: 200px;
+  height: 180px;
   line-height: 1;
   border: 1px solid $clr-aterul;
   border-radius: 5px;
@@ -35,7 +35,7 @@
   margin-top: 1%;
   margin-left: 1%;
   margin-right: 0.15%;
-  padding: 0.75%;
+  padding: 0.5%;
   overflow: hidden;
   white-space: normal;
   
@@ -46,7 +46,7 @@
 .tile-fail {
   background-color: $clr-fail !important;
   width: 250px;
-  height: 200px;
+  height: 180px;
   line-height: 1;
   border: 1px solid $clr-aterul;
   border-radius: 5px;
@@ -55,7 +55,7 @@
   margin-top: 1%;
   margin-left: 1%;
   margin-right: 0.15%;
-  padding: 0.75%;
+  padding: 0.5%;
   overflow: hidden;
   white-space: normal;
   
@@ -63,6 +63,8 @@
 
 p.cl-copy-14 {
   text-align: center;
+  padding: 10px;
+  margin: 0;
 }
 
 /*@media only screen and (max-width: 1920px) {
@@ -93,7 +95,7 @@ p.cl-copy-14 {
 @media only screen and (max-width: 1400px) {
   .tile-success {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -102,7 +104,7 @@ p.cl-copy-14 {
   }
   .tile-unclear {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -111,7 +113,7 @@ p.cl-copy-14 {
   }
   .tile-fail {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -123,7 +125,7 @@ p.cl-copy-14 {
 @media only screen and (max-width: 1024px) {
   .tile-success {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -133,7 +135,7 @@ p.cl-copy-14 {
   }
   .tile-unclear {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -143,7 +145,7 @@ p.cl-copy-14 {
   }
   .tile-fail {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     width: 22.75%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -156,7 +158,7 @@ p.cl-copy-14 {
 @media only screen and (max-width: 768px) {
   .tile-success {
     display: inline-block;
-    max-height: 200px;
+    max-height: 180px;
     max-width: 31%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -167,7 +169,7 @@ p.cl-copy-14 {
   }
   .tile-unclear {
     display: inline-block;
-    height: 200px;
+    height: 180px;
     max-width: 31%;
     margin-top: 1%;
     margin-left: 1.25%;
@@ -178,7 +180,7 @@ p.cl-copy-14 {
   }
   .tile-fail {
     display: inline-block;
-    max-height: 200px;
+    max-height: 180px;
     max-width: 31%;
     margin-top: 1%;
     margin-left: 1%;
