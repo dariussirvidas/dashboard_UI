@@ -18,7 +18,7 @@ class Menu extends Component {
                     <li><Link to="/">Home Page</Link></li>
                     <li><Link to="/domains">Maintaining list</Link></li>
                     <li><Link to="/topics">Comment</Link></li>
-                    <li><Link to="/">Users</Link></li>
+                    <li><Link to="/login">Login</Link></li>
                 </ul>
             </div>
         );

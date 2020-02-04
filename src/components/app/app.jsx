@@ -5,6 +5,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
+import Login from '../login/login'
 
 function App() {
     const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
@@ -76,6 +77,7 @@ function App() {
                 />
                 {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
+                <Login/>
             </Router>
         </>
     );

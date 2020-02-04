@@ -10,6 +10,7 @@ import {
     useParams
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
+import Login from '../login/login'
 
 function Main(props) {
 
@@ -47,6 +48,9 @@ function Main(props) {
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
                         />
+                        <Route path="/login">
+                            <Login/>
+                        </Route>
                     </Route>
                 </Switch>
             </div>
