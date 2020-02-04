@@ -66,6 +66,11 @@ function App() {
         <>
             <Router>
                 <Menu/>
+                <div className="lds-facebook">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
                 <Main
                     endpoint={endpoint}
                     callbackReFetchDomains={reFetchDomains}

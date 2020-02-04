@@ -1,21 +1,35 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
+import LoadingSpinner from "../loadingSpinner/loadingSpinner";
+
 
 function StickerList(props) {
     return (
         <>
-            {console.log("checkina")}
+
             {
-                Boolean(props.domainList) === true &&
-                props.domainList.map((item) => {
-                    return (
-                        <SingleService
-                            item={item}
-                            endpoint={props.endpoint}
-                            changeDomainList={props.changeDomainList}
-                        />
+                props.domainList === "error" ?
+                    (
+                        <p> Cannot connect to endpoint </p>
                     )
-                })
+                    :
+                    Boolean(props.domainList) === undefined ?
+                        (
+                            <LoadingSpinner/>
+                        )
+                        :
+                        (
+                            props.domainList.map((item) => {
+                                return (
+                                    <SingleService
+                                        item={item}
+                                        endpoint={props.endpoint}
+                                        changeDomainList={props.changeDomainList}
+                                    />
+                                )
+                            })
+
+                        )
             }
 
         </>
