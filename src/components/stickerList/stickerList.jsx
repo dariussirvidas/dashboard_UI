@@ -17,8 +17,6 @@ function StickerList(props) {
                     )
                 })
             }
-
-            }
         </>
     )
 }
