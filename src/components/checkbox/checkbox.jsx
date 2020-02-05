@@ -9,31 +9,34 @@ function Checkbox(props) {
     );
 
     function changeActiveState(event) {
-        console.log(event.target.checked);
-
-        // the following is temporary until PUT does not require the whole domain object anymore
         let domainForSending = {...props.domain};
-        console.log(domainForSending);
-        console.log(JSON.stringify(domainForSending));
         domainForSending.active = event.target.checked;
-
         submitData(domainForSending);
     }
 
     function submitData(domainWithNewActiveState) {
         fetchPut(domainWithNewActiveState)
-            .then((data) => {
-                console.log('magic data:', data);
-                props.changeDomainList(data)
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200, run changeDomainList function!");
+                    props.changeDomainList(domainWithNewActiveState)
+                } else if (statusCode === 400) {
+                    console.log("status code 400, do something else");
+                    // alert('reeeeeeee')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
 
             })
             .catch((error) => {
-                console.error("error while put'ing domains: " + error);
+                console.log(domainWithNewActiveState);
+
+                console.error("error while PUT'ing domains: " + error);
             });
     }
 
     async function fetchPut(dataForSending) {
-        const response = await fetch(props.endpoint + "api/domain/" + props.id,
+        const response = await fetch(props.endpoint + "api/domain/" + dataForSending.id,
             {
                 method: 'PUT',
                 headers: {
@@ -43,8 +46,9 @@ function Checkbox(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        const data = await response.json();
-        return data;
+        await console.log('statusCode:' + response.status);
+        let statusCode = await response.status;
+        return statusCode;
     }
 
 }
