@@ -80,17 +80,37 @@ function SingleDomain(props) {
             })
 
             .catch((error) => {
-                console.error("error while fetching domains:" + error);
+                console.error("error while fetching domains: ", error);
             });
     }
 
-    async function deleteDomain(d, changeDomainList) {
-        const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
+    function submitDelete(endpoint, changeDomainList, id) {
+        fetchPutDelete(props.d.id)
+            .then((data) => {
+                if (data.status === 200) {
+                    console.log("status code " + data.status);
+                    let dataForSending = {...props.d};
+                    dataForSending.deleted = true;
+                    changeDomainList(dataForSending)
+                } else if (data.status === 400) {
+                    console.log("status code " + data.status);
+                } else {
+                    console.log("status code " + data.status + ", this is an unhandled exception. what do?");
+                }
+            })
+            .catch((error) => {
+                console.log("error deleting domain: ", error);
+            });
+    }
+
+    async function fetchPutDelete(id) {
+        const response = await fetch(props.endpoint + 'api/domain/del/' + id, {
                 method: 'PUT'
             }
         );
         const data = await response.json();
-        await changeDomainList(data);
+        data.status = response.status;
+        console.log("deletedata:", data);
         return data;
     }
 
@@ -140,7 +160,7 @@ function SingleDomain(props) {
                     <div>
                         <td>
                             <p className="textlink-1" onClick={() => {
-                                deleteDomain(props.d, props.changeDomainList)
+                                submitDelete(props.endpoint, props.changeDomainList, props.d.id)
                             }}>
                                 DELETE
                             </p>
