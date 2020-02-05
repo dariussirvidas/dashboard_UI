@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './domainList.scss';
 import AddDomain from "../addDomain/addDomain";
 import Checkbox from "../checkbox/checkbox";
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 
 function DomainList(props) {
 
@@ -12,6 +13,7 @@ function DomainList(props) {
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}
             />
+
             <div className="TableDiv">
                 <table className="Table" align="center">
                     <tr>
@@ -25,24 +27,28 @@ function DomainList(props) {
                     </tr>
                     {
                         // checks for errors, if there are any, do not render domains
-                        props.hasDomainListError === false &&
-                        props.domainList.map((item) => {
-                            return <SingleDomain
-                                d={item}
-                                callbackFetch={props.callbackReFetchDomains}
-                                endpoint={props.endpoint}
-                                changeDomainList={props.changeDomainList}
-                            />
-                        })
-                    }
-                    {
-                        props.hasDomainListError === true &&
-                        <p>
-                            domains could not be fetched
-                        </p>
+                        props.hasDomainListError === true ?
+                            (
+                                <ErrorMessage
+                                    message="domain list stuff"
+                                />
+                            )
+                            :
+                            (
+                                props.domainList.map((item) => {
+                                    return <SingleDomain
+                                        d={item}
+                                        callbackFetch={props.callbackReFetchDomains}
+                                        endpoint={props.endpoint}
+                                        changeDomainList={props.changeDomainList}
+                                    />
+                                })
+                            )
                     }
                 </table>
             </div>
+
+
         </>
     )
 }
@@ -133,7 +139,7 @@ function SingleDomain(props) {
 
                     <div>
                         <td>
-                            <p onClick={() => {
+                            <p className="textlink-1" onClick={() => {
                                 deleteDomain(props.d, props.changeDomainList)
                             }}>
                                 DELETE
@@ -143,7 +149,7 @@ function SingleDomain(props) {
                             editBox === false &&
 
                             <div>
-                                <td><a onClick={() => {
+                                <td><a className="textlink-1" onClick={() => {
                                     setEditBox(true)
                                 }}>Edit</a></td>
                             </div>
@@ -171,7 +177,7 @@ function SingleDomain(props) {
                                     </select>
                                     <input name="Parameters" type="text" placeholder="Parameters"></input>
 
-                                    <p><input type="submit" value="submit"/></p>
+                                    <p><input type="submit" value="Submit"/></p>
                                 </form>
                             </div>
                         }

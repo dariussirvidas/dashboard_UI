@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
+import {LoadingSpinner} from "../elements/elements";
+
 
 function StickerList(props) {
     return (
         <>
-            {console.log("checkina")}
             {
-                Boolean(props.domainList) === true &&
                 props.domainList.map((item) => {
                     return (
                         <SingleService
@@ -18,6 +18,7 @@ function StickerList(props) {
                 })
             }
 
+            }
         </>
     )
 }

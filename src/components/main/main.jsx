@@ -27,17 +27,14 @@ function Main(props) {
                     </Route>
 
                     <Route path="/domains">
-                        {
-                            Boolean(props.domainList) &&
-                            <DomainList
-                                endpoint={props.endpoint}
-                                callbackReFetchDomains={props.callbackReFetchDomains}
-                                domainList={props.domainList}
-                                hasDomainListError={props.hasDomainListError}
-                                appendDomainList={props.appendDomainList}
-                                changeDomainList={props.changeDomainList}
-                            />
-                        }
+                        <DomainList
+                            endpoint={props.endpoint}
+                            callbackReFetchDomains={props.callbackReFetchDomains}
+                            domainList={props.domainList}
+                            hasDomainListError={props.hasDomainListError}
+                            appendDomainList={props.appendDomainList}
+                            changeDomainList={props.changeDomainList}
+                        />
                     </Route>
                     <Route path="/">
                         <StickerList
@@ -49,11 +46,11 @@ function Main(props) {
                         />
                     </Route>
                 </Switch>
+
             </div>
         </>
     );
 }
-
 
 
 function ExampleComponentStructure() {
