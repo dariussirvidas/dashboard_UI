@@ -11,6 +11,7 @@ import {
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
+import Signup from "../signup/signup";
 
 function Main(props) {
 
@@ -40,6 +41,12 @@ function Main(props) {
                             />
                         }
                     </Route>
+                    <Route path="/login">
+                        <Login/>
+                    </Route>
+                    <Route path="/signup">
+                        <Signup/>
+                    </Route>
                     <Route path="/">
                         <StickerList
                             endpoint={props.endpoint}
@@ -48,10 +55,8 @@ function Main(props) {
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
                         />
-                        <Route path="/login">
-                            <Login/>
-                        </Route>
                     </Route>
+
                 </Switch>
             </div>
         </>

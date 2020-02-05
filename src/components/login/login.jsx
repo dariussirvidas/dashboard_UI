@@ -1,68 +1,21 @@
 import React, {Component} from 'react';
 import login from './login.scss'
+import Logo from "../../Content/logo.png";
 function Login() {
-    {
-        const switchers = [...document.querySelectorAll('.switcher')]
-
-        switchers.forEach(item => {
-            item.addEventListener('click', function() {
-                switchers.forEach(item => item.parentElement.classList.remove('is-active'))
-                this.parentElement.classList.add('is-active')
-            })
-        })
-    }
     return (
-        <div className="background">
-            <section className="forms-section">
-                <div className="forms">
-                    <div className="form-wrapper is-active">
-                        <button type="button" className="switcher switcher-login">
-                            Login
-                            <span className="underline"></span>
-                        </button>
-                        <form className="form form-login">
-                            <fieldset>
-                                <legend>Please, enter your email and password for login.</legend>
-                                <div className="input-block">
-                                    <label htmlFor="login-email">E-mail</label>
-                                    <input id="login-email" type="email" required></input>
-                                </div>
-                                <div className="input-block">
-                                    <label htmlFor="login-password">Password</label>
-                                    <input id="login-password" type="password" required></input>
-                                </div>
-                            </fieldset>
-                            <button type="submit" className="btn-login">Login</button>
-                        </form>
-                    </div>
-                    <div className="form-wrapper">
-                        <button type="button" className="switcher switcher-signup">
-                            Sign Up
-                            <span className="underline"></span>
-                        </button>
-                        <form className="form form-signup">
-                            <fieldset>
-                                <legend>Please, enter your email, password and password confirmation for sign up.
-                                </legend>
-                                <div className="input-block">
-                                    <label htmlFor="signup-email">E-mail</label>
-                                    <input id="signup-email" type="email" required></input>
-                                </div>
-                                <div className="input-block">
-                                    <label htmlFor="signup-password">Password</label>
-                                    <input id="signup-password" type="password" required></input>
-                                </div>
-                                <div className="input-block">
-                                    <label htmlFor="signup-password-confirm">Confirm password</label>
-                                    <input id="signup-password-confirm" type="password" required></input>
-                                </div>
-                            </fieldset>
-                            <button type="submit" className="btn-signup">Continue</button>
-                        </form>
-                    </div>
+        <div>
+            <div className="login-page">
+                <div className="form">
+                    <img src={Logo} alt="Festo Logo"/>
+                    <hr/>
+                    <form className="login-form">
+                        <input type="text" placeholder="username"/>
+                        <input type="password" placeholder="password"/>
+                        <button>login</button>
+                        <p className="message">Not registered? <a href="/signup">Create an account</a></p>
+                    </form>
                 </div>
-            </section>
-
+            </div>
         </div>
     );
 }
