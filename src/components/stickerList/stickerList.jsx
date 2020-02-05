@@ -25,10 +25,16 @@ function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
     const [domainPing, setDomainPing] = useState({status: "No response yet"});
     const [domainPingError, setDomainPingError] = useState("false");
+    const [timer, setTimer] = useState(10000);
 
     useEffect(() => {
         if (props.item.deleted === false) {
-            pingDomain(props.item, props.type);
+            pingDomain();
+            setTimer(props.item.interval_Ms)
+            // repeatChecks();
+            console.log("USESTATE___________")
+
+            console.log(timer);
         }
     }, []);
 
@@ -42,8 +48,8 @@ function SingleService(props) {
         return data;
     }
 
-    function pingDomain(d) {
-        fetchFromApi(props.endpoint + "api/ping/domain/" + d.id)
+    function pingDomain() {
+        fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id)
             .then(data => {
                 setDomainPing(data);
 
@@ -69,6 +75,22 @@ function SingleService(props) {
             });
     }
 
+
+    // function repeatChecks() {
+    //     setTimer(prevState => prevState - 1000);
+    //     console.log("timer:", timer);
+    //     if (timer > 0) {
+    //         setTimeout(repeatChecks, 1000);
+    //         console.log("a second has passed!", "timer =", timer)
+    //     } else {
+    //         console.log("other thing ________");
+    //         pingDomain();
+    //         setTimer(props.item.interval_Ms);
+    //         setTimeout(repeatChecks, 1000);
+    //     }
+    // }
+
+
     return (
         <>
             {
@@ -77,6 +99,7 @@ function SingleService(props) {
                     item={props.item}
                     domainPing={domainPing}
                     domainPingError={domainPingError}
+                    checkIn={timer}
                 />
             }
         </>
