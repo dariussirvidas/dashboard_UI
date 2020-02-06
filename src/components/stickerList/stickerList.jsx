@@ -25,16 +25,21 @@ function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
     const [domainPing, setDomainPing] = useState({status: "No response yet"});
     const [domainPingError, setDomainPingError] = useState("false");
-    const [timer, setTimer] = useState(10000);
+    const [timer, setTimer] = useState(props.item.interval_Ms);
 
     useEffect(() => {
         if (props.item.deleted === false) {
             pingDomain();
-            setTimer(props.item.interval_Ms)
-            // repeatChecks();
-            console.log("USESTATE___________")
 
-            console.log(timer);
+            // repeatChecks();
+            console.log("USESTATE___________");
+
+
+
+            const interval = setInterval(() => {
+                pingDomain()
+            }, props.item.interval_Ms);
+            return () => clearInterval(interval);
         }
     }, []);
 
@@ -76,19 +81,19 @@ function SingleService(props) {
     }
 
 
-    // function repeatChecks() {
-    //     setTimer(prevState => prevState - 1000);
-    //     console.log("timer:", timer);
-    //     if (timer > 0) {
-    //         setTimeout(repeatChecks, 1000);
-    //         console.log("a second has passed!", "timer =", timer)
-    //     } else {
-    //         console.log("other thing ________");
-    //         pingDomain();
-    //         setTimer(props.item.interval_Ms);
-    //         setTimeout(repeatChecks, 1000);
-    //     }
-    // }
+    function repeatChecks() {
+        setTimer(prevState => prevState - 1000);
+        console.log("timer:", timer);
+        if (timer > 0) {
+            setTimeout(repeatChecks, 1000);
+            console.log("a second has passed!", "timer =", timer)
+        } else {
+            console.log("other thing ________");
+            pingDomain();
+            setTimer(props.item.interval_Ms);
+            setTimeout(repeatChecks, 1000);
+        }
+    }
 
 
     return (
