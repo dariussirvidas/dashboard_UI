@@ -16,7 +16,7 @@ function AddDomain(props) {
                         <option value="portals">portal</option>
                         <option value="services">service</option>
                     </select>
-                    <p><input type="submit" value="submit"/></p>
+                    <p><input type="submit" value="submit" /></p>
 
                 </form>
 
