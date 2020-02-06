@@ -8,6 +8,7 @@ function StickerList(props) {
         <>
             {
                 props.domainList.map((item) => {
+                    if(item.deleted !== true)
                     return (
                         <SingleService
                             item={item}
@@ -25,23 +26,30 @@ function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
     const [domainPing, setDomainPing] = useState({status: "No response yet"});
     const [domainPingError, setDomainPingError] = useState("false");
+
+    useEffect(() => {
+
+            pingDomain();
+            console.log("USESTATE___________");
+
+    }, []);
+
+
     const [timer, setTimer] = useState(props.item.interval_Ms);
 
     useEffect(() => {
-        if (props.item.deleted === false) {
-            pingDomain();
 
-            // repeatChecks();
-            console.log("USESTATE___________");
+        const interval = setInterval(() => {
+            console.log(timer);
+            setTimer(prevState => prevState - 1000);
+            if (timer < 1 ){
+                pingDomain();
+                setTimer(props.item.interval_Ms);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
 
-
-
-            const interval = setInterval(() => {
-                pingDomain()
-            }, props.item.interval_Ms);
-            return () => clearInterval(interval);
-        }
-    }, []);
+    },[timer]);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint);
@@ -81,19 +89,6 @@ function SingleService(props) {
     }
 
 
-    function repeatChecks() {
-        setTimer(prevState => prevState - 1000);
-        console.log("timer:", timer);
-        if (timer > 0) {
-            setTimeout(repeatChecks, 1000);
-            console.log("a second has passed!", "timer =", timer)
-        } else {
-            console.log("other thing ________");
-            pingDomain();
-            setTimer(props.item.interval_Ms);
-            setTimeout(repeatChecks, 1000);
-        }
-    }
 
 
     return (
