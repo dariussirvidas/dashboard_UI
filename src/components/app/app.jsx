@@ -6,6 +6,8 @@ import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
 import {LoadingSpinner, ErrorMessage} from "../elements/elements";
+import Login from '../login/login'
+import Signup from "../signup/signup";
 
 function App() {
     const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
