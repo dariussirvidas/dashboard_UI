@@ -5,6 +5,7 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
+import {LoadingSpinner, ErrorMessage} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 
@@ -46,13 +47,13 @@ function App() {
     }
 
     // appends the local domainList array with one new domain
-    function appendDomainList(newDomain){
+    function appendDomainList(newDomain) {
         console.log("append this:", newDomain);
         setDomainList([...domainList, newDomain]);
     }
 
     // changes the local domainList active state for one domain
-    function changeDomainList(responseDomain){
+    function changeDomainList(responseDomain) {
         console.log("changing domainList");
         let domainListCopy = domainList.slice();
         let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === responseDomain.id);
@@ -60,7 +61,7 @@ function App() {
         setDomainList(domainListCopy);
     }
 
-    function queryBackEnd(intervalMilliseconds){
+    function queryBackEnd(intervalMilliseconds) {
         setInterval(reFetchDomains, intervalMilliseconds);
     }
 
@@ -68,14 +69,31 @@ function App() {
         <>
             <Router>
                 <Menu/>
-                <Main
-                    endpoint={endpoint}
-                    callbackReFetchDomains={reFetchDomains}
-                    domainList={domainList}
-                    hasDomainListError={hasDomainListError}
-                    appendDomainList={appendDomainList}
-                    changeDomainList={changeDomainList}
-                />
+                {
+                    // Main component is only rendered when domainList is fetched
+                    domainList === "error" ?
+                        (
+                            <ErrorMessage
+                                message="stuff"
+                            />
+                        )
+                        :
+                        Boolean(domainList) === true ?
+                            (
+                                <Main
+                                    endpoint={endpoint}
+                                    callbackReFetchDomains={reFetchDomains}
+                                    domainList={domainList}
+                                    hasDomainListError={hasDomainListError}
+                                    appendDomainList={appendDomainList}
+                                    changeDomainList={changeDomainList}
+                                />
+                            )
+                            :
+                            (
+                                <LoadingSpinner/>
+                            )
+                }
                 {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>

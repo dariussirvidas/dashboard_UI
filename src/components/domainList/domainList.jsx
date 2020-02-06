@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './domainList.scss';
 import AddDomain from "../addDomain/addDomain";
 import Checkbox from "../checkbox/checkbox";
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 
 function DomainList(props) {
 
@@ -12,6 +13,7 @@ function DomainList(props) {
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}
             />
+
             <div className="TableDiv">
                 <table className="Table" align="center">
                     <tr>
@@ -25,24 +27,28 @@ function DomainList(props) {
                     </tr>
                     {
                         // checks for errors, if there are any, do not render domains
-                        props.hasDomainListError === false &&
-                        props.domainList.map((item) => {
-                            return <SingleDomain
-                                d={item}
-                                callbackFetch={props.callbackReFetchDomains}
-                                endpoint={props.endpoint}
-                                changeDomainList={props.changeDomainList}
-                            />
-                        })
-                    }
-                    {
-                        props.hasDomainListError === true &&
-                        <p>
-                            domains could not be fetched
-                        </p>
+                        props.hasDomainListError === true ?
+                            (
+                                <ErrorMessage
+                                    message="domain list stuff"
+                                />
+                            )
+                            :
+                            (
+                                props.domainList.map((item) => {
+                                    return <SingleDomain
+                                        d={item}
+                                        callbackFetch={props.callbackReFetchDomains}
+                                        endpoint={props.endpoint}
+                                        changeDomainList={props.changeDomainList}
+                                    />
+                                })
+                            )
                     }
                 </table>
             </div>
+
+
         </>
     )
 }
@@ -52,6 +58,9 @@ function SingleDomain(props) {
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [editBox, setEditBox] = useState(false);
 
+
+
+    //  will need to edit this when we get the final edit form
     async function fetchPut(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
@@ -78,14 +87,45 @@ function SingleDomain(props) {
             });
     }
 
-    async function deleteDomain(d, changeDomainList) {
-        const response = await fetch(props.endpoint + 'api/domain/del/' + d.id, {
+
+
+
+
+    async function fetchPutDelete() {
+        const response = await fetch(props.endpoint + 'api/domain/del/' + props.d.id, {
                 method: 'PUT'
             }
         );
-        const data = await response.json();
-        await changeDomainList(data);
-        return data;
+        await console.log('statusCode:' + response.status);
+        let statusCode = await response.status;
+        return statusCode;
+    }
+
+    function deleteDomain(){
+        fetchPutDelete()
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200, run changeDomainList function!");
+                    let dataForSending={...props.d};
+                    dataForSending.deleted = true;
+
+                    props.changeDomainList(dataForSending)
+                }
+                else if (statusCode === 400) {
+                    console.log("status code 400, do something else");
+                    // alert('reeeeeeee')
+                }
+                else
+                {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
+
+            })
+            .catch((error) => {
+                console.error("error while PUT delete domain: " + error);
+            });
+
+
     }
 
     function handleSubmit(event) {
@@ -134,7 +174,7 @@ function SingleDomain(props) {
                     <div>
                         <td>
                             <p className="textlink-1" onClick={() => {
-                                deleteDomain(props.d, props.changeDomainList)
+                                deleteDomain()
                             }}>
                                 DELETE
                             </p>
