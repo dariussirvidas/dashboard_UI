@@ -173,11 +173,11 @@ function SingleDomain(props) {
 
                     <div>
                         <td>
-                            <p className="textlink-1" onClick={() => {
+                            <a className="textlink-1" onClick={() => {
                                 deleteDomain()
                             }}>
-                                DELETE
-                            </p>
+                                Deletes
+                            </a>
                         </td>
                         {
                             editBox === false &&
