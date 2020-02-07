@@ -14,6 +14,16 @@ function App() {
     const [domainList, setDomainList] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
 
+    // initial fetch ("deps:" stops infinite loop)
+    useEffect(() => {
+        fetchDomains(endpoint);
+    }, []);
+
+
+    useEffect(() => {
+        setTimeout(reFetchDomains, 8000)
+    }, []);
+
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint);
         const data = await response.json();
@@ -35,14 +45,11 @@ function App() {
             });
     }
 
-    // initial fetch ("deps:" stops infinite loop)
-    useEffect(() => {
-        fetchDomains(endpoint);
-    }, []);
 
     // (re)fetches domainList
     function reFetchDomains() {
         console.log("refetching!");
+        setTimeout(reFetchDomains, 5000)
         fetchDomains(endpoint);
     }
 

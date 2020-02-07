@@ -40,7 +40,7 @@ function SingleService(props) {
     useEffect(() => {
 
         const interval = setInterval(() => {
-            console.log(timer);
+
             setTimer(prevState => prevState - 1000);
             if (timer < 1 ){
                 pingDomain();

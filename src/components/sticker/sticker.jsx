@@ -17,7 +17,6 @@ function Sticker(props) {
                   props.domainPing &&
                   <>
                       {props.domainPing.latencyMS}
-                      {console.log("domainpingerror: ", props.domainPingError)}
                   </>
 
               }
