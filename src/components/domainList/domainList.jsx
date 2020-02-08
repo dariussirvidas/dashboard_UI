@@ -9,11 +9,14 @@ function DomainList(props) {
 
     return (
         <>
+        <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
+    closeOnDocumentClick>
             <AddDomain
                 callbackFetch={props.callbackReFetchDomains}
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}
             />
+             </Popup>
             <div className="TableDiv">
                 <table className="Table" align="center">
                     <tr>
@@ -45,6 +48,7 @@ function DomainList(props) {
                     }
                 </table>
             </div>
+            
         </>
     )
 }
@@ -163,7 +167,7 @@ function SingleDomain(props) {
                         {
                             editBox === true &&
 
-                            <div>
+                            <div className="wat">
                                 <button onClick={() => {
                                     setEditBox(false);
                                 }}>
