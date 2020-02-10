@@ -1,13 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
+import {LoadingSpinner} from "../elements/elements";
+
 
 function StickerList(props) {
     return (
         <>
-            {console.log("checkina")}
             {
-                Boolean(props.domainList) === true &&
                 props.domainList.map((item) => {
+                    if(item.deleted !== true)
                     return (
                         <SingleService
                             item={item}
@@ -17,7 +18,6 @@ function StickerList(props) {
                     )
                 })
             }
-
         </>
     )
 }
@@ -28,10 +28,28 @@ function SingleService(props) {
     const [domainPingError, setDomainPingError] = useState("false");
 
     useEffect(() => {
-        if (props.item.deleted === false) {
-            pingDomain(props.item, props.type);
-        }
+
+            pingDomain();
+            console.log("USESTATE___________");
+
     }, []);
+
+
+    const [timer, setTimer] = useState(props.item.interval_Ms);
+
+    useEffect(() => {
+
+        const interval = setInterval(() => {
+
+            setTimer(prevState => prevState - 1000);
+            if (timer < 1 ){
+                pingDomain();
+                setTimer(props.item.interval_Ms);
+            }
+        }, 1000);
+        return () => clearInterval(interval);
+
+    },[timer]);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint);
@@ -43,8 +61,8 @@ function SingleService(props) {
         return data;
     }
 
-    function pingDomain(d) {
-        fetchFromApi(props.endpoint + "api/ping/domain/" + d.id)
+    function pingDomain() {
+        fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id)
             .then(data => {
                 setDomainPing(data);
 
@@ -70,6 +88,9 @@ function SingleService(props) {
             });
     }
 
+
+
+
     return (
         <>
             {
@@ -78,6 +99,7 @@ function SingleService(props) {
                     item={props.item}
                     domainPing={domainPing}
                     domainPingError={domainPingError}
+                    checkIn={timer}
                 />
             }
         </>

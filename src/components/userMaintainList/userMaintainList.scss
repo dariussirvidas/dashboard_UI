@@ -1,0 +1,25 @@
+@import "../_ux_global_design.scss";
+
+
+table {
+  margin-top: 50px;
+  border-collapse: collapse;
+  width: 1080px;
+  justify-content: center;
+text-align: center;
+  border: 1px solid $clr-icdg-1;
+  margin-bottom: 1%;
+}
+
+th, td {
+
+  text-align: center;
+  padding: 1.5%;
+  vertical-align: top;
+}
+tr:nth-child(even) {background-color: $clr-sucanul;}
+
+.button{
+  padding-right: 120px;
+  float: right;
+}

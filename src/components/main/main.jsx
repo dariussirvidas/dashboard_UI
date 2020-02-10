@@ -10,6 +10,9 @@ import {
     useParams
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
+import Login from '../login/login'
+import Signup from "../signup/signup";
+import UserMaintainList from "../userMaintainList/userMaintainList";
 
 function Main(props) {
 
@@ -27,17 +30,23 @@ function Main(props) {
                     </Route>
 
                     <Route path="/domains">
-                        {
-                            Boolean(props.domainList) &&
-                            <DomainList
-                                endpoint={props.endpoint}
-                                callbackReFetchDomains={props.callbackReFetchDomains}
-                                domainList={props.domainList}
-                                hasDomainListError={props.hasDomainListError}
-                                appendDomainList={props.appendDomainList}
-                                changeDomainList={props.changeDomainList}
-                            />
-                        }
+                        <DomainList
+                            endpoint={props.endpoint}
+                            callbackReFetchDomains={props.callbackReFetchDomains}
+                            domainList={props.domainList}
+                            hasDomainListError={props.hasDomainListError}
+                            appendDomainList={props.appendDomainList}
+                            changeDomainList={props.changeDomainList}
+                        />
+                    </Route>
+                    <Route path="/login">
+                        <Login/>
+                    </Route>
+                    <Route path="/signup">
+                        <Signup/>
+                    </Route>
+                    <Route path="/users">
+                        <UserMaintainList/>
                     </Route>
                     <Route path="/">
                         <StickerList
@@ -48,12 +57,12 @@ function Main(props) {
                             changeDomainList={props.changeDomainList}
                         />
                     </Route>
+
                 </Switch>
             </div>
         </>
     );
 }
-
 
 
 function ExampleComponentStructure() {

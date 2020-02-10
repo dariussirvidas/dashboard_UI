@@ -17,14 +17,13 @@ function Sticker(props) {
                   props.domainPing &&
                   <>
                       {props.domainPing.latencyMS}
-                      {console.log("domainpingerror: ", props.domainPingError)}
                   </>
 
               }
           </p>
           {/*<p className="cl-copy-14">Response code: {domainPingResponseCode}</p>*/}
           <p className="cl-copy-14">Last Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
-          <p className="cl-copy-14">Next Check in: {props.item.interval_Ms} </p>
+          <p className="cl-copy-14">Next Check in: {props.checkIn} </p>
       </div>
   );
 }
