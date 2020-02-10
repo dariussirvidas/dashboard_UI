@@ -12,6 +12,7 @@ import {
 import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
 import Signup from "../signup/signup";
+import UserMaintainList from "../userMaintainList/userMaintainList";
 
 function Main(props) {
 
@@ -43,6 +44,9 @@ function Main(props) {
                     </Route>
                     <Route path="/signup">
                         <Signup/>
+                    </Route>
+                    <Route path="/users">
+                        <UserMaintainList/>
                     </Route>
                     <Route path="/">
                         <StickerList
