@@ -11,15 +11,15 @@ function DomainList(props) {
 
     return (
         <>
-        <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
-    closeOnDocumentClick>
-            <AddDomain
-                callbackFetch={props.callbackReFetchDomains}
-                appendDomainList={props.appendDomainList}
-                endpoint={props.endpoint}
-            />
+            <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
+                   closeOnDocumentClick>
+                <AddDomain
+                    callbackFetch={props.callbackReFetchDomains}
+                    appendDomainList={props.appendDomainList}
+                    endpoint={props.endpoint}
+                />
 
-             </Popup>
+            </Popup>
 
             <div className="TableDiv">
                 <table className="Table" align="center">
@@ -65,7 +65,6 @@ function SingleDomain(props) {
     const [editBox, setEditBox] = useState(false);
 
 
-
     //  will need to edit this when we get the final edit form
     async function fetchPut(endpoint, dataForSending) {
         const response = await fetch(endpoint,
@@ -94,9 +93,6 @@ function SingleDomain(props) {
     }
 
 
-
-
-
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'api/domain/del/' + props.d.id, {
                 method: 'PUT'
@@ -107,22 +103,19 @@ function SingleDomain(props) {
         return statusCode;
     }
 
-    function deleteDomain(){
+    function deleteDomain() {
         fetchPutDelete()
             .then((statusCode) => {
                 if (statusCode === 200) {
                     console.log("status code 200, run changeDomainList function!");
-                    let dataForSending={...props.d};
+                    let dataForSending = {...props.d};
                     dataForSending.deleted = true;
 
                     props.changeDomainList(dataForSending)
-                }
-                else if (statusCode === 400) {
+                } else if (statusCode === 400) {
                     console.log("status code 400, do something else");
                     // alert('reeeeeeee')
-                }
-                else
-                {
+                } else {
                     console.log("status code " + statusCode + ", this is an unhandled exception I guess")
                 }
 
@@ -176,57 +169,60 @@ function SingleDomain(props) {
                     </td>
                     <td>{props.d.notification_Email}</td>
                     <td>{props.d.interval_Ms} ms</td>
-                    
-                        <div>
-                        
-                        <Popup trigger={<button className="btn-hero-round"><i className="eva eva-2x eva-edit-outline"></i></button>} modal
-    closeOnDocumentClick> {/* triggers shitty pop up */}
-                    <div className="pup-size">
-                   
-                        <td>
-                            <a className="textlink-1" onClick={() => {
-                                deleteDomain()
-                            }}>
-                                Deletes
-                            </a>
-                        </td>
-                        
-                        {
-                            editBox === false &&
 
-                            <div>
-                                
-                                <td><a className="textlink-1" onClick={() => {
-                                    setEditBox(true)
-                                }}>Edit</a></td>
-                                
+                    <div>
+
+                        <Popup
+                            trigger={<button className="btn-hero-round"><i className="eva eva-2x eva-edit-outline"></i>
+                            </button>} modal
+                            closeOnDocumentClick> {/* triggers shitty pop up */}
+                            <div className="pup-size">
+
+                                <td>
+                                    <a className="textlink-1" onClick={() => {
+                                        deleteDomain()
+                                    }}>
+                                        Deletes
+                                    </a>
+                                </td>
+
+                                {
+                                    editBox === false &&
+
+                                    <div>
+
+                                        <td><a className="textlink-1" onClick={() => {
+                                            setEditBox(true)
+                                        }}>Edit</a></td>
+
+                                    </div>
+
+                                }
+
+                                {
+                                    editBox === true &&
+
+                                    <div className="wat">
+                                        <button onClick={() => {
+                                            setEditBox(false);
+                                        }}>
+                                            go back
+                                        </button>
+
+                                            <EditDomain
+                                                domain={props.d}
+                                                callbackFetch={props.callbackReFetchDomains}
+                                                appendDomainList={props.appendDomainList}
+                                                endpoint={props.endpoint}
+                                            />
+
+                                    </div>
+                                }
+
+
                             </div>
-                            
-                        }
+                        </Popup>
 
-                        {
-                            editBox === true &&
-
-                            <div className="wat">
-                                <button onClick={() => {
-                                    setEditBox(false);
-                                }}>
-                                    go back
-                                </button>
-                                
-                                <EditDomain
-                                
-                callbackFetch={props.callbackReFetchDomains}
-                appendDomainList={props.appendDomainList}
-                endpoint={props.endpoint}
-            />
-                            </div>
-                        }
-
-                       
-                    </div>
-                   </Popup> 
-                   
                     </div>
                 </tr>
             }
