@@ -11,16 +11,17 @@ function AddDomain(props) {
                     <p>Service Name <input name="Service_name" type="text" placeholder="Service Name"></input></p>
                     <p>Service URL <input name="Url_" type="text" placeholder="Url (www.domain.com)"></input></p>
                     <p>Service Type &nbsp;
+
                         <select required name="service_type">
-                            <option value="webapp">WebApp</option>
-                            <option value="rest">Service - REST</option>
-                            <option value="soap">Service - SOAP</option>
+                            <option value={0}>WebApp</option>
+                            <option value={1}>Service - REST</option>
+                            <option value={2}>Service - SOAP</option>
                         </select>
                     </p>
                     <p>Method &nbsp;
                         <select required name="method">>
-                            <option value="post">POST</option>
-                            <option value="get">GET</option>
+                            <option value={1}>POST</option>
+                            <option value={0}>GET</option>
                         </select>
                     </p>
                     <p>Basic auth
@@ -81,14 +82,14 @@ function AddDomain(props) {
     function handleSubmit(event) {
         let dataForSending = {
             service_Name: event.target.Service_name.value,
-            Url_: event.target.Url_.value,
-            service_Type: event.target.service_type.value,
-            Method: event.target.method.value,
+            url: event.target.Url_.value,
+            service_Type: parseInt(event.target.service_type.value),
+            method: parseInt(event.target.method.value),
             basic_auth: event.target.auth.checked,
-            User: event.target.User.value,
-            Password: event.target.Password.value,
-            Parameters: event.target.Parameters.value,
-            email: event.target.Email.value,
+            user: event.target.User.value,
+            password: event.target.Password.value,
+            parameters: event.target.Parameters.value,
+            notification_Email: event.target.Email.value,
             check_interval: parseInt(event.target.Check_interval.value),
             active: event.target.active.checked
             /*  url: event.target.Url_.value,
@@ -100,35 +101,49 @@ function AddDomain(props) {
              active: true */
         };
         console.log("full object for sending:", dataForSending);
-        submitData(props.endpoint, props.appendDomainList, dataForSending);
+        submitData(dataForSending);
         event.preventDefault();
     }
+
+    function submitData(dataForSending) {
+        console.log(JSON.stringify(dataForSending));
+        fetchPost(dataForSending)
+            .then((statusCode) => {
+                if (statusCode === 201) {
+                    console.log("status code 201, run appendDomainList function!");
+
+                    props.appendDomainList(dataForSending)
+                } else if (statusCode === 400) {
+                    console.log("status code 400, do something else");
+                    // alert('reeeeeeee')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
+
+            })
+            .catch((error) => {
+                console.error("error while POST edit domain: " + error);
+            });
+    }
+
+
+    async function fetchPost(dataForSending) {
+        const response = await fetch(props.endpoint + 'api/domain', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: JSON.stringify(dataForSending)
+            }
+        );
+        await console.log('statusCode:' + response.status);
+        let statusCode = await response.status;
+        return statusCode;
+    }
+
+
 }
 
-async function fetchPost(endpoint, dataForSending) {
-    const response = await fetch(endpoint,
-        {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
-        }
-    );
-    const data = await response.json();
-    return data;
-}
-
-function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-    fetchPost(endpoint + "api/domain/", dataForSending)
-        .then((data) => {
-            callbackAppendDomainList(data)
-        })
-
-        .catch((error) => {
-            console.error("error while fetching domains:" + error);
-        });
-}
 
 export default AddDomain;
