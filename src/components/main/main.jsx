@@ -46,7 +46,9 @@ function Main(props) {
                         <Signup/>
                     </Route>
                     <Route path="/users">
-                        <UserMaintainList/>
+                        <UserMaintainList
+                            endpoint={props.endpoint}
+                        />
                     </Route>
                     <Route path="/">
                         <StickerList
