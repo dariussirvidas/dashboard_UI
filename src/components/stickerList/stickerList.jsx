@@ -24,8 +24,8 @@ function StickerList(props) {
 
 function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
-    const [domainPing, setDomainPing] = useState({status: "No response yet"});
-    const [domainPingError, setDomainPingError] = useState("false");
+    const [requestResponseData, setRequestResponseData] = useState({status: "No response yet"});
+    const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
 
     useEffect(() => {
 
@@ -63,13 +63,9 @@ function SingleService(props) {
         return data;
     }
 
-    // "method": Get=0, Post=1
-    // "service_Type": WebApp=0, ServiceRest=1, ServiceSoap=2
-
 
     function pingDomain() {
-        //Pinging is dead.
-        // fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id) 
+        
         let endpointToFetch = "";
         switch(props.item.service_Type){
             case(0): //WebApp(Portal)
@@ -86,7 +82,7 @@ function SingleService(props) {
 
         fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {
-                setDomainPing(data);
+                setRequestResponseData(data);
 
                 // if the ping response is not success, refetch that single domain to get last failure date
                 if (data.status !== "Success")
@@ -95,7 +91,7 @@ function SingleService(props) {
             .catch(error => {
                 console.error("error while fetching domains: " + error);
                 setDomainPingError(true);
-                setDomainPing("error");
+                setRequestResponseData("error");
             });
     }
 
@@ -116,7 +112,7 @@ function SingleService(props) {
                 props.item.deleted === false && props.item.active === true &&
                 <Sticker
                     item={props.item}
-                    domainPing={domainPing}
+                    domainPing={requestResponseData}
                     // domainPingError={domainPingError}
                     checkIn={timer}
                 />
