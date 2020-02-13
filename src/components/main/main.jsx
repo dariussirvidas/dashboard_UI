@@ -22,13 +22,12 @@ function Main(props) {
                 {/*Switch will only render the first matched <Route/> child.*/}
                 <Switch>
 
-                    <Route path="/about">
-                        <p>this is the about page</p>
-                    </Route>
                     <Route path="/topics">
                         <ExampleComponentStructure/>
                     </Route>
-
+                    <Route path="/login">
+                        <Login/>
+                    </Route>
                     <Route path="/domains">
                         <DomainList
                             endpoint={props.endpoint}
@@ -38,9 +37,6 @@ function Main(props) {
                             appendDomainList={props.appendDomainList}
                             changeDomainList={props.changeDomainList}
                         />
-                    </Route>
-                    <Route path="/login">
-                        <Login/>
                     </Route>
                     <Route path="/signup">
                         <Signup/>

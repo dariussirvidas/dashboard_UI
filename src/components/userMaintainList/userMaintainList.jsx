@@ -98,7 +98,7 @@ function SingleUser(props){
         <tr align="center">
             <td>{props.user.firstName}</td>
             <td>{props.user.lastName}</td>
-            <td></td>
+            <td>{props.user.userEmail}</td>
             <td>
                 <Checkbox/>
             </td>

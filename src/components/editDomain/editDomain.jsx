@@ -14,6 +14,7 @@ let isRestSelected=false;
 let isSoapSelected=false;
 function EditDomain(props) {
 
+
     function getDefaultSelectionServiceType(){
         switch(props.domain.service_Type){
             case 0 :

@@ -1,37 +1,40 @@
 import React from "react";
 import "./sticker.scss";
+import Card from 'react-bootstrap/Card';
 
 function Sticker(props) {
-  return (
-      <div className={
-          "tile-unclear " +
-          (props.domainPing.status === "TimedOut" && "tile-fail ") + " " +
-          (props.domainPing.status === 200 && "tile-success ") + " " +
-          ((props.domainPing.message !== undefined && "tile-fail "))
-      }
-      >
-          <h3 className="cl-h3">Service name: {props.item.service_Name}</h3>
-          <p className="cl-copy-14">
-              URL:
-              {props.domainPing.domainUrl}
-              Response time:
-              {
-                  
-                  props.domainPing &&
-                  <>
-                      {props.domainPing.requestTime}
-                  </>
 
-              }
-              Status:
-              {props.domainPing.status}
+    return (
+        <div>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem'}}>
+                <Card.Header
+                    className={
+                        "tile-unclear cl-h3 text-center Card " +
+                        (props.domainPing.status === "TimedOut" && "tile-fail ") + " " +
+                        (props.domainPing.status === "Success" && "tile-success ") + " " +
+                        ((props.domainPing.message !== undefined && "tile-fail "))
+                    }>{props.item.service_Name}
+                </Card.Header>
+                <Card.Body>
+                    <Card.Text>
+                        <p className="cl-copy-14 text-center">
+                            Response time:
+                            {
+                                props.domainPing &&
+                                <div>
+                                    {props.domainPing.latencyMS}
+                                </div>
+                            }
+                        </p>
+                        <p className="cl-copy-14 text-center">Last
+                            Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
+                        <p className="cl-copy-14 text-center">Next Check in: {props.checkIn} </p>
+                    </Card.Text>
+                </Card.Body>
+            </Card>
+        </div>
+    );
 
-          </p>
-          {/*<p className="cl-copy-14">Response code: {domainPingResponseCode}</p>*/}
-          <p className="cl-copy-14">Last Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
-          <p className="cl-copy-14">Next Check in: {props.checkIn} </p>
-      </div>
-  );
 }
 
 export default Sticker;

@@ -1,29 +1,46 @@
 import React, {Component} from 'react';
-import FestoLogo from '../.././Content/FestoLogo.png'
-import menu from './menu.scss';
-import {Link} from "react-router-dom";
+import Logo from '../../Content/Festo logo.svg';
+import Menu_icon from '../../Content/hamburger_menu.png';
+import Dropdown from 'react-bootstrap/Dropdown';
+import Style from './menu.scss';
 
+const CustomToggle = React.forwardRef(({onClick}, ref) => (
+    <a
+        href=""
+        ref={ref}
+        onClick={e => {
 
+            e.preventDefault();
+            onClick(e);
+        }}
+    >
+        <img src={Menu_icon} width="20" height="20" alt=""/>
+    </a>
+));
 
-class Menu extends Component {
-    render() {
-        return (
-            <div className="header">
-                <Link to="/"><img className="Logo" src={FestoLogo} alt="Festo"/></Link>
-                <h1 className="headerText cl-h1">Monitoring Dashboard</h1>
-                <h1 className="headerUser cl-h1"> User: user567</h1>
-                <input className="menu-btn" type="checkbox" id="menu-btn"/>
-                <label className="menu-icon" htmlFor="menu-btn"><span className="navicon"></span></label>
-                <ul className="menu">
-                    <li><Link to="/">Home Page</Link></li>
-                    <li><Link to="/domains">Maintaining list</Link></li>
-                    <li><Link to="/topics">Comment</Link></li>
-                    <li><Link to="/login">Login</Link></li>
-                    <li><Link to="/users">User maintaining list</Link></li>
-                </ul>
-            </div>
-        );
-    }
+function Menu() {
+    return (
+        <div className="container">
+            <nav className="navbar navbar-light bg-white">
+                <a className="navbar-brand" href="/">
+                    <img src={Logo} width="112" height="20" alt=""/>
+                </a>
+                <h5 className="Menu_text">Monitoring Dashboard</h5>
+                <h5 className="Menu_text">User: id13</h5>
+                <Dropdown>
+                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu className="Dropdown" s>
+                        <Dropdown.Item href="/">Home</Dropdown.Item>
+                        <Dropdown.Item href="/domains">Maintaining List</Dropdown.Item>
+                        <Dropdown.Item href="/users">User Maintaining List</Dropdown.Item>
+                        <Dropdown.Item href="/topics">Comment</Dropdown.Item>
+                        <Dropdown.Item href="/login">Login</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </nav>
+        </div>
+    );
 }
 
 export default Menu;

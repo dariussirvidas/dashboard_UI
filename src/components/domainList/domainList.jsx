@@ -5,57 +5,73 @@ import EditDomain from "../editDomain/editDomain";
 import Checkbox from "../checkbox/checkbox";
 import Popup from "reactjs-popup";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
+import Table from 'react-bootstrap/Table';
+import EditDomainModal from "../EditDomainModal/EditDomainModal";
+
 
 
 function DomainList(props) {
 
+    function PopUp() {
+        const [show, setShow] = useState(false);
+
+        const handleClose = () => setShow(false);
+        const handleShow = () => setShow(true);
+    }
+
     return (
-        <>
-            <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
-                   closeOnDocumentClick>
-                <AddDomain
+        <div className="container">
+
+            <Table striped bordered hover size="sm">
+                <thead>
+                <tr>
+                    <th>Service name</th>
+                    <th>Service type</th>
+                    <th>URL</th>
+                    <th>Active</th>
+                    <th>Emails</th>
+                    <th>Check interval (S)</th>
+                    <th>Maintenance</th>
+                </tr>
+                </thead>
+                <tbody>
+                {
+                    // checks for errors, if there are any, do not render domains
+                    props.hasDomainListError === true ?
+                        (
+                            <ErrorMessage
+                                message="Error while fetching list"
+                            />
+                        )
+                        :
+                        (
+                            props.domainList.map((item) => {
+                                return <SingleDomain
+                                    d={item}
+                                    callbackFetch={props.callbackReFetchDomains}
+                                    endpoint={props.endpoint}
+                                    changeDomainList={props.changeDomainList}
+                                />
+                            })
+                        )
+                }
+                </tbody>
+            </Table>
+            <div className="d-flex justify-content-end domainButton">
+                <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
+                       closeOnDocumentClick>
+                    <AddDomain
+                        callbackFetch={props.callbackReFetchDomains}
+                        appendDomainList={props.appendDomainList}
+                        endpoint={props.endpoint}
+                    />
+                </Popup>
+                <EditDomainModal
                     callbackFetch={props.callbackReFetchDomains}
                     appendDomainList={props.appendDomainList}
-                    endpoint={props.endpoint}
-                />
-
-            </Popup>
-
-            <div className="TableDiv">
-                <table className="Table" align="center">
-                    <tr>
-                        <th>Service name</th>
-                        <th>Service type</th>
-                        <th>URL</th>
-                        <th>Active</th>
-                        <th>Emails</th>
-                        <th>Check interval (S)</th>
-                        <th>Maintenance</th>
-                    </tr>
-                    {
-                        // checks for errors, if there are any, do not render domains
-                        props.hasDomainListError === true ?
-                            (
-                                <ErrorMessage
-                                    message="domain list stuff"
-                                />
-                            )
-                            :
-                            (
-                                props.domainList.map((item) => {
-                                    return <SingleDomain
-                                        d={item}
-                                        callbackFetch={props.callbackReFetchDomains}
-                                        endpoint={props.endpoint}
-                                        changeDomainList={props.changeDomainList}
-                                    />
-                                })
-                            )
-                    }
-                </table>
+                    endpoint={props.endpoint}/>
             </div>
-
-        </>
+        </div>
     )
 }
 
@@ -169,59 +185,42 @@ function SingleDomain(props) {
                     </td>
                     <td>{props.d.notification_Email}</td>
                     <td>{props.d.interval_Ms} ms</td>
-
                     <div>
-
-                        <Popup
-                            trigger={<button className="btn-hero-round"><i className="eva eva-2x eva-edit-outline"></i>
-                            </button>} modal
-                            closeOnDocumentClick> {/* triggers shitty pop up */}
-                            <div className="pup-size">
-
+                            <div >
                                 <td>
-                                    <a className="textlink-1" onClick={() => {
+                                    <a  onClick={() => {
                                         deleteDomain()
                                     }}>
-                                        Deletes
+                                        Delete
                                     </a>
                                 </td>
-
                                 {
                                     editBox === false &&
-
                                     <div>
-
-                                        <td><a className="textlink-1" onClick={() => {
+                                        <td><a onClick={() => {
                                             setEditBox(true)
                                         }}>Edit</a></td>
-
                                     </div>
-
                                 }
-
                                 {
                                     editBox === true &&
 
-                                    <div className="wat">
-                                        <button onClick={() => {
+                                    <div >
+                                        <button className="align-content-center" onClick={() => {
                                             setEditBox(false);
                                         }}>
                                             go back
                                         </button>
 
-                                            <EditDomain
-                                                domain={props.d}
-                                                callbackFetch={props.callbackReFetchDomains}
-                                                appendDomainList={props.appendDomainList}
-                                                endpoint={props.endpoint}
-                                            />
-
+                                        <EditDomain
+                                            domain={props.d}
+                                            callbackFetch={props.callbackReFetchDomains}
+                                            appendDomainList={props.appendDomainList}
+                                            endpoint={props.endpoint}
+                                        />
                                     </div>
                                 }
-
-
                             </div>
-                        </Popup>
 
                     </div>
                 </tr>
