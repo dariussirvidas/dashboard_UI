@@ -71,8 +71,9 @@ function Example(props) {
                         <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
                         <input type="text" placeholder="User"/>
                         <input type="text" placeholder="Password"/>
-                        <input type="text" placeholder="Parameters"/>
+                        <textarea className="textArea"  rows="4"  placeholder="Parameters"></textarea>
                         <input type="text" placeholder="Interval"/>
+
                         <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
                         <button>Test</button>
                         <button>Save</button>
