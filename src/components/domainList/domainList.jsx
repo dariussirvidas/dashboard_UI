@@ -6,8 +6,8 @@ import Checkbox from "../checkbox/checkbox";
 import Popup from "reactjs-popup";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Table from 'react-bootstrap/Table';
-import EditDomainModal from "../addDomainModal/EditDomainModal";
-
+import AddDomainModal from "../addDomainModal/addDomainModal";
+import EditDomainModal from "../editDomainModal/editDomainModal"
 
 
 function DomainList(props) {
@@ -58,15 +58,7 @@ function DomainList(props) {
                 </tbody>
             </Table>
             <div className="d-flex justify-content-end domainButton">
-                <Popup trigger={<button className="btn-hero">Add Domain</button>} modal
-                       closeOnDocumentClick>
-                    <AddDomain
-                        callbackFetch={props.callbackReFetchDomains}
-                        appendDomainList={props.appendDomainList}
-                        endpoint={props.endpoint}
-                    />
-                </Popup>
-                <EditDomainModal
+                <AddDomainModal
                     callbackFetch={props.callbackReFetchDomains}
                     appendDomainList={props.appendDomainList}
                     endpoint={props.endpoint}/>
@@ -186,41 +178,42 @@ function SingleDomain(props) {
                     <td>{props.d.notification_Email}</td>
                     <td>{props.d.interval_Ms} ms</td>
                     <div>
-                            <div >
-                                <td>
-                                    <a  onClick={() => {
-                                        deleteDomain()
-                                    }}>
-                                        Delete
-                                    </a>
-                                </td>
-                                {
-                                    editBox === false &&
-                                    <div>
-                                        <td><a onClick={() => {
-                                            setEditBox(true)
-                                        }}>Edit</a></td>
-                                    </div>
-                                }
-                                {
-                                    editBox === true &&
+                        <div>
+                            <td>
+                                <a onClick={() => {
+                                    deleteDomain()
+                                }}>
+                                    Delete
+                                </a>
+                            </td>
+                            <EditDomainModal></EditDomainModal>
+                            {/*{*/}
+                            {/*    editBox === false &&*/}
+                            {/*    <div>*/}
+                            {/*        <td><a onClick={() => {*/}
+                            {/*            setEditBox(true)*/}
+                            {/*        }}>Edit</a></td>*/}
+                            {/*    </div>*/}
+                            {/*}*/}
+                            {/*{*/}
+                            {/*    editBox === true &&*/}
 
-                                    <div >
-                                        <button className="align-content-center" onClick={() => {
-                                            setEditBox(false);
-                                        }}>
-                                            go back
-                                        </button>
+                            {/*    <div >*/}
+                            {/*        <button className="align-content-center" onClick={() => {*/}
+                            {/*            setEditBox(false);*/}
+                            {/*        }}>*/}
+                            {/*            go back*/}
+                            {/*        </button>*/}
 
-                                        <EditDomain
-                                            domain={props.d}
-                                            callbackFetch={props.callbackReFetchDomains}
-                                            appendDomainList={props.appendDomainList}
-                                            endpoint={props.endpoint}
-                                        />
-                                    </div>
-                                }
-                            </div>
+                            {/*        <EditDomain*/}
+                            {/*            domain={props.d}*/}
+                            {/*            callbackFetch={props.callbackReFetchDomains}*/}
+                            {/*            appendDomainList={props.appendDomainList}*/}
+                            {/*            endpoint={props.endpoint}*/}
+                            {/*        />*/}
+                            {/*    </div>*/}
+                            {/*}*/}
+                        </div>
 
                     </div>
                 </tr>

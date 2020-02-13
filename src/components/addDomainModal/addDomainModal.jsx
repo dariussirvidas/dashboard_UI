@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './editdomainlis.scss';
+import Style from './addDomainModal.scss';
 
 // currently functions as another Add service
 // jei webapp, metodas GET, keisti negalima, nereikia parametru
@@ -11,7 +11,7 @@ let isWebappSelected = false;
 let isRestSelected = false;
 let isSoapSelected = false;
 
-function EditDomainModal(props) {
+function AddDomainModal(props) {
 
     function getDefaultSelectionServiceType() {
         switch (props.domain.service_Type) {
@@ -48,7 +48,7 @@ function Example(props) {
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
-                Donato Modal
+                Add Domain new
             </Button>
 
             <Modal show={show} onHide={handleClose}>
@@ -71,9 +71,8 @@ function Example(props) {
                         <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
                         <input type="text" placeholder="User"/>
                         <input type="text" placeholder="Password"/>
-                        <textarea className="textArea"  rows="4"  placeholder="Parameters"></textarea>
+                        <input type="text" placeholder="Parameters"/>
                         <input type="text" placeholder="Interval"/>
-
                         <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
                         <button>Test</button>
                         <button>Save</button>
@@ -132,4 +131,4 @@ function Example(props) {
     }
 }
 
-export default EditDomainModal;
+export default AddDomainModal;
