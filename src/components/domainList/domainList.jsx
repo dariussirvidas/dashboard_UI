@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import './domainList.scss';
-import AddDomain from "../addDomain/addDomain";
 import EditDomain from "../editDomain/editDomain";
 import Checkbox from "../checkbox/checkbox";
 import Popup from "reactjs-popup";
