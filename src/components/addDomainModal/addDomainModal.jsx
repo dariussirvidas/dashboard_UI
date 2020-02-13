@@ -3,13 +3,6 @@ import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './addDomainModal.scss';
 
-// currently functions as another Add service
-// jei webapp, metodas GET, keisti negalima, nereikia parametru
-// jei auth checked, neduoda user ir password
-
-let isWebappSelected = false;
-let isRestSelected = false;
-let isSoapSelected = false;
 
 function AddDomainModal(props) {
 
@@ -23,6 +16,8 @@ function AddDomainModal(props) {
     );
 }
 
+
+
 function Example(props) {
 
     const [show, setShow] = useState(false);
@@ -30,41 +25,76 @@ function Example(props) {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //disabled inputs states:
+    const [getSelectedMethod, setSelectedMethod] = useState(0);
+    const [getSelectedServiceType, setSelectedServiceType] = useState(0);
+    const [getBasicAuth, setBasicAuth] = useState(false);
+
+
+    function changeMethodOption(event) { //<select name="method"
+        setSelectedMethod(event.target.value)
+    }
+    function changeServiceTypeOption(event) { //<select name="serviceType"
+        setSelectedServiceType(event.target.value)
+    }
+    function changeAuth(event){
+        setBasicAuth(event.target.checked)
+    }
+
+    const isUsernamePasswordDisabled = function checkIfDisabled() {
+        if(getBasicAuth == true){ 
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    const isParametersDisabled = function checkIfDisabled() {
+        if(getSelectedMethod == 0 || getSelectedServiceType == 0){ //tipo jei GET ar WEBapp 
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     return (
         <>
             <Button variant="primary" onClick={handleShow}>
                 Add Domain new
             </Button>
-
+{/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
-                    <form className="login-form" onSubmit={handleSubmit} id="formForPost">
-                        <input type="text" placeholder="Service name" name="serviceName"/>
-                        <select className="SelectFrom" required name="method">>
-                            <option value={1}>POST</option>
+                    <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
+                        <div className="form-group"/>                   
+                        <input type="text" placeholder="Service name" name="serviceName" required/>
+                        <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required> 
                             <option value={0}>GET</option>
+                            <option value={1}>POST</option>
                         </select>
-                        <select className="SelectFrom" required name="serviceType">
-                            <option selected={isWebappSelected} value={0}>WebApp</option>
-                            <option selected={isRestSelected} value={1}>Service - REST</option>
-                            <option selected={isSoapSelected} value={2}>Service - SOAP</option>
+                        <select className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
+                            <option value={0}>WebApp</option>
+                            <option value={1}>Service - REST</option>
+                            <option value={2}>Service - SOAP</option>
                         </select>
-                        <input type="url" placeholder="URL" name="url"/>
-                        <input type="email" placeholder="Email" name="email"/>
+                        <input type="url" placeholder="URL" name="url" required/>
+                        <input type="email" placeholder="Email" name="email" required/>
                         <hr/>
                         <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
-                        <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth"></input>
-                        <input type="text" placeholder="User" name="user"/>
-                        <input type="password" placeholder="Password" name="password"/>
-                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters"></textarea>
-                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval"/>
+                        <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
+                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required/>
+                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required/>
+                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required></textarea>
+                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="50" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
                         <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
-                        <button>Test</button>
+                        <button>Test(sitas dar neveikia)</button>
                         <button type="submit" value="send POST">Add</button>
-                        <button>Cancel</button>
+                        <button onClick={handleClose}>Cancel</button>
                         
                     </form>
                 </div>
@@ -84,7 +114,7 @@ function Example(props) {
                 auth_Password: event.target.password.value,
                 Parameters: event.target.parameters.value,
                 notification_email: event.target.email.value,
-                interval_Ms: parseInt(event.target.interval.value),
+                interval_Ms: parseInt(event.target.interval.value * 60), //paverciam is ms i s, pries siunciant i serveri
                 active: event.target.active.checked
             };
         } catch (error) {
@@ -93,6 +123,7 @@ function Example(props) {
         
         console.log("full object for POSTing:", dataForSending);
         submitData(props.endpoint, props.appendDomainList, dataForSending);
+        handleClose();
         event.preventDefault();
     }
 
