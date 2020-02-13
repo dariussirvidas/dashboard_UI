@@ -1,6 +1,8 @@
 import React from "react";
 import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
+import ListGroup from "react-bootstrap/ListGroup";
+import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 function Sticker(props) {
 
@@ -12,7 +14,7 @@ function Sticker(props) {
     }
     return (
         <div>
-            <Card className="cardMargin" border="secondary" style={{width: '18rem'}}>
+            <Card className="cardMargin" border="secondary" style={{ width: '18rem', height: '16rem'}}>
                 <Card.Header
                     className={
 
@@ -21,35 +23,39 @@ function Sticker(props) {
                 >
                         {props.item.service_Name}
                 </Card.Header>
-                <Card.Body>
+                <Card.Body >
                     <Card.Text>
-                        <p>
-                            Url:
+                        <p className="cl-copy-14 FixedSize text-left">
+
                             {
                                 props.domainPing.domainUrl
                             }
                         </p>
-                        <p className="cl-copy-14 text-center">
-                            Status:
+                        <hr/>
+                        <p className="cl-copy-14 text-left">
+                            Status: &nbsp;
                             {
                                 props.domainPing &&
-                                <div>
+                                <>
                                     {props.domainPing.status}
-                                </div>
+                                </>
                             }
                         </p>
-                        <p className="cl-copy-14 text-center">
-                            Response time:
+                        <hr/>
+                        <p className="cl-copy-14 text-left">
+                            Response time: &nbsp;
                             {
                                 props.domainPing &&
-                                <div>
+                                <>
                                     {props.domainPing.requestTime}
-                                </div>
+                                </>
                             }
                         </p>
-                        <p className="cl-copy-14 text-center">Last
+                        <hr/>
+                        <p className="cl-copy-14 text-left">Last
                             Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
-                        <p className="cl-copy-14 text-center">Next Check in: {props.checkIn} </p>
+                        <hr/>
+                        <p className="cl-copy-14 text-left">Next Check in: {props.checkIn} </p>
                     </Card.Text>
                 </Card.Body>
             </Card>

@@ -11,7 +11,7 @@ function Login() {
                     <form className="login-form">
                         <input type="text" placeholder="username"/>
                         <input type="password" placeholder="password"/>
-                        <button>login</button>
+                        <button href="/">login</button>
                         <p className="message">Not registered? <a href="/signup">Create an account</a></p>
                     </form>
                 </div>
