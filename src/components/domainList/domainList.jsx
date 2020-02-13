@@ -6,7 +6,7 @@ import Checkbox from "../checkbox/checkbox";
 import Popup from "reactjs-popup";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Table from 'react-bootstrap/Table';
-import EditDomainModal from "../EditDomainModal/EditDomainModal";
+import EditDomainModal from "../addDomainModal/EditDomainModal";
 
 
 

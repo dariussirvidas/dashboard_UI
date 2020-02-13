@@ -56,13 +56,25 @@ function Example(props) {
                     <forma className="login-form">
                         <input type="text" placeholder="Service name"/>
                         <input type="text" placeholder="Service type"/>
+                        <select className="SelectFrom" required name="method">>
+                            <option value="post">POST</option>
+                            <option value="get">GET</option>
+                        </select>
+                        <select className="SelectFrom" required name="service_type">
+                            <option selected={isWebappSelected} value="webapp">WebApp</option>
+                            <option selected={isRestSelected} value="rest">Service - REST</option>
+                            <option selected={isSoapSelected} value="soap">Service - SOAP</option>
+                        </select>
                         <input type="password" placeholder="URL"/>
                         <input type="password" placeholder="Email"/>
                         <input type="text" placeholder="interval"/>
+                        <p>Basic Auth:  </p> <input type="checkbox" name="auth"></input>
                         <input type="text" placeholder="User"/>
                         <input type="text" placeholder="Password"/>
                         <input type="text" placeholder="Parameters"/>
                         <input type="text" placeholder="Interval"/>
+
+                    <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
                         <button>Test</button>
                         <button>Save</button>
                         <button>Cancel</button>
