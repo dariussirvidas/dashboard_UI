@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
 import {LoadingSpinner} from "../elements/elements";
+import CardDeck from "react-bootstrap/CardDeck";
+import Style from './stickerList.scss';
 
 
 function StickerList(props) {
     return (
-        <>
+        <div>
+            <div className="container">
+                <CardDeck>
             {
                 props.domainList.map((item) => {
                     if(item.deleted !== true)
@@ -18,14 +22,16 @@ function StickerList(props) {
                     )
                 })
             }
-        </>
+                </CardDeck>
+            </div>
+        </div>
     )
 }
 
 function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
-    const [domainPing, setDomainPing] = useState({status: "No response yet"});
-    const [domainPingError, setDomainPingError] = useState("false");
+    const [requestResponseData, setRequestResponseData] = useState({status: "No response yet"});
+    const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
 
     useEffect(() => {
 
@@ -52,19 +58,37 @@ function SingleService(props) {
     },[timer]);
 
     async function fetchFromApi(endpoint) {
+
         const response = await fetch(endpoint);
+
         const data = await response.json();
-        console.log("data: ", data);
-        console.log("response: ", response.status);
+        // console.log("data: ", data); 
+        // console.log("response: ", response.status);
         setDomainPingResponseCode(response.status);
-        console.log("response again: ", response.status);
+        // console.log("response again: ", response.status);
         return data;
     }
 
+
     function pingDomain() {
-        fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id)
+        
+        let endpointToFetch = "";
+        switch(props.item.service_Type){
+            case(0): //WebApp(Portal)
+                endpointToFetch = props.endpoint + "api/requests/getportal/";
+                break
+            case(1): //ServiceRest
+            case(2): //ServiceSoap
+                endpointToFetch = props.endpoint + "api/requests/getservice/";
+                break
+            default:
+                console.log("tokio service mes neturim")
+            
+        }
+
+        fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {
-                setDomainPing(data);
+                setRequestResponseData(data);
 
                 // if the ping response is not success, refetch that single domain to get last failure date
                 if (data.status !== "Success")
@@ -73,7 +97,7 @@ function SingleService(props) {
             .catch(error => {
                 console.error("error while fetching domains: " + error);
                 setDomainPingError(true);
-                setDomainPing("error");
+                setRequestResponseData("error");
             });
     }
 
@@ -88,17 +112,14 @@ function SingleService(props) {
             });
     }
 
-
-
-
     return (
         <>
             {
                 props.item.deleted === false && props.item.active === true &&
                 <Sticker
                     item={props.item}
-                    domainPing={domainPing}
-                    domainPingError={domainPingError}
+                    domainPing={requestResponseData}
+                    // domainPingError={domainPingError}
                     checkIn={timer}
                 />
             }
