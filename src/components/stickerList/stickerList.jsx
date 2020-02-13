@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
 import {LoadingSpinner} from "../elements/elements";
+import CardDeck from "react-bootstrap/CardDeck";
+import Style from './stickerList.scss';
 
 
 function StickerList(props) {
     return (
-        <>
+        <div>
+            <div className="container">
+                <CardDeck>
             {
                 props.domainList.map((item) => {
                     if(item.deleted !== true)
@@ -18,7 +22,9 @@ function StickerList(props) {
                     )
                 })
             }
-        </>
+                </CardDeck>
+            </div>
+        </div>
     )
 }
 

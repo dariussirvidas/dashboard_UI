@@ -16,9 +16,7 @@ function EditUser(props) {
                     <p>Name <input name="firstName" type="text" placeholder="Name"></input></p>
                     <p>Last Name <input name="lastName" type="text" placeholder="Last Name"></input></p>
                     <p>Username <input name="username" type="text" placeholder="Username"></input></p>
-                    <p>Email <input name="Email" type="text" placeholder="Email"></input></p>
-                    <p>Password &nbsp;
-                        <input name="Password" type="password" placeholder="Password"></input></p>
+                    <p>Email <input name="userEmail" type="text" placeholder="Email"></input></p>
                     <p>Active <input type="checkbox" name="active" value="active"></input></p>
                     <button input type="submit" className="btn-hero">
                         Save
@@ -36,7 +34,9 @@ function EditUser(props) {
         let dataForSending = {
             firstName: event.target.firstName.value,
             lastName: event.target.lastName.value,
-            username: event.target.username.value
+            username: event.target.username.value,
+            userEmail: event.target.userEmail.value,
+
         };
         console.log("full object for sending:", dataForSending);
         event.preventDefault();
@@ -59,7 +59,7 @@ async function fetchPost(endpoint, dataForSending) {
 }
 
 function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-    fetchPost(endpoint + "api/domain/", dataForSending)
+    fetchPost(endpoint + "api/users", dataForSending)
         .then((data) => {
             callbackAppendDomainList(data)
         })
