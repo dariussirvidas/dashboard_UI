@@ -61,7 +61,7 @@ function Example(props) {
                         <button type="submit" value="send POST">
                         Add
                         </button>
-                        {/* <button>Cancel</button> */}
+                        <button>Cancel</button>
                         
                     </form>
                 </div>

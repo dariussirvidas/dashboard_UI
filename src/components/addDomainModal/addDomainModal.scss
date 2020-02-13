@@ -62,3 +62,36 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+label{
+  display: inline !important;
+  margin-bottom: 15px !important;
+}
+.SelectCheckbox{
+  display: inline !important;
+  padding: 0 !important;
+  margin-right: 0% !important;
+  width: 10% !important;
+  margin-bottom: 15px !important;
+
+}
+
+.SelectCheckbox2{
+  display: inline !important;
+  margin-bottom: 15px !important;
+  width: 10% !important;
+}
+.SelectCheckbox3{
+  display: inline !important;
+  padding: 0 !important;
+  margin-right: 0% !important;
+  margin-bottom: 15px !important;
+  width: 10% !important;
+}
+
+.SelectInterval{
+  width: 78% !important;
+}
+.SelectIntervalSeconds{
+  width: 15% !important;
+  margin-left: 5px !important;
+}
