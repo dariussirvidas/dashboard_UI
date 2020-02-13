@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, {Component, useEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
@@ -7,11 +7,26 @@ import Style from './editDomainModal.scss';
 // jei webapp, metodas GET, keisti negalima, nereikia parametru
 // jei auth checked, neduoda user ir password
 
-let isWebappSelected = false;
-let isRestSelected = false;
-let isSoapSelected = false;
 
 function EditDomainModal(props) {
+
+    return (
+        <div>
+            <Example
+                domain={props.domain}
+                callbackFetch={props.callbackReFetchDomains}
+                changeDomainList={props.changeDomainList}
+                endpoint={props.endpoint}/>
+        </div>
+    );
+
+}
+
+function Example(props) {
+
+    let isWebappSelected = false;
+    let isRestSelected = false;
+    let isSoapSelected = false;
 
     function getDefaultSelectionServiceType() {
         switch (props.domain.service_Type) {
@@ -27,58 +42,79 @@ function EditDomainModal(props) {
         }
     }
 
-    return (
-        <div>
-            <Example
-                callbackFetch={props.callbackReFetchDomains}
-                appendDomainList={props.appendDomainList}
-                endpoint={props.endpoint}/>
-        </div>
-    );
+    // soapui - postas
+    // restui get ir post
+    // webapp tik get
 
-}
+    // basic auth tiek soapui tiek restui (gal ir webappui)
 
-function Example(props) {
+    let isPostSelected = false;
+    let isGetSelected = false;
+
+    function getDefaultSelectionMethod() {
+        switch (props.domain.method) {
+            case 0 :
+                isGetSelected = true;
+                break;
+            case 1 :
+                isPostSelected = true;
+                break;
+        }
+    }
+
+
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
-                Add Domain new
-            </Button>
+            <a variant="primary" onClick={handleShow}>
+                Edit
+            </a>
+
+            {
+                getDefaultSelectionServiceType()
+            }
+            {
+                getDefaultSelectionMethod()
+            }
 
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
-                    <forma className="login-form">
-                        <input type="text" placeholder="Service name"/>
-                        <input type="text" placeholder="Service type"/>
-                        <select className="SelectFrom" required name="method">>
-                            <option value="post">POST</option>
-                            <option value="get">GET</option>
+                    <form className="login-form" onSubmit={handleSubmit}>
+                        <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
+                               placeholder="Service name"/>
+                        <select name="method" className="SelectFrom" required>>
+                            <option selected={isGetSelected} value={0}>GET</option>
+                            <option selected={isPostSelected} value={1}>POST</option>
                         </select>
-                        <select className="SelectFrom" required name="service_type">
-                            <option selected={isWebappSelected} value="webapp">WebApp</option>
-                            <option selected={isRestSelected} value="rest">Service - REST</option>
-                            <option selected={isSoapSelected} value="soap">Service - SOAP</option>
+                        <select name="serviceType" className="SelectFrom" required>
+                            <option selected={isWebappSelected} value={0}>WebApp</option>
+                            <option selected={isRestSelected} value={1}>Service - REST</option>
+                            <option selected={isSoapSelected} value={2}>Service - SOAP</option>
                         </select>
-                        <input type="password" placeholder="URL"/>
-                        <input type="password" placeholder="Email"/>
-                        <input type="text" placeholder="interval"/>
-                        <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
-                        <input type="text" placeholder="User"/>
-                        <input type="text" placeholder="Password"/>
-                        <textarea className="textArea"  rows="4"  placeholder="Parameters"></textarea>
-                        <input type="text" placeholder="Interval"/>
+                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL"/>
+                        <input name="email" defaultValue={props.domain.notification_Email} type="email"
+                               placeholder="Email"/>
+                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
+                                                   name="auth" id="authActive"></input>
+                        <input name="user" defaultValue={props.domain.user} type="text" placeholder="User"/>
+                        <input name="password" defaultValue={"password"} type="password" placeholder="Password"/>
+                        <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
+                                  placeholder="Parameters"></textarea>
+                        <input name="interval" defaultValue={props.domain.interval_Ms} type="number"
+                               placeholder="Interval"/>
+                        <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
+                                                value="active"></input>
+                        <button type="button">Test</button>
+                        <button type="submit">Save</button>
+                        <button type="button" onClick={handleClose}>Cancel</button>
 
-                        <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
-                        <button>Test</button>
-                        <button>Save</button>
-                        <button>Cancel</button>
-                    </forma>
+                    </form>
                 </div>
             </Modal>
 
@@ -87,28 +123,30 @@ function Example(props) {
 
     function handleSubmit(event) {
         let dataForSending = {
-            service_Name: event.target.Service_name.value,
-            Url_: event.target.Url_.value,
-            service_Type: event.target.service_type.value,
-            Method: event.target.method.value,
+            service_Name: event.target.serviceName.value,
+            Url: event.target.url.value,
+            service_Type: parseInt(event.target.serviceType.value),
+            Method: parseInt(event.target.method.value),
             basic_auth: event.target.auth.checked,
-            User: event.target.User.value,
-            Password: event.target.Password.value,
-            Parameters: event.target.Parameters.value,
-            email: event.target.Email.value,
-            check_interval: parseInt(event.target.Check_interval.value),
+            auth_User: event.target.user.value,
+            auth_Password: event.target.password.value,
+            Parameters: event.target.parameters.value,
+            notification_Email: event.target.email.value,
+            interval_Ms: parseInt(event.target.interval.value),
             active: event.target.active.checked
         };
         console.log("full object for sending:", dataForSending);
-        submitData(props.endpoint, props.appendDomainList, dataForSending);
+        console.log("JSON string:", JSON.stringify(dataForSending));
+        console.log("domain obj: ", props.domain);
+
+        submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
 
-
-    async function fetchPost(endpoint, dataForSending) {
+    async function fetchPut(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
-                method: 'POST',
+                method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                     // 'Content-Type': 'application/x-www-form-urlencoded',
@@ -116,18 +154,29 @@ function Example(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        const data = await response.json();
-        return data;
+        let statusCode = response.status;
+        return statusCode;
     }
 
-    function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-        fetchPost(endpoint + "api/domain/", dataForSending)
-            .then((data) => {
-                callbackAppendDomainList(data)
+    function submitData(endpoint, changeDomainList, dataForSending) {
+        fetchPut(endpoint + "api/domain/" + props.domain.id, dataForSending)
+            .then((statusCode) => {
+                console.log("status code " + statusCode +  "...");
+                if (statusCode > 199 && statusCode < 300) {
+                    console.log("success!");
+                    // creates a new object. uses the prop domain as a base and overwrites any old data with data from
+                    // the input fields
+                    const editedDomain = Object.assign({...props.domain}, dataForSending);
+                    changeDomainList(editedDomain)
+                }
+                else
+                {
+                    console.log("unsuccessful. what now?")
+                }
             })
 
             .catch((error) => {
-                console.error("error while fetching domains:" + error);
+                console.error("FETCH ERROR: ", error);
             });
     }
 }

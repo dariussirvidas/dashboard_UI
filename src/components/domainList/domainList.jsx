@@ -186,7 +186,11 @@ function SingleDomain(props) {
                                     Delete
                                 </a>
                             </td>
-                            <EditDomainModal></EditDomainModal>
+                            <EditDomainModal
+                                domain={props.d}
+                                changeDomainList={props.changeDomainList}
+                                endpoint={props.endpoint}
+                            />
                             {/*{*/}
                             {/*    editBox === false &&*/}
                             {/*    <div>*/}
