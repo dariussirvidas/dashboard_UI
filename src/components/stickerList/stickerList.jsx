@@ -58,17 +58,39 @@ function SingleService(props) {
     },[timer]);
 
     async function fetchFromApi(endpoint) {
+
         const response = await fetch(endpoint);
+
         const data = await response.json();
-        console.log("data: ", data);
-        console.log("response: ", response.status);
+        // console.log("data: ", data); 
+        // console.log("response: ", response.status);
         setDomainPingResponseCode(response.status);
-        console.log("response again: ", response.status);
+        // console.log("response again: ", response.status);
         return data;
     }
 
+    // "method": Get=0, Post=1
+    // "service_Type": WebApp=0, ServiceRest=1, ServiceSoap=2
+
+
     function pingDomain() {
-        fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id)
+        //Pinging is dead.
+        // fetchFromApi(props.endpoint + "api/ping/domain/" + props.item.id) 
+        let endpointToFetch = "";
+        switch(props.item.service_Type){
+            case(0): //WebApp(Portal)
+                endpointToFetch = props.endpoint + "api/requests/getportal/";
+                break
+            case(1): //ServiceRest
+            case(2): //ServiceSoap
+                endpointToFetch = props.endpoint + "api/requests/getservice/";
+                break
+            default:
+                console.log("tokio service mes neturim")
+            
+        }
+
+        fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {
                 setDomainPing(data);
 
@@ -94,9 +116,6 @@ function SingleService(props) {
             });
     }
 
-
-
-
     return (
         <>
             {
@@ -104,7 +123,7 @@ function SingleService(props) {
                 <Sticker
                     item={props.item}
                     domainPing={domainPing}
-                    domainPingError={domainPingError}
+                    // domainPingError={domainPingError}
                     checkIn={timer}
                 />
             }

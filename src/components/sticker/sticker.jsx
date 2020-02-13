@@ -3,6 +3,7 @@ import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
 
 function Sticker(props) {
+
     return (
         <div>
             <Card className="cardMargin" border="secondary" style={{width: '18rem'}}>
@@ -33,6 +34,7 @@ function Sticker(props) {
             </Card>
         </div>
     );
+
 }
 
 export default Sticker;
