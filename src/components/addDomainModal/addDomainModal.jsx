@@ -67,20 +67,24 @@ function Example(props) {
                         </select>
                         <input type="password" placeholder="URL"/>
                         <input type="password" placeholder="Email"/>
-                        <input type="text" placeholder="interval"/>
-                        <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
+                        <hr/>
+                        <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
+                        <input className="SelectCheckbox" id="checkboxTitle1 "type="checkbox" name="auth"/>
+
                         <input type="text" placeholder="User"/>
                         <input type="text" placeholder="Password"/>
-                        <input type="text" placeholder="Parameters"/>
-                        <input type="text" placeholder="Interval"/>
-                        <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
+                        <textarea className="textArea" rows="4" placeholder="Parameters"/>
+                        <input className="SelectInterval" type="text" placeholder="Interval"/>
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
+                        <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
+                        <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
+                        <br/>
                         <button>Test</button>
                         <button>Save</button>
                         <button>Cancel</button>
                     </forma>
                 </div>
             </Modal>
-
         </>
     );
 
