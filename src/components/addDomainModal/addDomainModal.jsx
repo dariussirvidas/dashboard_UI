@@ -37,7 +37,7 @@ function Example(props) {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                <div className="forma ">
+                <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <input type="text" placeholder="Service name" name="serviceName"/>
                         <select className="SelectFrom" required name="method">>
@@ -51,16 +51,19 @@ function Example(props) {
                         </select>
                         <input type="url" placeholder="URL" name="url"/>
                         <input type="email" placeholder="Email" name="email"/>
-                        <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
+                        <hr/>
+                        <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
+                        <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth"></input>
                         <input type="text" placeholder="User" name="user"/>
                         <input type="password" placeholder="Password" name="password"/>
-                        <textarea form="formForPost" name="parameters" placeholder="Parameters"></textarea>
-                        <input type="number" placeholder="Interval" name="interval"/>
-                        <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
+                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters"></textarea>
+                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval"/>
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
+                        <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
+                        <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
+                        <br/>
                         <button>Test</button>
-                        <button type="submit" value="send POST">
-                        Add
-                        </button>
+                        <button type="submit" value="send POST">Add</button>
                         <button>Cancel</button>
                         
                     </form>
