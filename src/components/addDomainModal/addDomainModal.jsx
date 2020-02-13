@@ -13,20 +13,6 @@ let isSoapSelected = false;
 
 function AddDomainModal(props) {
 
-    function getDefaultSelectionServiceType() {
-        switch (props.domain.service_Type) {
-            case 0 :
-                isWebappSelected = true;
-                break;
-            case 1 :
-                isRestSelected = true;
-                break;
-            case 2 :
-                isSoapSelected = true;
-                break;
-        }
-    }
-
     return (
         <div>
             <Example
@@ -35,7 +21,6 @@ function AddDomainModal(props) {
                 endpoint={props.endpoint}/>
         </div>
     );
-
 }
 
 function Example(props) {
@@ -52,53 +37,58 @@ function Example(props) {
             </Button>
 
             <Modal show={show} onHide={handleClose}>
-                <div className="forma">
-                    <forma className="login-form">
-                        <input type="text" placeholder="Service name"/>
-                        <input type="text" placeholder="Service type"/>
+                <div className="forma ">
+                    <form className="login-form" onSubmit={handleSubmit} id="formForPost">
+                        <input type="text" placeholder="Service name" name="serviceName"/>
                         <select className="SelectFrom" required name="method">>
-                            <option value="post">POST</option>
-                            <option value="get">GET</option>
+                            <option value={1}>POST</option>
+                            <option value={0}>GET</option>
                         </select>
-                        <select className="SelectFrom" required name="service_type">
-                            <option selected={isWebappSelected} value="webapp">WebApp</option>
-                            <option selected={isRestSelected} value="rest">Service - REST</option>
-                            <option selected={isSoapSelected} value="soap">Service - SOAP</option>
+                        <select className="SelectFrom" required name="serviceType">
+                            <option selected={isWebappSelected} value={0}>WebApp</option>
+                            <option selected={isRestSelected} value={1}>Service - REST</option>
+                            <option selected={isSoapSelected} value={2}>Service - SOAP</option>
                         </select>
-                        <input type="password" placeholder="URL"/>
-                        <input type="password" placeholder="Email"/>
-                        <input type="text" placeholder="interval"/>
+                        <input type="url" placeholder="URL" name="url"/>
+                        <input type="email" placeholder="Email" name="email"/>
                         <p>Basic Auth: </p> <input type="checkbox" name="auth"></input>
-                        <input type="text" placeholder="User"/>
-                        <input type="text" placeholder="Password"/>
-                        <input type="text" placeholder="Parameters"/>
-                        <input type="text" placeholder="Interval"/>
+                        <input type="text" placeholder="User" name="user"/>
+                        <input type="password" placeholder="Password" name="password"/>
+                        <textarea form="formForPost" name="parameters" placeholder="Parameters"></textarea>
+                        <input type="number" placeholder="Interval" name="interval"/>
                         <p>Active : </p> <input type="checkbox" name="active" value="active"></input>
                         <button>Test</button>
-                        <button>Save</button>
-                        <button>Cancel</button>
-                    </forma>
+                        <button type="submit" value="send POST">
+                        Add
+                        </button>
+                        {/* <button>Cancel</button> */}
+                        
+                    </form>
                 </div>
             </Modal>
-
         </>
     );
 
     function handleSubmit(event) {
-        let dataForSending = {
-            service_Name: event.target.Service_name.value,
-            Url_: event.target.Url_.value,
-            service_Type: event.target.service_type.value,
-            Method: event.target.method.value,
-            basic_auth: event.target.auth.checked,
-            User: event.target.User.value,
-            Password: event.target.Password.value,
-            Parameters: event.target.Parameters.value,
-            email: event.target.Email.value,
-            check_interval: parseInt(event.target.Check_interval.value),
-            active: event.target.active.checked
-        };
-        console.log("full object for sending:", dataForSending);
+        try {
+            var dataForSending = {
+                service_Name: event.target.serviceName.value,
+                Url: event.target.url.value,
+                service_Type: parseInt(event.target.serviceType.value),
+                Method: parseInt(event.target.method.value),
+                basic_auth: event.target.auth.checked,
+                auth_User: event.target.user.value,
+                auth_Password: event.target.password.value,
+                Parameters: event.target.parameters.value,
+                notification_email: event.target.email.value,
+                interval_Ms: parseInt(event.target.interval.value),
+                active: event.target.active.checked
+            };
+        } catch (error) {
+            console.log(error)
+        }
+        
+        console.log("full object for POSTing:", dataForSending);
         submitData(props.endpoint, props.appendDomainList, dataForSending);
         event.preventDefault();
     }
