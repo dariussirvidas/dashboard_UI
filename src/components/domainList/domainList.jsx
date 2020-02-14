@@ -4,6 +4,7 @@ import Checkbox from "../checkbox/checkbox";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
+import DeleteDomain from "../deleteDomain/deleteDomain";
 
 function DomainList(props) {
 
@@ -30,22 +31,30 @@ function DomainList(props) {
                     </tr>
                     {
                         // checks for errors, if there are any, do not render domains
-                        props.hasDomainListError === true ?
+                        props.domainList !== "error" ?
+                            (
+                                props.domainList.status !== 404 ?
+                                    (
+                                        props.domainList.map((item) => {
+                                            return <SingleDomain
+                                                d={item}
+                                                callbackFetch={props.callbackReFetchDomains}
+                                                endpoint={props.endpoint}
+                                                changeDomainList={props.changeDomainList}
+                                            />
+                                        })
+                                    )
+                                    :
+                                    (
+                                        <>
+                                        </>
+                                    )
+                            )
+                            :
                             (
                                 <ErrorMessage
                                     message="Error while fetching list"
                                 />
-                            )
-                            :
-                            (
-                                props.domainList.map((item) => {
-                                    return <SingleDomain
-                                        d={item}
-                                        callbackFetch={props.callbackReFetchDomains}
-                                        endpoint={props.endpoint}
-                                        changeDomainList={props.changeDomainList}
-                                    />
-                                })
                             )
                     }
                 </table>
@@ -92,39 +101,6 @@ function SingleDomain(props) {
             });
     }
 
-    async function fetchPutDelete() {
-        const response = await fetch(props.endpoint + 'api/domain/del/' + props.d.id, {
-                method: 'PUT'
-            }
-        );
-        await console.log('statusCode:' + response.status);
-        let statusCode = await response.status;
-        return statusCode;
-    }
-
-    function deleteDomain() {
-        fetchPutDelete()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200, run changeDomainList function!");
-                    let dataForSending = {...props.d};
-                    dataForSending.deleted = true;
-
-                    props.changeDomainList(dataForSending)
-                } else if (statusCode === 400) {
-                    console.log("status code 400, do something else");
-                    // alert('reeeeeeee')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                console.error("error while PUT delete domain: " + error);
-            });
-
-
-    }
 
     function handleSubmit(event) {
 
@@ -167,13 +143,7 @@ function SingleDomain(props) {
                     <td>{Math.trunc(props.d.interval_Ms / 1000)} s</td>
                     <div>
                         <div>
-                            <td>
-                                <a className="txt"onClick={() => {
-                                    deleteDomain()
-                                }}>
-                                    Delete
-                                </a>
-                            </td>
+
                             <EditDomainModal
                                 domain={props.d}
                                 changeDomainList={props.changeDomainList}
