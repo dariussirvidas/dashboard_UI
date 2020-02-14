@@ -92,7 +92,7 @@ function Example(props) {
                         <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
-                        <button>Test(sitas dar neveikia)</button>
+                        {/* <button>Test(sitas dar neveikia)</button> */}
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose}>Cancel</button>
                         
@@ -114,7 +114,7 @@ function Example(props) {
                 auth_Password: event.target.password.value,
                 Parameters: event.target.parameters.value,
                 notification_email: event.target.email.value,
-                interval_Ms: parseInt(event.target.interval.value * 60), //paverciam is ms i s, pries siunciant i serveri
+                interval_Ms: parseInt(event.target.interval.value * 1000), //paverciam i ms is s, pries siunciant i serveri
                 active: event.target.active.checked
             };
         } catch (error) {
