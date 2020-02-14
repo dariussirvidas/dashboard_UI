@@ -167,7 +167,7 @@ function SingleDomain(props) {
                     <div>
                         <div>
                             <td>
-                                <a onClick={() => {
+                                <a className="txt"onClick={() => {
                                     deleteDomain()
                                 }}>
                                     Delete

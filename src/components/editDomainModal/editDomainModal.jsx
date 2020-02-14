@@ -72,7 +72,7 @@ function Example(props) {
 
     return (
         <>
-            <a variant="primary" onClick={handleShow}>
+            <a variant="primary" className="txt" onClick={handleShow}>
                 Edit
             </a>
 
