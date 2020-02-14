@@ -175,7 +175,7 @@ function SingleDomain(props) {
                         />
                     </td>
                     <td>{props.d.notification_Email}</td>
-                    <td>{props.d.interval_Ms} ms</td>
+                    <td>{Math.trunc(props.d.interval_Ms / 1000)} s</td>
                     <div>
                         <div>
                             <td>

@@ -47,7 +47,7 @@ function Sticker(props) {
                             {
                                 props.domainPing &&
                                 <>
-                                    {props.domainPing.requestTime}
+                                    {props.domainPing.requestTime + ' ms'}
                                 </>
                             }
                         </p>
@@ -55,7 +55,7 @@ function Sticker(props) {
                         <p className="cl-copy-14 text-left">Last
                             Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
                         <hr/>
-                        <p className="cl-copy-14 text-left">Next Check in: {props.checkIn} </p>
+                        <p className="cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
                     </Card.Text>
                 </Card.Body>
             </Card>
