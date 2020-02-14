@@ -2,6 +2,7 @@ import React, {Component, useEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
+import DeleteDomain from "../deleteDomain/deleteDomain";
 
 // currently functions as another Add service
 // jei webapp, metodas GET, keisti negalima, nereikia parametru
@@ -113,7 +114,11 @@ function Example(props) {
                         <button type="button">Test</button>
                         <button type="submit">Save</button>
                         <button type="button" onClick={handleClose}>Cancel</button>
-
+                        <DeleteDomain
+                            domain={props.domain}
+                            changeDomainList={props.changeDomainList}
+                            endpoint={props.endpoint}
+                        />
                     </form>
                 </div>
             </Modal>

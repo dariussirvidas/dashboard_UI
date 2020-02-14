@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
-import {LoadingSpinner} from "../elements/elements";
+
 import CardDeck from "react-bootstrap/CardDeck";
 import Style from './stickerList.scss';
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 
 
 function StickerList(props) {
@@ -10,18 +11,34 @@ function StickerList(props) {
         <div>
             <div className="container">
                 <CardDeck>
-            {
-                props.domainList.map((item) => {
-                    if(item.deleted !== true)
-                    return (
-                        <SingleService
-                            item={item}
-                            endpoint={props.endpoint}
-                            changeDomainList={props.changeDomainList}
-                        />
-                    )
-                })
-            }
+                    {
+                        props.domainList !== "error" ?
+                            (
+                                props.domainList.status !== 404 ?
+                                    (
+                                        props.domainList.map((item) => {
+                                            if (item.deleted !== true)
+                                                return (
+                                                    <SingleService
+                                                        item={item}
+                                                        endpoint={props.endpoint}
+                                                        changeDomainList={props.changeDomainList}
+                                                    />
+                                                )
+                                        })
+                                    )
+                                    :
+                                    (
+                                        <>
+                                            <p>Please add a domain</p>
+                                        </>
+                                    )
+                            )
+                            :
+                            (
+                                <ErrorMessage/>
+                            )
+                    }
                 </CardDeck>
             </div>
         </div>
@@ -35,8 +52,8 @@ function SingleService(props) {
 
     useEffect(() => {
 
-            pingDomain();
-            console.log("USESTATE___________");
+        pingDomain();
+        console.log("USESTATE___________");
 
     }, []);
 
@@ -48,14 +65,14 @@ function SingleService(props) {
         const interval = setInterval(() => {
 
             setTimer(prevState => prevState - 1000);
-            if (timer < 1 ){
+            if (timer < 1) {
                 pingDomain();
                 setTimer(props.item.interval_Ms);
             }
         }, 1000);
         return () => clearInterval(interval);
 
-    },[timer]);
+    }, [timer]);
 
     async function fetchFromApi(endpoint) {
 
@@ -71,9 +88,9 @@ function SingleService(props) {
 
 
     function pingDomain() {
-        
+
         let endpointToFetch = "";
-        switch(props.item.service_Type){
+        switch (props.item.service_Type) {
             case(0): //WebApp(Portal)
                 endpointToFetch = props.endpoint + "api/requests/getportal/";
                 break
@@ -83,7 +100,7 @@ function SingleService(props) {
                 break
             default:
                 console.log("tokio service mes neturim")
-            
+
         }
 
         fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
