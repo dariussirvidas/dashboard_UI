@@ -1,66 +1,59 @@
 import React, {useEffect, useState} from 'react';
 import './domainList.scss';
-import EditDomain from "../editDomain/editDomain";
 import Checkbox from "../checkbox/checkbox";
-import Popup from "reactjs-popup";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
-import Table from 'react-bootstrap/Table';
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
-
 
 function DomainList(props) {
 
     function PopUp() {
-        const [show, setShow] = useState(false);
 
+        const [show, setShow] = useState(false);
         const handleClose = () => setShow(false);
         const handleShow = () => setShow(true);
     }
 
     return (
         <div className="container">
-
-            <Table striped bordered hover size="sm">
-                <thead>
-                <tr>
-                    <th>Service name</th>
-                    <th>Service type</th>
-                    <th>URL</th>
-                    <th>Active</th>
-                    <th>Emails</th>
-                    <th>Check interval (S)</th>
-                    <th>Maintenance</th>
-                </tr>
-                </thead>
-                <tbody>
-                {
-                    // checks for errors, if there are any, do not render domains
-                    props.hasDomainListError === true ?
-                        (
-                            <ErrorMessage
-                                message="Error while fetching list"
-                            />
-                        )
-                        :
-                        (
-                            props.domainList.map((item) => {
-                                return <SingleDomain
-                                    d={item}
-                                    callbackFetch={props.callbackReFetchDomains}
-                                    endpoint={props.endpoint}
-                                    changeDomainList={props.changeDomainList}
+            <div className="TableDiv">
+                <table className="Table" align="center">
+                    <tr>
+                        <th>Service name</th>
+                        <th>Service type</th>
+                        <th>URL</th>
+                        <th>Active</th>
+                        <th>Emails</th>
+                        <th>Check interval (S)</th>
+                        <th>Maintenance</th>
+                    </tr>
+                    {
+                        // checks for errors, if there are any, do not render domains
+                        props.hasDomainListError === true ?
+                            (
+                                <ErrorMessage
+                                    message="Error while fetching list"
                                 />
-                            })
-                        )
-                }
-                </tbody>
-            </Table>
-            <div className="d-flex justify-content-end domainButton">
-                <AddDomainModal
-                    callbackFetch={props.callbackReFetchDomains}
-                    appendDomainList={props.appendDomainList}
-                    endpoint={props.endpoint}/>
+                            )
+                            :
+                            (
+                                props.domainList.map((item) => {
+                                    return <SingleDomain
+                                        d={item}
+                                        callbackFetch={props.callbackReFetchDomains}
+                                        endpoint={props.endpoint}
+                                        changeDomainList={props.changeDomainList}
+                                    />
+                                })
+                            )
+                    }
+                </table>
+                <div className="d-flex justify-content-end domainButton">
+                    <AddDomainModal
+                        callbackFetch={props.callbackReFetchDomains}
+                        appendDomainList={props.appendDomainList}
+                        endpoint={props.endpoint}/>
+                </div>
             </div>
         </div>
     )
@@ -70,7 +63,6 @@ function SingleDomain(props) {
 
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [editBox, setEditBox] = useState(false);
-
 
     //  will need to edit this when we get the final edit form
     async function fetchPut(endpoint, dataForSending) {
@@ -98,7 +90,6 @@ function SingleDomain(props) {
                 console.error("error while fetching domains:" + error);
             });
     }
-
 
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'api/domain/del/' + props.d.id, {
@@ -136,7 +127,6 @@ function SingleDomain(props) {
 
     function handleSubmit(event) {
 
-
         let dataForSending = Object.assign({}, props.d);
 
         dataForSending.url = event.target.Url_.value;
@@ -145,9 +135,7 @@ function SingleDomain(props) {
         dataForSending.interval_Ms = parseInt(event.target.IntervalMs.value);
         dataForSending.service_Type = event.target.domain_type.value;
         dataForSending.parameters = event.target.Parameters.value;
-        // //
         console.log("full object for sending:", dataForSending);
-        console.log("BOOP");
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
@@ -190,51 +178,12 @@ function SingleDomain(props) {
                                 changeDomainList={props.changeDomainList}
                                 endpoint={props.endpoint}
                             />
-                            {/*{*/}
-                            {/*    editBox === false &&*/}
-                            {/*    <div>*/}
-                            {/*        <td><a onClick={() => {*/}
-                            {/*            setEditBox(true)*/}
-                            {/*        }}>Edit</a></td>*/}
-                            {/*    </div>*/}
-                            {/*}*/}
-                            {/*{*/}
-                            {/*    editBox === true &&*/}
-
-                            {/*    <div >*/}
-                            {/*        <button className="align-content-center" onClick={() => {*/}
-                            {/*            setEditBox(false);*/}
-                            {/*        }}>*/}
-                            {/*            go back*/}
-                            {/*        </button>*/}
-
-                            {/*        <EditDomain*/}
-                            {/*            domain={props.d}*/}
-                            {/*            callbackFetch={props.callbackReFetchDomains}*/}
-                            {/*            appendDomainList={props.appendDomainList}*/}
-                            {/*            endpoint={props.endpoint}*/}
-                            {/*        />*/}
-                            {/*    </div>*/}
-                            {/*}*/}
                         </div>
-
                     </div>
                 </tr>
             }
         </>
     )
 }
-
-
-function editDomain(d, type, editBox, callbackFetch) {
-
-
-    return (
-        <>
-            <p>hi</p>
-        </>
-    )
-}
-
 
 export default DomainList;

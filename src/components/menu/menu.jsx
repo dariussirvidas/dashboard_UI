@@ -15,7 +15,6 @@ function Menu() {
                     <img src={Logo} width="112" height="20" alt=""/>
                 </a>
                 <h5 className="Menu_text">Monitoring Dashboard</h5>
-                <h5 className="Menu_text">User: id50</h5>
                     <div className="dropleft">
                         <a className="offset-5" href="#" id="imageDropdown" data-toggle="dropdown">
                             <img src={Menu_icon} width="20" height="20" alt=""/>
@@ -24,7 +23,6 @@ function Menu() {
                             <Dropdown.Item><Link to="/">Home</Link></Dropdown.Item>
                             <Dropdown.Item><Link to="/domains">Maintaining List</Link></Dropdown.Item>
                             <Dropdown.Item><Link to="/users">User Maintaining List</Link></Dropdown.Item>
-                            <Dropdown.Item><Link to="/topics">Comment</Link></Dropdown.Item>
                             <Dropdown.Item><Link to="/login">Login</Link></Dropdown.Item>
                         </ul>
                     </div>
