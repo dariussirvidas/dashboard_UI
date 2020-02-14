@@ -1,15 +1,9 @@
 import React from "react";
 import './editUser.scss';
-import Popup from "reactjs-popup";
-
-
-// currently functions as another Add service
 
 function EditUser(props) {
     return (
         <>
-
-
             <div className="popup-container">
                 <form onSubmit={handleSubmit}>
                     <legend>Edit Domain:</legend>
