@@ -7,23 +7,24 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 function Sticker(props) {
 
     function getClassNameFromStatus() { //class name grazina, pagal status
-        if(props.domainPing.status === 200){
+        if (props.domainPing.status === 200) {
             return "tile-success"
         }
         return "tile-fail"
     }
+
     return (
         <div>
-            <Card className="cardMargin" border="secondary" style={{ width: '18rem', height: '16rem'}}>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '16rem'}}>
                 <Card.Header
                     className={
 
                         "cl-h3 text-center Card " + getClassNameFromStatus()
                     }
                 >
-                        {props.item.service_Name}
+                    {props.item.service_Name}
                 </Card.Header>
-                <Card.Body >
+                <Card.Body>
                     <Card.Text>
                         <p className="cl-copy-14 FixedSize text-left">
 
@@ -45,15 +46,19 @@ function Sticker(props) {
                         <p className="cl-copy-14 text-left">
                             Response time: &nbsp;
                             {
-                                props.domainPing &&
+                                props.domainPing.requestTime &&
                                 <>
                                     {props.domainPing.requestTime + ' ms'}
                                 </>
                             }
                         </p>
                         <hr/>
-                        <p className="cl-copy-14 text-left">Last
-                            Failure: {props.item.last_Fail.slice(0, 10)} {props.item.last_Fail.slice(11, 16)}</p>
+                        <p className="cl-copy-14 text-left">Last Failure: &nbsp;
+                            {
+                                props.item.last_Fail.slice(0, 10) !== '0001-01-01' &&
+                                props.item.last_Fail.slice(0, 10) + " " + props.item.last_Fail.slice(11, 16)
+                            }
+                        </p>
                         <hr/>
                         <p className="cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
                     </Card.Text>
