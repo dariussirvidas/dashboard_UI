@@ -11,9 +11,9 @@ function Menu() {
     return (
         <div className="container NavBarOnTop">
             <nav className="navbar navbar-light bg-white">
-                <a className="navbar-brand" href="/stickerList">
+                <Link className="navbar-brand" to="/stickerList">
                     <img src={Logo} width="112" height="20" alt=""/>
-                </a>
+                </Link>
                 <h5 className="Menu_text">Monitoring Dashboard</h5>
                 <h5 className="Menu_text">User: id50</h5>
                     <div className="dropleft">

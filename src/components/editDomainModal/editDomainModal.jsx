@@ -106,7 +106,7 @@ function Example(props) {
                         <input name="password" defaultValue={"password"} type="password" placeholder="Password"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
                                   placeholder="Parameters"></textarea>
-                        <input name="interval" defaultValue={props.domain.interval_Ms} type="number"
+                        <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
                                placeholder="Interval"/>
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
@@ -132,7 +132,7 @@ function Example(props) {
             auth_Password: event.target.password.value,
             Parameters: event.target.parameters.value,
             notification_Email: event.target.email.value,
-            interval_Ms: parseInt(event.target.interval.value),
+            interval_Ms: (parseInt(event.target.interval.value) * 1000),
             active: event.target.active.checked
         };
         console.log("full object for sending:", dataForSending);
