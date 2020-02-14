@@ -64,7 +64,6 @@ function Example(props) {
     }
 
 
-
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -103,8 +102,9 @@ function Example(props) {
                                placeholder="Email"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
                                                    name="auth" id="authActive"></input>
-                        <input name="user" defaultValue={props.domain.user} type="text" placeholder="User"/>
-                        <input name="password" defaultValue={"password"} type="password" placeholder="Password"/>
+                        <input name="user" defaultValue={props.domain.auth_User} type="text" placeholder="User"/>
+                        <input name="password" defaultValue={props.domain.auth_Password} type="password"
+                               placeholder="Password"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
                                   placeholder="Parameters"></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
@@ -166,16 +166,14 @@ function Example(props) {
     function submitData(endpoint, changeDomainList, dataForSending) {
         fetchPut(endpoint + "api/domain/" + props.domain.id, dataForSending)
             .then((statusCode) => {
-                console.log("status code " + statusCode +  "...");
+                console.log("status code " + statusCode + "...");
                 if (statusCode > 199 && statusCode < 300) {
                     console.log("success!");
                     // creates a new object. uses the prop domain as a base and overwrites any old data with data from
                     // the input fields
                     const editedDomain = Object.assign({...props.domain}, dataForSending);
                     changeDomainList(editedDomain)
-                }
-                else
-                {
+                } else {
                     console.log("unsuccessful. what now?")
                 }
             })
