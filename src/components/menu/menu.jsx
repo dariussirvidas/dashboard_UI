@@ -3,6 +3,7 @@ import Logo from '../../Content/Festo logo.svg';
 import Menu_icon from '../../Content/hamburger_menu.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Style from './menu.scss';
+import {Link} from "react-router-dom";
 
 
 
@@ -20,16 +21,26 @@ function Menu() {
                             <img src={Menu_icon} width="20" height="20" alt=""/>
                         </a>
                         <ul className="dropdown-menu"  role="menu" aria-labelledby="imageDropdown">
-                            <Dropdown.Item href="/">Home</Dropdown.Item>
-                            <Dropdown.Item href="/domains">Maintaining List</Dropdown.Item>
-                            <Dropdown.Item href="/users">User Maintaining List</Dropdown.Item>
-                            <Dropdown.Item href="/topics">Comment</Dropdown.Item>
-                            <Dropdown.Item href="/login">Login</Dropdown.Item>
+                            <Dropdown.Item><Link to="/">Home</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to="/domains">Maintaining List</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to="/users">User Maintaining List</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to="/topics">Comment</Link></Dropdown.Item>
+                            <Dropdown.Item><Link to="/login">Login</Link></Dropdown.Item>
                         </ul>
                     </div>
             </nav>
         </div>
     );
 }
+
+
+// <ul className="menu">
+//     <li><Link to="/">Home Page</Link></li>
+//     <li><Link to="/domains">Maintaining list</Link></li>
+//     <li><Link to="/topics">Comment</Link></li>
+//     <li><Link to="/login">Login</Link></li>
+//     <li><Link to="/users">User maintaining list</Link></li>
+// </ul>
+
 
 export default Menu;
