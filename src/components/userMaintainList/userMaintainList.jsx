@@ -81,19 +81,13 @@ function UserMaintainList(props) {
                             )
                     }
                 </table>
-                <div className="button">
-                    <Popup trigger={<button>Add New User</button>} modal
-                           closeOnDocumentClick>
-                        <EditUser/>
-                    </Popup>
-                </div>
             </div>
         </div>
     );
 }
 
 
-function SingleUser(props){
+function SingleUser(props) {
     return (
         <tr align="center">
             <td>{props.user.firstName}</td>
