@@ -144,7 +144,7 @@ function Example(props) {
     }
 
     function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-        fetchPost(endpoint + "api/domain/", dataForSending)
+        fetchPost(endpoint + "domain/", dataForSending)
             .then((data) => {
                 callbackAppendDomainList(data)
             })

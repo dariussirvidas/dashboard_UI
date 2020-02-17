@@ -92,11 +92,11 @@ function SingleService(props) {
         let endpointToFetch = "";
         switch (props.item.service_Type) {
             case(0): //WebApp(Portal)
-                endpointToFetch = props.endpoint + "api/requests/getportal/";
+                endpointToFetch = props.endpoint + "requests/getportal/";
                 break
             case(1): //ServiceRest
             case(2): //ServiceSoap
-                endpointToFetch = props.endpoint + "api/requests/getservice/";
+                endpointToFetch = props.endpoint + "requests/getservice/";
                 break
             default:
                 console.log("tokio service mes neturim")
@@ -119,7 +119,7 @@ function SingleService(props) {
     }
 
     function fetchSingleDomain(endpoint) {
-        fetchFromApi(endpoint + "api/domain/" + props.item.id)
+        fetchFromApi(endpoint + "domain/" + props.item.id)
             .then(data => {
                 // the updated single domain goes up to be put in the local state in <App/>
                 props.changeDomainList(data)

@@ -53,7 +53,7 @@ async function fetchPost(endpoint, dataForSending) {
 }
 
 function submitData(endpoint, callbackAppendDomainList, dataForSending) {
-    fetchPost(endpoint + "api/users", dataForSending)
+    fetchPost(endpoint + "users", dataForSending)
         .then((data) => {
             callbackAppendDomainList(data)
         })

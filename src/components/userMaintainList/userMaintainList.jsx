@@ -34,7 +34,7 @@ function UserMaintainList(props) {
 
     async function fetchGet() {
 
-        const response = await fetch(props.endpoint + "api/" + "users",
+        const response = await fetch(props.endpoint + "" + "users",
             {
                 method: 'GET',
                 headers: {

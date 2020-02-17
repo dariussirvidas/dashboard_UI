@@ -36,7 +36,7 @@ function Checkbox(props) {
     }
 
     async function fetchPut(dataForSending) {
-        const response = await fetch(props.endpoint + "api/domain/" + dataForSending.id,
+        const response = await fetch(props.endpoint + "domain/" + dataForSending.id,
             {
                 method: 'PUT',
                 headers: {

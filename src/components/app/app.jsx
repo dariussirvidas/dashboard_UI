@@ -10,7 +10,7 @@ import Login from '../login/login'
 import Signup from "../signup/signup";
 
 function App() {
-    const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
+    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [domainList, setDomainList] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
 
@@ -31,7 +31,7 @@ function App() {
     }
 
     function fetchDomains(endpoint) {
-        fetchFromApi(endpoint + "api/domain")
+        fetchFromApi(endpoint + "domain")
             .then(data => {
                 setDomainList(data)
             })

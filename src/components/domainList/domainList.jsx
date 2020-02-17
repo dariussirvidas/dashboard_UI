@@ -91,7 +91,7 @@ function SingleDomain(props) {
     }
 
     function submitData(endpoint, changeDomainList, dataForSending) {
-        fetchPut(endpoint + "api/domain/" + dataForSending.id, dataForSending)
+        fetchPut(endpoint + "domain/" + dataForSending.id, dataForSending)
             .then((data) => {
                 changeDomainList(data)
             })

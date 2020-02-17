@@ -5,7 +5,7 @@ import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 function DeleteDomain(props) {
 
     async function fetchPutDelete() {
-        const response = await fetch(props.endpoint + 'api/domain/del/' + props.domain.id, {
+        const response = await fetch(props.endpoint + 'domain/del/' + props.domain.id, {
                 method: 'PUT'
             }
         );

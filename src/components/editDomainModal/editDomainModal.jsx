@@ -164,7 +164,7 @@ function Example(props) {
     }
 
     function submitData(endpoint, changeDomainList, dataForSending) {
-        fetchPut(endpoint + "api/domain/" + props.domain.id, dataForSending)
+        fetchPut(endpoint + "domain/" + props.domain.id, dataForSending)
             .then((statusCode) => {
                 console.log("status code " + statusCode + "...");
                 if (statusCode > 199 && statusCode < 300) {
