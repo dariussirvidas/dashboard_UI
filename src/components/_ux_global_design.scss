@@ -1,0 +1,297 @@
+/*-------------------
+COLORS
+--------------------*/
+
+// Aterul, Caerul and etc.
+$clr-aterul: rgb(0, 0, 0);
+$clr-caerul: rgb(0, 145, 220);
+$clr-canul: rgb(182, 190, 198);
+$clr-sucaerul: rgb(200, 230, 250);
+$clr-sucanul: rgb(229, 232, 235);
+
+// Black & White
+
+$clr-black: #333333;
+$clr-white: #ffffff;
+
+// Hero Color
+
+$clr-hero: #0091dc; //text has to be white with this color
+
+//Only use for icons and diagrams
+
+$clr-icdg-1: #b6bec6;
+$clr-icdg-2: #c8e6fa;
+
+// Layout Colors
+
+$clr-gr-1: #d8dce1;
+$clr-gr-2: #e5e8eb;
+$clr-gr-3: #f2f3f5;
+
+// Special Colors
+
+$clr-spc-1: #80ca3d;
+$clr-spc-2: #ffd600;
+$clr-spc-3: #ff6900; //text has to be white with this color
+$clr-spc-4: #d50000; // text has to be white with this color
+
+// For stickers
+$clr-success: #b6d7a8;
+$clr-fail: #e06666;
+
+/*-------------------------
+    FONTS
+ ------------------------*/   
+ @font-face {
+    font-family: "MetaPro";
+    font-style: normal;
+    font-weight: 400;
+    src: local("MetaPro"), local("MetaPro-Regular"),
+      url(../assets/fonts/MetaPro-Regular.ttf) format("ttf");
+  }
+  
+  @font-face {
+    font-family: "MetaPro";
+    font-style: normal;
+    font-weight: 700;
+    src: local("MetaPro"), local("MetaPro-Bold"),
+      url(../assets/fonts/MetaPro-Bold.ttf) format("ttf");
+  }
+  
+  html {
+    font-family: "MetaPro", sans-serif;
+  }
+  
+  //Variables
+  
+  $fnt-mpr: "MetaPro-Regular";
+  $fnt-mpb: "MetaPro-Bold";
+  
+  //Classes
+  
+  .cl-h1 {
+    font-family: $fnt-mpb;
+    color: $clr-black;
+    font-size: 32px;
+    text-align: left;
+  }
+  
+  .cl-intro {
+    font-family: $fnt-mpb;
+    color: $clr-icdg-1;
+    font-weight: bold;
+    font-size: 24px;
+    text-align: left;
+  }
+  
+  .cl-h2 {
+    font-family: $fnt-mpr;
+    color: $clr-black;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .cl-h3 {
+    font-family: $fnt-mpb;
+    color: $clr-black;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .cl-copy-16 {
+    font-family: $fnt-mpr;
+    color: $clr-black;
+    font-size: 16px;
+    text-align: left;
+  }
+  
+  .cl-copy-14 {
+    font-family: $fnt-mpr;
+    color: $clr-black;
+    font-size: 14px;
+    text-align: left;
+    
+  }
+  
+  .cl-copy-12 {
+    font-family: $fnt-mpr;
+    color: $clr-black;
+    font-size: 12px;
+    text-align: left;
+  }
+/*///////////////////
+BUTTONS
+*//////////////////
+
+//Button styles
+
+//Button Interaction Grey
+
+.btn-grey {
+    background-color: $clr-gr-1;
+    color: $clr-black;
+    height: 48px;
+    border-radius: 7px;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    font-family: $fnt-mpr;
+    &:hover {
+      background-color: mix($clr-black, $clr-gr-1, 10%);
+    }
+    &:active {
+      background-color: mix($clr-black, $clr-gr-1, 20%);
+    }
+  }
+  .btn-grey-disabled {
+    background-color: $clr-gr-1;
+    color: $clr-black;
+    height: 48px;
+    border-radius: 7px;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    font-family: $fnt-mpr;
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .btn-grey-round {
+    background-color: $clr-gr-1;
+    color: $clr-black;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    border: none;
+    &:hover {
+      background-color: mix($clr-black, $clr-gr-1, 10%);
+      color: mix($clr-black, $clr-white, 10%);
+    }
+    &:active {
+      background-color: mix($clr-black, $clr-gr-1, 20%);
+      color: mix($clr-black, $clr-white, 20%);
+    }
+  }
+  .btn-grey-round-disabled {
+    background-color: $clr-gr-1;
+    color: $clr-black;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  //Button Interaction Hero
+  
+  .btn-hero {
+    background-color: $clr-hero;
+    color: $clr-white;
+    height: 48px;
+    border-radius: 7px;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    font-family: $fnt-mpr;
+    &:hover {
+      background-color: mix($clr-black, $clr-hero, 10%);
+      color: mix($clr-black, $clr-white, 10%);
+    }
+    &:active {
+      background-color: mix($clr-black, $clr-hero, 20%);
+      color: mix($clr-black, $clr-white, 20%);
+    }
+  }
+  
+  .btn-hero-disabled {
+    background-color: $clr-canul;
+    color: $clr-black;
+    height: 48px;
+    border-radius: 7px;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    font-family: $fnt-mpr;
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  
+  .btn-hero-round {
+    background-color: $clr-hero;
+    color: $clr-white;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    &:hover {
+      background-color: mix($clr-black, $clr-hero, 10%);
+      color: mix($clr-black, $clr-white, 10%);
+    }
+    &:active {
+      background-color: mix($clr-black, $clr-hero, 20%);
+      color: mix($clr-black, $clr-white, 20%);
+    }
+  }
+  
+  .btn-hero-round-disabled {
+    background-color: $clr-canul;
+    color: $clr-black;
+    height: 48px;
+    width: 48px;
+    border-radius: 50%;
+    outline-style: none;
+    box-shadow: none;
+    border-color: transparent;
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  
+/*---------------------------
+  TEXTLINKS
+ --------------------------*/ 
+ .textlink-1 {
+    color: $clr-hero;
+    cursor: pointer;
+    &:hover {
+      color: mix($clr-black, $clr-hero, 10%);
+    }
+    &:active {
+      color: mix($clr-black, $clr-hero, 20%);
+    }
+  }
+  .textlink-disabled {
+    color: $clr-aterul;
+    opacity: 0.3;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .textlink-2 {
+    color: $clr-black;
+    &:hover {
+      color: mix($clr-black, $clr-hero, 10%);
+    }
+    &:active {
+      color: mix($clr-black, $clr-hero, 20%);
+    }
+  }
+  .textlink-3 {
+    color: $clr-canul;
+    &:hover {
+      color: mix($clr-black, $clr-hero, 10%);
+    }
+    &:active {
+      color: mix($clr-black, $clr-hero, 20%);
+    }
+  }
+  

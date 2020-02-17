@@ -1,0 +1,97 @@
+.forma {
+  position: relative;
+  z-index: 1;
+  padding: 45px;
+  text-align: center;
+}
+.forma input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 95%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.forma button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: lightskyblue;
+  width: 30%;
+  border: 0;
+  padding: 10px;
+  margin: 5px;
+  color: #FFFFFF;
+  font-size: 14px;
+
+}
+.forma button:hover,.forma button:active,.forma button:focus {
+  background: lightskyblue;
+}
+.forma .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.forma .message a {
+  color: lightskyblue;
+  text-decoration: none;
+}
+.SelectFrom{
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 45%;
+  border: 0;
+  margin: 0px 10px 10px 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.textArea{
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 95%;
+  border: 0;
+  margin: 0px 10px 10px 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+label{
+  display: inline !important;
+  margin-bottom: 15px !important;
+}
+.SelectCheckbox{
+  display: inline !important;
+  padding: 0 !important;
+  margin-right: 0% !important;
+  width: 10% !important;
+  margin-bottom: 15px !important;
+
+}
+
+.SelectCheckbox2{
+  display: inline !important;
+  margin-bottom: 15px !important;
+  width: 10% !important;
+}
+.SelectCheckbox3{
+  display: inline !important;
+  padding: 0 !important;
+  margin-right: 0% !important;
+  margin-bottom: 15px !important;
+  width: 10% !important;
+}
+
+.SelectInterval{
+  width: 78% !important;
+}
+.SelectIntervalSeconds{
+  width: 15% !important;
+  margin-left: 5px !important;
+}

@@ -5,24 +5,17 @@ import {BrowserRouter as Router} from "react-router-dom";
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import Footer from "../footer/footer";
-import {LoadingSpinner, ErrorMessage} from "../elements/elements";
+<<<<<<< HEAD
 import Login from '../login/login'
 import Signup from "../signup/signup";
+=======
+import {LoadingSpinner, ErrorMessage} from "../elements/elements";
+>>>>>>> origin/develop
 
 function App() {
-    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
+    const [endpoint, setEndpoint] = useState("http://40.85.76.116/");
     const [domainList, setDomainList] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
-
-    // initial fetch ("deps:" stops infinite loop)
-    useEffect(() => {
-        fetchDomains(endpoint);
-    }, []);
-
-
-    useEffect(() => {
-        setTimeout(reFetchDomains, 8000)
-    }, []);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint);
@@ -31,7 +24,7 @@ function App() {
     }
 
     function fetchDomains(endpoint) {
-        fetchFromApi(endpoint + "domain")
+        fetchFromApi(endpoint + "api/domain")
             .then(data => {
                 setDomainList(data)
             })
@@ -45,11 +38,14 @@ function App() {
             });
     }
 
+    // initial fetch ("deps:" stops infinite loop)
+    useEffect(() => {
+        fetchDomains(endpoint);
+    }, []);
 
     // (re)fetches domainList
     function reFetchDomains() {
         console.log("refetching!");
-        setTimeout(reFetchDomains, 5000)
         fetchDomains(endpoint);
     }
 

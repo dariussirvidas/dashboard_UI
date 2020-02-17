@@ -1,0 +1,32 @@
+@import "../_ux_global_design.scss";
+
+table {
+  border-collapse: collapse;
+  width: 1080px;
+  justify-content: center;
+  border: 1px solid $clr-icdg-1;
+  margin-bottom: 1%;
+}
+
+th, td {
+  text-align: left !important;
+  vertical-align: center !important;
+}
+
+tr:nth-child(even) {
+  background-color: $clr-sucanul;
+}
+
+.eva-edit-outline {
+  vertical-align: middle;
+}
+
+
+
+.domainButton{
+  margin-right: 10px;
+}
+.txt {
+  cursor: pointer;
+}
+
