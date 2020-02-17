@@ -104,6 +104,9 @@ function Example(props) {
                                   placeholder="Parameters"></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
                                placeholder="Interval"/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold"
+                               min="50"/>
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
                         <button type="button">Test</button>
@@ -133,6 +136,7 @@ function Example(props) {
             Parameters: event.target.parameters.value,
             notification_Email: event.target.email.value,
             interval_Ms: (parseInt(event.target.interval.value) * 1000),
+            Latency_Threshold_Ms: parseInt(event.target.threshold.value),
             active: event.target.active.checked
         };
         console.log("full object for sending:", dataForSending);
