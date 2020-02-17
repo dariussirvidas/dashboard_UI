@@ -9,6 +9,10 @@
 .tile-unclear {
   background: $clr-canul !important;
 }
+//When status is 200 but there is lag
+.tile-amber {
+  background: $clr-amber !important;
+}
 
 // When pinged and not ok
 .tile-fail {

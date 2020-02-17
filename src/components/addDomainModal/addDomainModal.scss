@@ -1,3 +1,4 @@
+@import '../ux_global_design.scss';
 .forma {
   position: relative;
   z-index: 1;
@@ -19,18 +20,26 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: lightskyblue;
+  background: $clr-hero;
   width: 30%;
   border: 0;
   padding: 10px;
   margin: 5px;
   color: #FFFFFF;
   font-size: 14px;
+  &:hover {
+    background-color: mix($clr-black, lightskyblue, 10%) !important;
+    color: mix($clr-black, $clr-white, 10%) !important;
+  }
+  &:active {
+    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
 
 }
-.forma button:hover,.forma button:active,.forma button:focus {
+/* .forma button:hover,.forma button:active,.forma button:focus {
   background: lightskyblue;
-}
+} */
 .forma .message {
   margin: 15px 0 0;
   color: #b3b3b3;
@@ -64,28 +73,28 @@
 }
 label{
   display: inline !important;
-  margin-bottom: 15px !important;
+ /*  margin-bottom: 15px !important; */     /*COMMENTED THESE OUT SINCE THEY HAVE NO EFFECT WHEN USED WITH DISPLAY:INLINE */
 }
 .SelectCheckbox{
   display: inline !important;
   padding: 0 !important;
   margin-right: 0% !important;
-  width: 10% !important;
-  margin-bottom: 15px !important;
+ /*  width: 10% !important;
+  margin-bottom: 15px !important; */
 
 }
 
 .SelectCheckbox2{
   display: inline !important;
-  margin-bottom: 15px !important;
-  width: 10% !important;
+ /*  margin-bottom: 15px !important; */
+ /*  width: 10% !important; */
 }
 .SelectCheckbox3{
   display: inline !important;
   padding: 0 !important;
   margin-right: 0% !important;
-  margin-bottom: 15px !important;
-  width: 10% !important;
+ /*  margin-bottom: 15px !important;
+  width: 10% !important; */
 }
 
 .SelectInterval{
@@ -94,4 +103,15 @@ label{
 .SelectIntervalSeconds{
   width: 15% !important;
   margin-left: 5px !important;
+}
+.interactive {
+  background-color: $clr-hero !important;
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    color: mix($clr-black, $clr-white, 10%) !important;
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
 }

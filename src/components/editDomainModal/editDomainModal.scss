@@ -1,3 +1,4 @@
+@import '../ux_global_design.scss';
 .forma {
   position: relative;
   z-index: 1;
@@ -26,11 +27,19 @@
   margin: 5px;
   color: #FFFFFF;
   font-size: 14px;
+  &:hover {
+    background-color: mix($clr-black, lightskyblue, 10%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+  &:active {
+    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
 
 }
-.forma button:hover,.forma button:active,.forma button:focus {
+/* .forma button:hover,.forma button:active,.forma button:focus {
   background: lightskyblue;
-}
+} */
 .forma .message {
   margin: 15px 0 0;
   color: #b3b3b3;
