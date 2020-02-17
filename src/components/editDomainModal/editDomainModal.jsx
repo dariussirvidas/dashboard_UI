@@ -25,19 +25,15 @@ function EditDomainModal(props) {
 
 function Example(props) {
 
-    let isWebappSelected = false;
     let isRestSelected = false;
     let isSoapSelected = false;
 
     function getDefaultSelectionServiceType() {
         switch (props.domain.service_Type) {
             case 0 :
-                isWebappSelected = true;
-                break;
-            case 1 :
                 isRestSelected = true;
                 break;
-            case 2 :
+            case 1 :
                 isSoapSelected = true;
                 break;
         }
@@ -93,9 +89,8 @@ function Example(props) {
                             <option selected={isPostSelected} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" required>
-                            <option selected={isWebappSelected} value={0}>WebApp</option>
-                            <option selected={isRestSelected} value={1}>Service - REST</option>
-                            <option selected={isSoapSelected} value={2}>Service - SOAP</option>
+                            <option selected={isRestSelected} value={0}>Service - REST</option>
+                            <option selected={isSoapSelected} value={1}>Service - SOAP</option>
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
