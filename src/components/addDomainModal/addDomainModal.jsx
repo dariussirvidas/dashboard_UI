@@ -75,9 +75,8 @@ function Example(props) {
                             <option value={1}>POST</option>
                         </select>
                         <select className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
-                            <option value={0}>WebApp</option>
-                            <option value={1}>Service - REST</option>
-                            <option value={2}>Service - SOAP</option>
+                            <option value={0}>Service - REST</option>
+                            <option value={1}>Service - SOAP</option>
                         </select>
                         <input type="url" placeholder="URL" name="url" required/>
                         <input type="email" placeholder="Email" name="email" required/>
