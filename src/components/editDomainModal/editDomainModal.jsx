@@ -25,19 +25,15 @@ function EditDomainModal(props) {
 
 function Example(props) {
 
-    let isWebappSelected = false;
     let isRestSelected = false;
     let isSoapSelected = false;
 
     function getDefaultSelectionServiceType() {
         switch (props.domain.service_Type) {
             case 0 :
-                isWebappSelected = true;
-                break;
-            case 1 :
                 isRestSelected = true;
                 break;
-            case 2 :
+            case 1 :
                 isSoapSelected = true;
                 break;
         }
@@ -93,9 +89,8 @@ function Example(props) {
                             <option selected={isPostSelected} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" required>
-                            <option selected={isWebappSelected} value={0}>WebApp</option>
-                            <option selected={isRestSelected} value={1}>Service - REST</option>
-                            <option selected={isSoapSelected} value={2}>Service - SOAP</option>
+                            <option selected={isRestSelected} value={0}>Service - REST</option>
+                            <option selected={isSoapSelected} value={1}>Service - SOAP</option>
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
@@ -109,6 +104,9 @@ function Example(props) {
                                   placeholder="Parameters"></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
                                placeholder="Interval"/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold"
+                               min="50"/>
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
                         <button type="button">Test</button>
@@ -138,6 +136,7 @@ function Example(props) {
             Parameters: event.target.parameters.value,
             notification_Email: event.target.email.value,
             interval_Ms: (parseInt(event.target.interval.value) * 1000),
+            Latency_Threshold_Ms: parseInt(event.target.threshold.value),
             active: event.target.active.checked
         };
         console.log("full object for sending:", dataForSending);

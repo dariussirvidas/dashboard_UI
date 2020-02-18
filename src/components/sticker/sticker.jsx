@@ -7,10 +7,14 @@ import ListGroupItem from "react-bootstrap/ListGroupItem";
 function Sticker(props) {
 
     function getClassNameFromStatus() { //class name grazina, pagal status
-        if (props.domainPing.status === 200) {
-            return "tile-success"
-        }
-        return "tile-fail"
+        if (props.domainPing.requestTime > props.domainPing.Latency_Threshold_Ms)
+            return "tile-amber";
+        else if (props.domainPing.status >= 200 && props.domainPing.status <= 299)
+            return "tile-success";
+        else if (props.domainPing.status >= 400 && props.domainPing.status <= 499)
+            return "tile-fail";
+        else
+            return "tile-unclear"
     }
 
     return (

@@ -61,7 +61,7 @@ function Example(props) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" className ="interactive"onClick={handleShow}>
                 Add Domain new
             </Button>
 {/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
@@ -75,9 +75,8 @@ function Example(props) {
                             <option value={1}>POST</option>
                         </select>
                         <select className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
-                            <option value={0}>WebApp</option>
-                            <option value={1}>Service - REST</option>
-                            <option value={2}>Service - SOAP</option>
+                            <option value={0}>Service - REST</option>
+                            <option value={1}>Service - SOAP</option>
                         </select>
                         <input type="url" placeholder="URL" name="url" required/>
                         <input type="email" placeholder="Email" name="email" required/>
@@ -89,13 +88,15 @@ function Example(props) {
                         <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required></textarea>
                         <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="50" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="50"/>
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose}>Cancel</button>
-                        
+
                     </form>
                 </div>
             </Modal>
@@ -115,7 +116,9 @@ function Example(props) {
                 Parameters: event.target.parameters.value,
                 notification_email: event.target.email.value,
                 interval_Ms: parseInt(event.target.interval.value * 1000), //paverciam i ms is s, pries siunciant i serveri
+                Latency_Threshold_Ms: parseInt(event.target.threshold.value),
                 active: event.target.active.checked
+
             };
         } catch (error) {
             console.log(error)
