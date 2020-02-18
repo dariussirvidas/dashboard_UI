@@ -4,6 +4,7 @@ import style from './userMaintainList.scss'
 import Popup from "reactjs-popup";
 import EditUser from '../editUser/editUser';
 import {ErrorMessage} from "../elements/elements";
+import store from "../../js/store";
 
 function UserMaintainList(props) {
 
@@ -34,14 +35,11 @@ function UserMaintainList(props) {
 
     async function fetchGet() {
 
-        const response = await fetch(props.endpoint + "" + "users",
-            {
-                method: 'GET',
+        const response = await fetch(props.endpoint + "" + "users", {
+                method: "GET",
                 headers: {
-                    // 'Content-Type': 'application/json'
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjgiLCJyb2xlIjoiVXNlciIsIm5iZiI6MTU4MTQxNTg4NiwiZXhwIjoxNTgyMDIwNjg2LCJpYXQiOjE1ODE0MTU4ODZ9.65cge-mCWXkuOLGm0yeTaMQFfysV36ogJLBYfGB1HAE'
-                },
+                    'Authorization': 'Bearer ' + store.getState().token
+                }
             }
         );
         const userList = await response.json();

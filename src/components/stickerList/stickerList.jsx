@@ -4,6 +4,7 @@ import Sticker from "../sticker/sticker";
 import CardDeck from "react-bootstrap/CardDeck";
 import Style from './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
+import store from "../../js/store";
 
 
 function StickerList(props) {
@@ -76,7 +77,12 @@ function SingleService(props) {
 
     async function fetchFromApi(endpoint) {
 
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                'Authorization': 'Bearer ' + store.getState().token
+            }
+        });
 
         const data = await response.json();
         // console.log("data: ", data); 

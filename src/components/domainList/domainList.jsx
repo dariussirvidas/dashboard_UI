@@ -5,6 +5,7 @@ import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
 import DeleteDomain from "../deleteDomain/deleteDomain";
+import store from "../../js/store";
 
 function DomainList(props) {
 
@@ -80,8 +81,9 @@ function SingleDomain(props) {
             {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + store.getState().token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

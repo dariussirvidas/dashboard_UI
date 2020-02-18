@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
+import store from "../../js/store";
 
 // currently functions as another Add service
 // jei webapp, metodas GET, keisti negalima, nereikia parametru
@@ -152,8 +153,9 @@ function Example(props) {
             {
                 method: 'PUT',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + store.getState().token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
