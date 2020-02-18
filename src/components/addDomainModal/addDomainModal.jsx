@@ -61,7 +61,7 @@ function Example(props) {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" className ="interactive"onClick={handleShow}>
                 Add Domain new
             </Button>
 {/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
