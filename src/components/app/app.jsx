@@ -9,6 +9,13 @@ import {LoadingSpinner, ErrorMessage} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 
+import rootReducer from "../../js/reducers";
+import store from "../../js/store";
+
+
+window.store = store;
+
+
 function App() {
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [domainList, setDomainList] = useState();
@@ -22,10 +29,16 @@ function App() {
 
     useEffect(() => {
         setTimeout(reFetchDomains, 8000)
+        console.log(store.getState().token)
     }, []);
 
     async function fetchFromApi(endpoint) {
-        const response = await fetch(endpoint);
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                'Authorization': 'Bearer ' + store.getState().token
+            }
+        });
         const data = await response.json();
         return data;
     }

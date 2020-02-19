@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import './deleteDomain.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
+import store from "../../js/store";
 
 function DeleteDomain(props) {
 
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'domain/del/' + props.domain.id, {
+            headers: {
+                'Authorization': 'Bearer ' + store.getState().token
+            },
                 method: 'PUT'
             }
         );

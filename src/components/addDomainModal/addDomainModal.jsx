@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './addDomainModal.scss';
+import store from "../../js/store";
 
 
 function AddDomainModal(props) {
@@ -88,7 +89,7 @@ function Example(props) {
                         <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required></textarea>
                         <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="50" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="50"/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="1" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
@@ -136,8 +137,9 @@ function Example(props) {
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + store.getState().token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
