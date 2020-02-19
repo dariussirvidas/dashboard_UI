@@ -17,53 +17,56 @@ function DomainList(props) {
 
     }
 
+
     return (
-        <div className="container">
-            <div className="TableDiv">
-                <table className="Table" align="center">
-                    <tr>
-                        <th>Service name</th>
-                        <th>Service type</th>
-                        <th>URL</th>
-                        <th>Active</th>
-                        <th>Emails</th>
-                        <th>Check interval (S)</th>
-                        <th>Maintenance</th>
-                    </tr>
-                    {
-                        // checks for errors, if there are any, do not render domains
-                        props.domainList !== "error" ?
-                            (
-                                props.domainList.status !== 404 ?
-                                    (
-                                        props.domainList.map((item) => {
-                                            return <SingleDomain
-                                                d={item}
-                                                callbackFetch={props.callbackReFetchDomains}
-                                                endpoint={props.endpoint}
-                                                changeDomainList={props.changeDomainList}
-                                            />
-                                        })
-                                    )
-                                    :
-                                    (
-                                        <>
-                                        </>
-                                    )
-                            )
-                            :
-                            (
-                                <ErrorMessage
-                                    message="Error while fetching list"
-                                />
-                            )
-                    }
-                </table>
-                <div className="d-flex justify-content-end domainButton">
-                    <AddDomainModal
-                        callbackFetch={props.callbackReFetchDomains}
-                        appendDomainList={props.appendDomainList}
-                        endpoint={props.endpoint}/>
+        <div className="container-fluid">
+            <div className="container table-responsive">
+                <div className="TableDiv">
+                    <table className="Table" align="center">
+                        <tr>
+                            <th className="text-center" width="7%">Active</th>
+                            <th className="text-left">Service Name</th>
+                            <th className="text-center">Service Type</th>
+                            <th className="text-center">URL</th>
+                            <th className="text-center">Emails</th>
+                            <th className="text-center" width="13%">Check interval (S)</th>
+                            <th className="text-center">Maintenance</th>
+                        </tr>
+                        {
+                            // checks for errors, if there are any, do not render domains
+                            props.domainList !== "error" ?
+                                (
+                                    props.domainList.status !== 404 ?
+                                        (
+                                            props.domainList.map((item) => {
+                                                return <SingleDomain
+                                                    d={item}
+                                                    callbackFetch={props.callbackReFetchDomains}
+                                                    endpoint={props.endpoint}
+                                                    changeDomainList={props.changeDomainList}
+                                                />
+                                            })
+                                        )
+                                        :
+                                        (
+                                            <>
+                                            </>
+                                        )
+                                )
+                                :
+                                (
+                                    <ErrorMessage
+                                        message="Error while fetching list"
+                                    />
+                                )
+                        }
+                    </table>
+                    <div className="d-flex justify-content-end domainButton">
+                        <AddDomainModal
+                            callbackFetch={props.callbackReFetchDomains}
+                            appendDomainList={props.appendDomainList}
+                            endpoint={props.endpoint}/>
+                    </div>
                 </div>
             </div>
         </div>
@@ -119,16 +122,19 @@ function SingleDomain(props) {
         event.preventDefault();
     }
 
+    function MakeShorterName(name) {
+        let maxLength = 24;
+        return name.length < maxLength ? name : String(name).substring(0, maxLength);
+    }
+
     return (
         <>
             {
                 // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
+
                 <tr align="center">
-                    <td>{props.d.service_Name}</td>
-                    <td>{props.d.service_Type}</td>
-                    <td>{props.d.url}</td>
-                    <td>
+                    <td className="text-center">
                         <Checkbox
                             endpoint={props.endpoint}
                             id={props.d.id}
@@ -141,10 +147,37 @@ function SingleDomain(props) {
                             domain={props.d}
                         />
                     </td>
-                    <td>{props.d.notification_Email}</td>
-                    <td>{Math.trunc(props.d.interval_Ms / 1000)} s</td>
+                    <td className="text-truncate">
+                        <div className="tooltip-wrap">
+                            <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                               title={props.d.service_Name}>
+                                {props.d.service_Name}
+                            </p>
+                        </div>
+                        </td>
+                    <td className="text-center">{props.d.service_Type}</td>
+                    <td className="tooltip-content">
+
+                        <div className="text-truncate">
+                            <div className="tooltip-wrap">
+                                <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                   title={props.d.url}>
+                                    {props.d.url}
+                                </p>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td className="text-center " title="Email">
+                        <div className="tooltip-wrap">
+                            <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                               title={props.d.notification_Email}>{MakeShorterName(props.d.notification_Email)}
+                            </p>
+                        </div>
+                    </td>
+                    <td className="text-center">{Math.trunc(props.d.interval_Ms / 1000)} s</td>
                     <div>
-                        <div>
+                        <div className="editDomainModal">
 
                             <EditDomainModal
                                 domain={props.d}

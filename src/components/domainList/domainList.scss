@@ -2,10 +2,15 @@
 
 table {
   border-collapse: collapse;
-  width: 1080px;
+  width: 1265px !important;
   justify-content: center;
   border: 1px solid $clr-icdg-1;
   margin-bottom: 1%;
+  table-layout: fixed;
+}
+th{
+  background: $clr-caerul;
+  color: #d8dce1;
 }
 
 th, td {
@@ -21,12 +26,31 @@ tr:nth-child(even) {
   vertical-align: middle;
 }
 
-
-
 .domainButton{
-  margin-right: 10px;
+  margin-right: -6px;
 }
 .txt {
   cursor: pointer;
 }
+.editDomainModal{
+  margin-top: 17px;
+}
 
+.tooltip-wrap {
+  position: relative !important;
+}
+.tooltip-wrap .tooltip-content {
+  display: none;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  right: 5%;
+  background-color: #fff;
+  padding: .5em;
+
+}
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
+
+
+}
