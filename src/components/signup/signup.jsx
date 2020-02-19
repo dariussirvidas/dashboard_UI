@@ -10,13 +10,13 @@ function Signup() {
                     <div className="form">
                         <img src={Logo} alt="Festo Logo"/>
                         <hr/>
-                        <form className="login-form">
-                            <input type="text" placeholder="name"/>
-                            <input type="text" placeholder="surname"/>
-                            <input type="password" placeholder="password"/>
-                            <input type="password" placeholder="repeat password"/>
-                            <input type="text" placeholder="email address"/>
-                            <button>create</button>
+                        <form className="login-form"  onSubmit={handleSubmit} id="formForSignUp" noValidate>
+                            <input type="text" placeholder="name" name="Name"/>
+                            <input type="text" placeholder="surname" name="Surname"/>
+                            <input type="password" placeholder="password" name="Password"/>
+                            <input type="password" placeholder="repeat password" name="rPassword"/>
+                            <input type="text" placeholder="email address" name="Email"/>
+                            <button type="submit" value="send POST">create</button>
 
                             <p className="message">Already registered?<Link to="/login"> Sign in</Link></p>
                         </form>
@@ -26,5 +26,23 @@ function Signup() {
         );
 
 }
+function handleSubmit(event) {
+    try {
+        var dataForSending = {
+            name: event.target.Name.value,
+            surname: event.target.Surname.value,
+            password: event.target.Password.value,
+            r_password: event.target.rPassword.value,
+            email: event.target.Email.value
+
+        };
+    } catch (error) {
+        console.log(error)
+    }
+    
+    console.log("full object for POSTing:", dataForSending);
+    
+}
+
 
 export default Signup;

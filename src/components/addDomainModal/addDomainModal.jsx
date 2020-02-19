@@ -62,6 +62,7 @@ function Example(props) {
 
     return (
         <>
+        
             <Button variant="primary" className ="interactive"onClick={handleShow}>
                 Add Domain new
             </Button>
