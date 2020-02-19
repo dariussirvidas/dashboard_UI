@@ -1,0 +1,17 @@
+@import '../ux_global_design.scss';
+
+.interactive1 {
+    /* margin-top: 1px;
+    margin-bottom: 1px;
+    margin-left: 200px;
+    margin-right: 200px; */
+    background-color: $clr-hero !important;
+    &:hover {
+      background-color: mix($clr-black, $clr-hero, 10%) !important;
+      color: mix($clr-black, $clr-white, 10%) !important;
+    }
+    &:active {
+      background-color: mix($clr-black, $clr-hero, 20%) !important;
+      color: mix($clr-black, $clr-white, 20%) !important;
+    }
+  }
