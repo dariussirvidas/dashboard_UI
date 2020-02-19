@@ -17,8 +17,6 @@ function AddDomainModal(props) {
     );
 }
 
-
-
 function Example(props) {
 
     const [show, setShow] = useState(false);
