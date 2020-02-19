@@ -1,0 +1,14 @@
+.Menu_text{
+  margin-top: 5px;
+}
+.Dropdown{
+  z-index: 99 !important;
+}
+@media only screen and (max-width: 1200px){
+  .Menu_text{
+    display: none;
+  }
+}
+.NavBarOnTop{
+  z-index: 99 !important;
+}
