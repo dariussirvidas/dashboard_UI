@@ -20,7 +20,6 @@ function EditUser(props) {
                     </button>
                 </form>
             </div>
-
         </>
     );
 
@@ -30,7 +29,6 @@ function EditUser(props) {
             lastName: event.target.lastName.value,
             username: event.target.username.value,
             userEmail: event.target.userEmail.value,
-
         };
         console.log("full object for sending:", dataForSending);
         event.preventDefault();

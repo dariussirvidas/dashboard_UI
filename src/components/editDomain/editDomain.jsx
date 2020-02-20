@@ -122,7 +122,6 @@ async function fetchPost(endpoint, dataForSending) {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
-                // 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
         }

@@ -9,7 +9,7 @@ function AddDomainModal(props) {
 
     return (
         <div>
-            <Example
+            <DomainModal
                 callbackFetch={props.callbackReFetchDomains}
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}/>
@@ -17,10 +17,9 @@ function AddDomainModal(props) {
     );
 }
 
-function Example(props) {
+function DomainModal(props) {
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
@@ -47,7 +46,7 @@ function Example(props) {
         else{
             return true;
         }
-    }
+    };
 
     const isParametersDisabled = function checkIfDisabled() {
         if(getSelectedMethod == 0 || getSelectedServiceType == 0){ //tipo jei GET ar WEBapp 
@@ -56,13 +55,13 @@ function Example(props) {
         else{
             return false;
         }
-    }
+    };
 
     return (
         <>
         
             <Button variant="primary" className ="interactive"onClick={handleShow}>
-                Add Domain new
+                New Domain
             </Button>
 {/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
             <Modal show={show} onHide={handleClose}>

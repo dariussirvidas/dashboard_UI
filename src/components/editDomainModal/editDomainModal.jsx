@@ -14,7 +14,7 @@ function EditDomainModal(props) {
 
     return (
         <div>
-            <Example
+            <EditDomain
                 domain={props.domain}
                 callbackFetch={props.callbackReFetchDomains}
                 changeDomainList={props.changeDomainList}
@@ -24,7 +24,7 @@ function EditDomainModal(props) {
 
 }
 
-function Example(props) {
+function EditDomain(props) {
 
     let isRestSelected = false;
     let isSoapSelected = false;
@@ -39,12 +39,6 @@ function Example(props) {
                 break;
         }
     }
-
-    // soapui - postas
-    // restui get ir post
-    // webapp tik get
-
-    // basic auth tiek soapui tiek restui (gal ir webappui)
 
     let isPostSelected = false;
     let isGetSelected = false;
@@ -121,7 +115,6 @@ function Example(props) {
                     </form>
                 </div>
             </Modal>
-
         </>
     );
 
@@ -143,7 +136,6 @@ function Example(props) {
         console.log("full object for sending:", dataForSending);
         console.log("JSON string:", JSON.stringify(dataForSending));
         console.log("domain obj: ", props.domain);
-
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }

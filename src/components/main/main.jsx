@@ -44,6 +44,9 @@ function Main(props) {
                     <Route path="/users">
                         <UserMaintainList
                             endpoint={props.endpoint}
+                            appendUserList={props.appendUserList}
+                            changeUserList={props.changeUserList}
+                            userList={props.userList}
                         />
                     </Route>
                     <Route path="/">

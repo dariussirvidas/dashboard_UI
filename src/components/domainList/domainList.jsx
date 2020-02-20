@@ -17,18 +17,17 @@ function DomainList(props) {
 
     }
 
-
     return (
         <div className="container-fluid">
             <div className="container table-responsive">
-                <div className="TableDiv table-hover">
+                <div className="TableDiv ">
                     <table className="Table table-hover" align="center">
                         <tr>
                             <th className="text-center" width="7%">Active</th>
-                            <th className="text-left" width="13%">Service Name</th>
+                            <th className="text-left" width="8%">Service Name</th>
                             <th className="text-center" width="10%">Service Type</th>
-                            <th className="text-center" width="15%">URL</th>
-                            <th className="text-center" width="25%">Emails</th>
+                            <th className="text-left" width="15%">URL</th>
+                            <th className="text-left" width="13%">Emails</th>
                             <th className="text-center" width="11%">Check interval</th>
                             <th className="text-center" width="10%">Maintenance</th>
                         </tr>
@@ -61,13 +60,13 @@ function DomainList(props) {
                                 )
                         }
                     </table>
-                    <div className="d-flex justify-content-end domainButton">
-                        <AddDomainModal
-                            callbackFetch={props.callbackReFetchDomains}
-                            appendDomainList={props.appendDomainList}
-                            endpoint={props.endpoint}/>
-                    </div>
                 </div>
+            </div>
+            <div className="d-flex justify-content-end domainButton">
+                <AddDomainModal
+                    callbackFetch={props.callbackReFetchDomains}
+                    appendDomainList={props.appendDomainList}
+                    endpoint={props.endpoint}/>
             </div>
         </div>
     )
@@ -182,7 +181,7 @@ function SingleDomain(props) {
                         </div>
                     </td>
 
-                    <td className="text-center " title="Email">
+                    <td className="text-left" title="Email">
                         <div className="tooltip-wrap">
                             <p className="text-truncate" data-toggle="tooltip" data-placement="top"
                                title={props.d.notification_Email}>{MakeShorterName(props.d.notification_Email)}
