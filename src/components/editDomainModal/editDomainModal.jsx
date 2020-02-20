@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
+import Icon from './../../Content/edit_icon.png';
 
 // currently functions as another Add service
 // jei webapp, metodas GET, keisti negalima, nereikia parametru
@@ -63,8 +64,8 @@ function EditDomain(props) {
 
     return (
         <>
-            <a variant="primary" className="txt" onClick={handleShow}>
-                Edit
+            <a class="btn btn-link btn-sm txt" variant="primary"  onClick={handleShow}>
+                <i className="material-icons iconHover">&#xe254;</i>
             </a>
 
             {
