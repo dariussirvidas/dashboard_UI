@@ -48,9 +48,9 @@ function DeleteUser(props) {
 
         return (
             <div>
-                <a class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
-                    <i className="material-icons iconHover">&#xe872;</i>
-                </a>
+                <button class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
+                Delete
+                </button>
                 <Modal show={show} onHide={handleClose}>
                     <div className="forma">
                         <form>

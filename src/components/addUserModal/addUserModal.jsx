@@ -11,7 +11,7 @@ function AddUserModal(props) {
         <div>
             <UserModal
                 callbackFetch={props.callbackReFetchUsers}
-                appendUserList={props.appendDomainList}
+                appendUserList={props.appendUserList}
                 endpoint={props.endpoint}/>
         </div>
     );
@@ -22,34 +22,19 @@ function UserModal(props) {
 
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false);
+        setPasswordsMatch(true) //after we close and re-enter Modal to have password state reset to default.
+    };
     const handleShow = () => setShow(true);
 
-    //disabled inputs states:
-    const [getSelectedMethod, setSelectedMethod] = useState(0);
-    const [getSelectedServiceType, setSelectedServiceType] = useState(0);
-    const [getBasicAuth, setBasicAuth] = useState(false);
+    //Check if passwords match
+    
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-
-    function changeMethodOption(event) { //<select name="method"
-        setSelectedMethod(event.target.value)
+    const checkPasswordMatch = function check(){
+        setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
     }
-
-    function changeServiceTypeOption(event) { //<select name="serviceType"
-        setSelectedServiceType(event.target.value)
-    }
-
-    function changeAuth(event) {
-        setBasicAuth(event.target.checked)
-    }
-
-    const isUsernamePasswordDisabled = function checkIfDisabled() {
-        if (getBasicAuth == true) {
-            return false;
-        } else {
-            return true;
-        }
-    };
 
     return (
         <>
@@ -64,12 +49,14 @@ function UserModal(props) {
                         <input type="text" placeholder="First Name" name="firstName" required/>
                         <input type="text" placeholder="Last Name" name="lastName" required/>
                         <input type="email" placeholder="Email" name="userEmail" required/>
-                        <input type="password" placeholder="Password" name="password" required/>
-                        <input type="password" placeholder="Confirm Password" name="confirmPassword" required/>
+                        <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
+                        {passwordsMatch ? "":"Passwords don't match"}
                         <hr/>
                         <br/>
-                        <button type="submit" value="send POST">Add</button>
-                        <button onClick={handleClose}>Cancel</button>
+                        {/* this is retarded, because it's enabled only if passwords match. */}
+                        <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
+                        <button onClick={handleClose} >Cancel</button>
                     </form>
                 </div>
             </Modal>
@@ -103,6 +90,7 @@ function UserModal(props) {
                 console.log("POSTING USER status code = " + response.status);
                 if (response.status > 199 && response.status < 300){
                     console.log("success!")
+                    dataForSending.role = "User" //pradzioj sukurus visi useriai buna. tik poto galima uzdet admin role.
                     props.appendUserList(dataForSending)
                 }
 
@@ -126,8 +114,6 @@ function UserModal(props) {
         const data = await response;
         return data;
     }
-
-
 }
 
 export default AddUserModal;

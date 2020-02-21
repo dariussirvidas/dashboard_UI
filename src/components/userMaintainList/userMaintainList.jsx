@@ -119,16 +119,13 @@ function SingleUser(props) {
                             </td>
                             <td>
                                 <div className="text-center">
-                                    <DeleteUser
-                                        user={props.user}
-                                        changeUserList={props.changeUserList}
-                                        endpoint={props.endpoint}/>
+                                    <EditUserModal
+                                       user={props.user}
+                                       changeUserList={props.changeUserList}
+                                       endpoint={props.endpoint}
+                                       appendUserList={props.appendUserList}
 
-                                    {/*<EditUserModal*/}
-                                    {/*    user={props.user}*/}
-                                    {/*    changeUserList={props.changeUserList}*/}
-                                    {/*    endpoint={props.endpoint}*/}
-                                    {/*/>*/}
+                                    />
                                 </div>
                             </td>
                         </tr>

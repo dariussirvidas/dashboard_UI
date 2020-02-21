@@ -1,5 +1,6 @@
 import React from "react";
 import './editUser.scss';
+import DeleteUser from "../deleteUser/deleteUser";
 
 function EditUser(props) {
     return (
@@ -18,6 +19,7 @@ function EditUser(props) {
                     <button type="button" className="btn-hero">
                         Cancel
                     </button>
+                    <DeleteUser/>
                 </form>
             </div>
         </>
