@@ -11,9 +11,9 @@ function Menu() {
         <>
             {
                 store.getState().isLoggedIn === true &&
-                <div className="bottomLine">
+                <div className="border-bottom border-primary">
                     <div className="container NavBarOnTop">
-                        <nav className="navbar navbar-light bg-white ">
+                        <nav className="navbar navbar-light bg-white">
                             <Link className="navbar-brand" to="/stickerList">
                                 <img src={Logo} width="112" height="20" alt=""/>
                             </Link>
@@ -31,8 +31,11 @@ function Menu() {
                             </div>
                         </nav>
                     </div>
+                    {/*<div className="border"></div>*/}
                 </div>
+
             }
+
         </>
 
     );
