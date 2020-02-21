@@ -2,6 +2,7 @@ import React, {Component, useState} from 'react';
 import store from "../../js/store";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import Style from './deleteUser.scss';
 
 function DeleteUser(props) {
 
@@ -47,9 +48,9 @@ function DeleteUser(props) {
 
         return (
             <div>
-                <Button variant="primary" className ="interactive"onClick={handleShow}>
-                    Delete
-                </Button>
+                <a class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
+                    <i className="material-icons iconHover">&#xe872;</i>
+                </a>
                 <Modal show={show} onHide={handleClose}>
                     <div className="forma">
                         <form>

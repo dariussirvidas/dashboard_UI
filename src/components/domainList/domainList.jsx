@@ -21,7 +21,7 @@ function DomainList(props) {
     return (
         <div className="container-fluid">
             <div className="container table-responsive space">
-                <div className="TableDiv ">
+                <div className="TableDiv">
                     <div className="d-flex justify-content-start domainButton">
                         <AddDomainModal
                             callbackFetch={props.callbackReFetchDomains}
