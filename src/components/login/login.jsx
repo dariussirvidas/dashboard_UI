@@ -8,7 +8,7 @@ function Login() {
             <div className="login-page">
                 <div className="form">
                     <img src={Logo} alt="Festo Logo"/>
-                    <hr/>
+                    <hr className="line"/>
                     <form className="login-form">
                         <input type="text" placeholder="username"/>
                         <input type="password" placeholder="password"/>

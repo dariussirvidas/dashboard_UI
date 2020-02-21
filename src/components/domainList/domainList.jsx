@@ -7,6 +7,7 @@ import EditDomainModal from "../editDomainModal/editDomainModal"
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
 
+
 function DomainList(props) {
 
     function PopUp() {
@@ -19,17 +20,23 @@ function DomainList(props) {
 
     return (
         <div className="container-fluid">
-            <div className="container table-responsive">
+            <div className="container table-responsive space">
                 <div className="TableDiv ">
+                    <div className="d-flex justify-content-start domainButton">
+                        <AddDomainModal
+                            callbackFetch={props.callbackReFetchDomains}
+                            appendDomainList={props.appendDomainList}
+                            endpoint={props.endpoint}/>
+                    </div>
                     <table className="Table table-hover" align="center">
                         <tr>
-                            <th className="text-center" width="7%">Active</th>
-                            <th className="text-left" width="8%">Service Name</th>
-                            <th className="text-center" width="10%">Service Type</th>
+                            <th className="text-center" width="5%">Active</th>
+                            <th className="text-left" width="9%">Service Name</th>
+                            <th className="text-center" width="7%">Service Type</th>
                             <th className="text-left" width="15%">URL</th>
-                            <th className="text-left" width="13%">Emails</th>
-                            <th className="text-center" width="11%">Check interval</th>
-                            <th className="text-center" width="10%">Maintenance</th>
+                            <th className="text-left" width="15%">Emails</th>
+                            <th className="text-center" width="7%">Check interval</th>
+                            <th className="text-center" width="7%">Maintenance</th>
                         </tr>
                         {
                             // checks for errors, if there are any, do not render domains
@@ -62,12 +69,7 @@ function DomainList(props) {
                     </table>
                 </div>
             </div>
-            <div className="d-flex justify-content-end domainButton">
-                <AddDomainModal
-                    callbackFetch={props.callbackReFetchDomains}
-                    appendDomainList={props.appendDomainList}
-                    endpoint={props.endpoint}/>
-            </div>
+
         </div>
     )
 }
@@ -121,10 +123,6 @@ function SingleDomain(props) {
         event.preventDefault();
     }
 
-    function MakeShorterName(name) {
-        let maxLength = 24;
-        return name.length < maxLength ? name : String(name).substring(0, maxLength);
-    }
 
     function getDefaultSelectionServiceType(name) {
         let data;
@@ -184,13 +182,13 @@ function SingleDomain(props) {
                     <td className="text-left" title="Email">
                         <div className="tooltip-wrap">
                             <p className="text-truncate" data-toggle="tooltip" data-placement="top"
-                               title={props.d.notification_Email}>{MakeShorterName(props.d.notification_Email)}
+                               title={props.d.notification_Email}>{props.d.notification_Email}
                             </p>
                         </div>
                     </td>
                     <td className="text-center">{Math.trunc(props.d.interval_Ms / 1000)} s</td>
                     <div>
-                        <div className="editDomainModal">
+                        <div className="editDomainModal editIcon">
 
                             <EditDomainModal
                                 domain={props.d}

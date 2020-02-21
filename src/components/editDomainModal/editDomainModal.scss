@@ -64,3 +64,11 @@
   cursor: pointer;
  
 }
+
+.iconHover{
+  font-size: 19px;
+}
+.iconHover:hover{
+  font-size: 22px ;
+  color: $clr-caerul ;
+}

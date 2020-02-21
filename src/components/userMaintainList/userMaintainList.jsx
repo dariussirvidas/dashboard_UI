@@ -18,7 +18,7 @@ function UserMaintainList(props) {
             <div className="TableDiv table-responsive">
                 <table className="Table" align="center">
                     <tr>
-                        <th className="text-" width="7%">Active</th>
+                        <th className="text-center" width="7%">Active</th>
                         <th className="text-left" width="13%">Username</th>
                         <th className="text-left" width="12%">Name</th>
                         <th className="text-left" width="12%">Surname</th>
@@ -45,14 +45,16 @@ function UserMaintainList(props) {
                                 })
                             )
                     }
+
                 </table>
+                <div className="d-flex justify-content-end userButton">
+                    <AddUserModal
+                        callbackFetch={props.callbackReFetchDomains}
+                        appendUserList={props.appendUserList}
+                        endpoint={props.endpoint}/>
+                </div>
             </div>
-            <div className="d-flex justify-content-end userButton">
-                <AddUserModal
-                    callbackFetch={props.callbackReFetchDomains}
-                    appendUserList={props.appendUserList}
-                    endpoint={props.endpoint}/>
-            </div>
+
         </div>
     );
 }
