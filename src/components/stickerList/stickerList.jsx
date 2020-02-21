@@ -54,7 +54,7 @@ function SingleService(props) {
     useEffect(() => {
 
         pingDomain();
-        console.log("USESTATE___________");
+        console.log("USESTATE");
 
     }, []);
 

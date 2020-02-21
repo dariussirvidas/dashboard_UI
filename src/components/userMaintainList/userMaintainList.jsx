@@ -14,8 +14,15 @@ import EditUserModal from "../editUserModal/editUserModal";
 function UserMaintainList(props) {
 
     return (
-        <div>
-            <div className="TableDiv table-responsive">
+        <div className="container-fluid">
+            <div className="container table-responsive space">
+            <div className="TableDiv">
+                <div className="d-flex justify-content-start domainButton">
+                    <AddUserModal
+                        callbackFetch={props.callbackReFetchDomains}
+                        appendUserList={props.appendUserList}
+                        endpoint={props.endpoint}/>
+                </div>
                 <table className="Table" align="center">
                     <tr>
                         <th className="text-center" width="7%">Active</th>
@@ -47,14 +54,9 @@ function UserMaintainList(props) {
                     }
 
                 </table>
-                <div className="d-flex justify-content-end userButton">
-                    <AddUserModal
-                        callbackFetch={props.callbackReFetchDomains}
-                        appendUserList={props.appendUserList}
-                        endpoint={props.endpoint}/>
-                </div>
-            </div>
 
+            </div>
+            </div>
         </div>
     );
 }
