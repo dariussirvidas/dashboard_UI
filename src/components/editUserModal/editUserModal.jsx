@@ -1,10 +1,16 @@
 import React, {Component, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import store from "../../js/store";
+
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
+import {useSelector, useDispatch} from "react-redux";
+
 
 function EditUserModal(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div>
@@ -20,6 +26,10 @@ function EditUser(props) {
 
     const [show, setShow] = useState(false);
     const [response, setResponse] = useState(); //response from server
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
 
     const handleClose = () => {
         setShow(false);
@@ -105,7 +115,7 @@ function EditUser(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
