@@ -54,7 +54,7 @@ function UserModal(props) {
                         {passwordsMatch ? "":"Passwords don't match"}
                         <hr/>
                         <br/>
-                        {/* this is retarded, because it's enabled only if passwords match. */}
+                        {/* this is retarded, because it's enabled only if passwords match and doesn't look at other inputs. */}
                         <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
                         <button onClick={handleClose} >Cancel</button>
                     </form>

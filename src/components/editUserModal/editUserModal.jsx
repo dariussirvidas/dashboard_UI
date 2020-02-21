@@ -18,8 +18,19 @@ function EditUserModal(props) {
 function EditUser(props) {
 
     const [show, setShow] = useState(false);
-    const handleClose = () => setShow(false);
+
+    const handleClose = () => {
+        setShow(false);
+        setPasswordsMatch(true) //after we close and re-enter Modal to have password state reset to default.
+    };
     const handleShow = () => setShow(true);
+
+    //check if passwords match
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
+
+    const checkPasswordMatch = function check(){
+        setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
+    }
 
 
     return (
@@ -35,14 +46,30 @@ function EditUser(props) {
                         <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName" required/>
                         <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName" required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail" required/>
+                        {
+                        props.user.role == "Admin" ? 
+                        <select name="role" className="SelectFrom" required>
+                            <option value="User">User</option>
+                            <option value="Admin" selected={true}>Admin</option>
+                        </select>
+                        :
+                        <select name="role" className="SelectFrom" required>
+                            <option value="User" selected={true}>User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
+                        }   
                         {/* Backendas neatsiuncia passwordo */}
-                        <input type="password" placeholder="Password"  name="password" required/> 
-                        <input type="password" placeholder="Confirm Password"  name="confirmPassword" required/>
+                        <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/> 
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
+                        {passwordsMatch ? "":"Passwords don't match"}
                         <hr/>
                         <br/>
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose} type="button">Cancel</button>
-                        <DeleteUser/>
+                        <DeleteUser
+                        user={props.user}
+                        changeUserList={props.changeUserList}
+                        endpoint={props.endpoint}/>
                     </form>
                 </div>
             </Modal>
@@ -50,18 +77,20 @@ function EditUser(props) {
     );
 
     function handleSubmit(event) {
-        let dataForSending = {
+        var dataForSending = {
             username: event.target.userName.value,
             firstName: event.target.firstName.value,
             lastName: event.target.lastName.value,
             userEmail: event.target.userEmail.value,
             password: event.target.password.value,
-            confirmPassword: event.target.confirmPassword.value
+            confirmPassword: event.target.confirmPassword.value,
+            role: event.target.role.value  
         };
         console.log("full object for sending:", dataForSending);
         console.log("JSON string:", JSON.stringify(dataForSending));
-        // console.log("domain obj: ", props.user);
-        // submitData(props.endpoint, props.changeUserList, dataForSending);
+        console.log("domain obj: ", props.user);
+        submitData(props.endpoint, props.changeUserList, dataForSending);
+        // handleClose();
         event.preventDefault();
     }
 
@@ -82,7 +111,7 @@ function EditUser(props) {
     }
 
     function submitData(endpoint, changeUserList, dataForSending) {
-        fetchPut(endpoint + "users/admin/register" + props.user.id, dataForSending)
+        fetchPut(endpoint + "users/" + props.user.id, dataForSending)
             .then((statusCode) => {
                 console.log("status code " + statusCode + "...");
                 if (statusCode > 199 && statusCode < 300) {

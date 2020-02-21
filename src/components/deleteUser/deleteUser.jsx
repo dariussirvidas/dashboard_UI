@@ -38,7 +38,7 @@ function DeleteUser(props) {
 
             })
             .catch((error) => {
-                console.error("error while PUT delete user: " + error);
+                console.error("error while delete user: " + error);
             });
     }
 
