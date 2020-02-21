@@ -61,9 +61,9 @@ function DomainModal(props) {
     return (
         <>
         
-            <Button variant="primary" className ="interactive"onClick={handleShow}>
+            <button variant="primary" className ="Buttonas" onClick={handleShow}>
                 New Domain
-            </Button>
+            </button>
 {/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">

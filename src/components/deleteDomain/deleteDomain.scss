@@ -1,17 +1,23 @@
 @import '../ux_global_design.scss';
 
-.interactive1 {
-    /* margin-top: 1px;
-    margin-bottom: 1px;
-    margin-left: 200px;
-    margin-right: 200px; */
-    background-color: $clr-hero !important;
-    &:hover {
-      background-color: mix($clr-black, $clr-hero, 10%) !important;
-      color: mix($clr-black, $clr-white, 10%) !important;
-    }
-    &:active {
-      background-color: mix($clr-black, $clr-hero, 20%) !important;
-      color: mix($clr-black, $clr-white, 20%) !important;
-    }
+forma {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: $clr-caerul !important;
+  width: 30%;
+  border: 0;
+  padding: 10px;
+  margin: 5px;
+  color: #FFFFFF;
+  font-size: 14px;
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%);
+    color: mix($clr-black, $clr-white, 20%) !important;
   }
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 10%);
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+
+}

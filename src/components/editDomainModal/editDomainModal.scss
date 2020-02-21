@@ -17,10 +17,9 @@
   font-size: 14px;
 }
 .forma button {
-  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: lightskyblue;
+  background: $clr-caerul !important;
   width: 30%;
   border: 0;
   padding: 10px;
@@ -28,11 +27,11 @@
   color: #FFFFFF;
   font-size: 14px;
   &:hover {
-    background-color: mix($clr-black, lightskyblue, 10%) !important;
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
   &:active {
-    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
@@ -69,6 +68,5 @@
   font-size: 19px;
 }
 .iconHover:hover{
-  font-size: 22px ;
   color: $clr-caerul ;
 }

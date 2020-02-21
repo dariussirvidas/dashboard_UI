@@ -5,6 +5,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Toast from 'react-bootstrap/Toast'
 import store from "../../js/store";
+import Style from './deleteDomain.scss';
 
 function DeleteDomain(props) {
 
@@ -53,10 +54,10 @@ function DeleteDomain(props) {
 
     return (
         <>
-            <Button variant="primary" className ="interactive"onClick={handleShow}>
+            <button variant="primary" className="forma" onClick={handleShow}>
             {/* <button type="button" onClick={deleteDomain}>Delete</button> */}
             Delete
-            </Button>
+            </button>
             <Modal show={show} onHide={handleClose}>
             <div className="forma">
                 <form>

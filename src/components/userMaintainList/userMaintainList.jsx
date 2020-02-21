@@ -25,7 +25,6 @@ function UserMaintainList(props) {
                 </div>
                 <table className="Table" align="center">
                     <tr>
-                        <th className="text-center" width="7%">Active</th>
                         <th className="text-left" width="13%">Username</th>
                         <th className="text-left" width="12%">Name</th>
                         <th className="text-left" width="12%">Surname</th>
@@ -54,7 +53,6 @@ function UserMaintainList(props) {
                     }
 
                 </table>
-
             </div>
             </div>
         </div>
@@ -64,7 +62,6 @@ function UserMaintainList(props) {
 function SingleUser(props) {
     return (
         <>
-
             {
                 props.user.deleted === true ?
                     (
@@ -74,9 +71,6 @@ function SingleUser(props) {
                     :
                     (
                         <tr align="center">
-                            <td className="text-center">
-                                <Checkbox/>
-                            </td>
                             <td className="text-truncate">
                                 <div className="tooltip-wrap text-left">
                                     <p className="text-truncate" data-toggle="tooltip" data-placement="top"

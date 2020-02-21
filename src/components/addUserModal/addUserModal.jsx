@@ -3,6 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import store from "../../js/store";
 import AddDomainModal from "../addDomainModal/addDomainModal";
+import Style from './addUserModal.scss';
 
 function AddUserModal(props) {
 
@@ -37,10 +38,9 @@ function UserModal(props) {
 
     return (
         <>
-            <Button variant="primary" className="interactive" onClick={handleShow}>
+            <button  className="Buttonas" onClick={handleShow}>
                 New User
-
-            </Button>
+            </button>
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
