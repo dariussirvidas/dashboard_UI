@@ -4,13 +4,13 @@ table {
   border-collapse: collapse;
   width: 1265px !important;
   justify-content: center;
-  border: 1px solid $clr-icdg-1;
+  border: 1px solid $clr-icdg-1 !important;
   margin-bottom: 1%;
   table-layout: fixed;
 }
 th{
   background: $clr-caerul;
-  color: #d8dce1;
+  color: #FFFFFF;
 }
 
 th, td {
@@ -27,7 +27,9 @@ tr:nth-child(even) {
 }
 
 .domainButton{
-  margin-right: -6px;
+
+margin-bottom: 15px;
+
 }
 .txt {
   cursor: pointer;
@@ -51,6 +53,10 @@ tr:nth-child(even) {
 }
 .tooltip-wrap:hover .tooltip-content {
   display: block;
-
-
+}
+.space{
+  margin-top: 50px !important;
+}
+.editIcon{
+  background: url('./../../Content/edit_icon.png');
 }

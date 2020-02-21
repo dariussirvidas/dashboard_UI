@@ -9,15 +9,15 @@ function Signup() {
                 <div className="login-page">
                     <div className="form">
                         <img src={Logo} alt="Festo Logo"/>
-                        <hr/>
+                        <hr className="line"/>
                         <form className="login-form"  onSubmit={handleSubmit} id="formForSignUp" noValidate>
+                            <input type="text" placeholder="Username" name="Username"/>
                             <input type="text" placeholder="name" name="Name"/>
                             <input type="text" placeholder="surname" name="Surname"/>
                             <input type="password" placeholder="password" name="Password"/>
-                            <input type="password" placeholder="repeat password" name="rPassword"/>
+                            <input type="password" placeholder="repeat password" name="repeatPassword"/>
                             <input type="text" placeholder="email address" name="Email"/>
                             <button type="submit" value="send POST">create</button>
-
                             <p className="message">Already registered?<Link to="/login"> Sign in</Link></p>
                         </form>
                     </div>
@@ -29,10 +29,11 @@ function Signup() {
 function handleSubmit(event) {
     try {
         var dataForSending = {
+            username: event.target.Username.value,
             name: event.target.Name.value,
             surname: event.target.Surname.value,
             password: event.target.Password.value,
-            r_password: event.target.rPassword.value,
+            r_password: event.target.repeatPassword.value,
             email: event.target.Email.value
 
         };

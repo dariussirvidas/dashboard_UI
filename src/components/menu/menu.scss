@@ -3,6 +3,7 @@
 }
 .Dropdown{
   z-index: 99 !important;
+
 }
 @media only screen and (max-width: 1200px){
   .Menu_text{
@@ -11,4 +12,7 @@
 }
 .NavBarOnTop{
   z-index: 99 !important;
+}
+.bottomLine{
+  border-bottom: #0091dc !important;
 }

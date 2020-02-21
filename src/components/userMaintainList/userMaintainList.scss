@@ -1,13 +1,29 @@
 @import "../_ux_global_design.scss";
 
 table {
-  margin-top: 50px;
   border-collapse: collapse;
-  width: 1080px;
+  width: 1265px !important;
   justify-content: center;
-  text-align: center;
   border: 1px solid $clr-icdg-1;
   margin-bottom: 1%;
+  table-layout: fixed;
+}
+th{
+  background: $clr-caerul;
+  color: #FFFFFF;
+}
+
+th, td {
+  text-align: left !important;
+  vertical-align: center !important;
+}
+
+tr:nth-child(even) {
+  background-color: $clr-sucanul;
+}
+
+.eva-edit-outline {
+  vertical-align: middle;
 }
 
 th, td {
@@ -23,4 +39,30 @@ tr:nth-child(even) {
 .button {
   padding-right: 120px;
   float: right;
+}
+.txt {
+  cursor: pointer;
+}
+.editDomainModal{
+  margin-top: 17px;
+}
+
+.tooltip-wrap {
+  position: relative !important;
+}
+.tooltip-wrap .tooltip-content {
+  display: none;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  right: 5%;
+  background-color: #fff;
+  padding: .5em;
+
+}
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
+}
+.userButton{
+  margin-right: 328px;
 }

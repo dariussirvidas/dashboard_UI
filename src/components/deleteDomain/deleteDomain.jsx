@@ -43,21 +43,8 @@ function DeleteDomain(props) {
                 console.error("error while PUT delete domain: " + error);
                 
             });
-            /* alert("domain deleted") */
     }
-    /* function showToast() {
-        
-        
-        <Toast>
-        <strong className="mr-auto"><i className="eva eva-trash-2-outline"></i>Bootstrap</strong>
-      <Toast.Header>
-        <small>11 mins ago</small>
-      </Toast.Header>
-      <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-    </Toast>
-            
-        
-    } */
+
 
     const [show, setShow] = useState(false);
     

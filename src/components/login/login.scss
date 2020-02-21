@@ -14,7 +14,6 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
-  font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -25,7 +24,6 @@
   font-size: 14px;
 }
 .form button {
-  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
   background: lightskyblue;
@@ -86,8 +84,14 @@
 }
 body {
   background: #dddddd; /* fallback for old browsers */
-
-  font-family: "Roboto", sans-serif;
+  $fnt-mpr: "MetaPro-Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.line{
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+.message{
+  margin-top: 15px !important;
 }

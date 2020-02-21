@@ -4,12 +4,13 @@ import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
+import Icon from './../../Content/edit_icon.png';
 
 function EditDomainModal(props) {
 
     return (
         <div>
-            <Example
+            <EditDomain
                 domain={props.domain}
                 callbackFetch={props.callbackReFetchDomains}
                 changeDomainList={props.changeDomainList}
@@ -19,7 +20,7 @@ function EditDomainModal(props) {
 
 }
 
-function Example(props) {
+function EditDomain(props) {
 
 
     //Default selection on select tags, when you open this edit Modal.
@@ -93,8 +94,8 @@ function Example(props) {
 
     return (
         <>
-            <a variant="primary" className="txt" onClick={handleShow}>
-                Edit
+            <a class="btn btn-link btn-sm txt" variant="primary"  onClick={handleShow}>
+                <i className="material-icons iconHover">&#xe254;</i>
             </a>
 
             {
@@ -145,7 +146,6 @@ function Example(props) {
                     </form>
                 </div>
             </Modal>
-
         </>
     );
 
@@ -167,7 +167,6 @@ function Example(props) {
         console.log("full object for sending:", dataForSending);
         console.log("JSON string:", JSON.stringify(dataForSending));
         console.log("domain obj: ", props.domain);
-
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
