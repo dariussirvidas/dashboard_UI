@@ -1,8 +1,6 @@
 import React, {Component, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
-import Style from './editUserModal.scss';
 import DeleteUser from "../deleteUser/deleteUser";
 
 function EditUserModal(props) {
@@ -37,12 +35,14 @@ function EditUser(props) {
                         <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName" required/>
                         <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName" required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail" required/>
-                        <input type="password" placeholder="Password"  name="password" required/>
+                        {/* Backendas neatsiuncia passwordo */}
+                        <input type="password" placeholder="Password"  name="password" required/> 
                         <input type="password" placeholder="Confirm Password"  name="confirmPassword" required/>
                         <hr/>
                         <br/>
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose} type="button">Cancel</button>
+                        <DeleteUser/>
                     </form>
                 </div>
             </Modal>
@@ -58,10 +58,10 @@ function EditUser(props) {
             password: event.target.password.value,
             confirmPassword: event.target.confirmPassword.value
         };
-        // console.log("full object for sending:", dataForSending);
-        // console.log("JSON string:", JSON.stringify(dataForSending));
-        console.log("domain obj: ", props.user);
-        submitData(props.endpoint, props.changeUserList, dataForSending);
+        console.log("full object for sending:", dataForSending);
+        console.log("JSON string:", JSON.stringify(dataForSending));
+        // console.log("domain obj: ", props.user);
+        // submitData(props.endpoint, props.changeUserList, dataForSending);
         event.preventDefault();
     }
 

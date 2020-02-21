@@ -29,7 +29,8 @@ function DomainModal(props) {
     const [getBasicAuth, setBasicAuth] = useState(false);
 
 
-    function changeMethodOption(event) { //<select name="method"
+    //Cia gal const reikia vietoj funkcijos ?
+    function changeMethodOption(event) { //<select name="method" 
         setSelectedMethod(event.target.value)
     }
     function changeServiceTypeOption(event) { //<select name="serviceType"
