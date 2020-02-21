@@ -34,6 +34,7 @@
   &:active {
     background-color: mix($clr-black, lightskyblue, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
+    border: none;
   }
 
 }

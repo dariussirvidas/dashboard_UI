@@ -95,8 +95,8 @@ function SingleService(props) {
 
     function pingDomain() {
 
-        let endpointToFetch = "";
-        switch (props.item.service_Type) {
+        let endpointToFetch = props.endpoint + "requests/getservice/";
+        /* switch (props.item.service_Type) {
             case(0): //WebApp(Portal)
                 endpointToFetch = props.endpoint + "requests/getportal/";
                 break
@@ -107,7 +107,7 @@ function SingleService(props) {
             default:
                 console.log("tokio service mes neturim")
 
-        }
+        } */
 
         fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {

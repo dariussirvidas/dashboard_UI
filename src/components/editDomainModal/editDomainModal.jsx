@@ -105,9 +105,9 @@ function EditDomain(props) {
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="button">Test</button>
-                        <button type="submit">Save</button>
-                        <button type="button" onClick={handleClose}>Cancel</button>
+                        <button type="button" className="interactive btn btn-primary">Test</button>
+                        <button type="submit" className="interactive btn btn-primary">Save</button>
+                        <button type="button" onClick={handleClose} className="interactive btn btn-primary">Cancel</button>
                         <DeleteDomain
                             domain={props.domain}
                             changeDomainList={props.changeDomainList}

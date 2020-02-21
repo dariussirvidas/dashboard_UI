@@ -17,29 +17,31 @@
   font-size: 14px;
 }
 .forma button {
-  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: lightskyblue;
+  background-color: $clr-hero !important;
   width: 30%;
   border: 0;
   padding: 10px;
   margin: 5px;
+  font-family: $fnt-mpr !important;
   color: #FFFFFF;
   font-size: 14px;
-  &:hover {
-    background-color: mix($clr-black, lightskyblue, 10%) !important;
+  /* &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
   &:active {
-    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
-  }
+  } */
 
 }
+
 /* .forma button:hover,.forma button:active,.forma button:focus {
-  background: lightskyblue;
+  background: black !important;
 } */
+
 .forma .message {
   margin: 15px 0 0;
   color: #b3b3b3;
@@ -71,4 +73,24 @@
 .iconHover:hover{
   font-size: 22px ;
   color: $clr-caerul ;
+}
+.interactive {
+  background-color: $clr-hero !important;
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    color: mix($clr-black, $clr-white, 10%) !important;
+    transition: none !important;
+  }
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+}
+.btn-primary {
+  background: $clr-hero !important;
+  &:hover {
+    text-decoration: none;
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    color: mix($clr-black, $clr-white, 10%) !important;
+  }
 }
