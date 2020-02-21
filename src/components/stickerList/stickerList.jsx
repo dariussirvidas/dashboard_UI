@@ -95,21 +95,7 @@ function SingleService(props) {
 
     function pingDomain() {
 
-        let endpointToFetch = "";
-        switch (props.item.service_Type) {
-            case(0): //WebApp(Portal)
-                endpointToFetch = props.endpoint + "requests/getportal/";
-                break
-            case(1): //ServiceRest
-            case(2): //ServiceSoap
-                endpointToFetch = props.endpoint + "requests/getservice/";
-                break
-            default:
-                console.log("tokio service mes neturim")
-
-        }
-
-        fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
+        fetchFromApi(props.endpoint + "requests/getservice/" + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {
                 setRequestResponseData(data);
 

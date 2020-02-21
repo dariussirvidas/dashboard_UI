@@ -52,7 +52,7 @@ function Example(props) {
     }
 
     const isParametersDisabled = function checkIfDisabled() {
-        if(getSelectedMethod == 0 || getSelectedServiceType == 0){ //tipo jei GET ar WEBapp 
+        if(getSelectedMethod == 0){ //tipo jei GET 
             return true;
         }
         else{

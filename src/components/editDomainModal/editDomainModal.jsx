@@ -5,11 +5,6 @@ import Style from './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
 
-// currently functions as another Add service
-// jei webapp, metodas GET, keisti negalima, nereikia parametru
-// jei auth checked, neduoda user ir password
-
-
 function EditDomainModal(props) {
 
     return (
@@ -26,6 +21,8 @@ function EditDomainModal(props) {
 
 function Example(props) {
 
+
+    //Default selection on select tags, when you open this edit Modal.
     let isRestSelected = false;
     let isSoapSelected = false;
 
@@ -39,12 +36,6 @@ function Example(props) {
                 break;
         }
     }
-
-    // soapui - postas
-    // restui get ir post
-    // webapp tik get
-
-    // basic auth tiek soapui tiek restui (gal ir webappui)
 
     let isPostSelected = false;
     let isGetSelected = false;
@@ -60,12 +51,45 @@ function Example(props) {
         }
     }
 
-
+    // show or hide this modal state
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    //disabled inputs states: (su sitais dabar dirtbi)
+        const [getSelectedMethod, setSelectedMethod] = useState(0);
+        const [getSelectedServiceType, setSelectedServiceType] = useState(0);
+        const [getBasicAuth, setBasicAuth] = useState(false);
+    
+    
+        function changeMethodOption(event) { //<select name="method"
+            setSelectedMethod(event.target.value)
+        }
+        function changeServiceTypeOption(event) { //<select name="serviceType"
+            setSelectedServiceType(event.target.value)
+        }
+        function changeAuth(event){
+            setBasicAuth(event.target.checked)
+        }
+    
+        const isUsernamePasswordDisabled = function checkIfDisabled() {
+            if(getBasicAuth == true){ 
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    
+        const isParametersDisabled = function checkIfDisabled() {
+            if(getSelectedMethod == 0){ //tipo jei GET 
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     return (
         <>
@@ -85,11 +109,11 @@ function Example(props) {
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
                                placeholder="Service name"/>
-                        <select name="method" className="SelectFrom" required>>
+                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
                             <option selected={isGetSelected} value={0}>GET</option>
                             <option selected={isPostSelected} value={1}>POST</option>
                         </select>
-                        <select name="serviceType" className="SelectFrom" required>
+                        <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
                             <option selected={isRestSelected} value={0}>Service - REST</option>
                             <option selected={isSoapSelected} value={1}>Service - SOAP</option>
                         </select>
@@ -97,20 +121,20 @@ function Example(props) {
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
                                placeholder="Email"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
-                                                   name="auth" id="authActive"></input>
-                        <input name="user" defaultValue={props.domain.auth_User} type="text" placeholder="User"/>
-                        <input name="password" defaultValue={props.domain.auth_Password} type="password"
+                                                   name="auth" id="authActive" onClick={changeAuth}></input>
+                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User"/>
+                        <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
                                placeholder="Password"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
-                                  placeholder="Parameters"></textarea>
+                                  placeholder="Parameters" disabled={isParametersDisabled()}></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
                                placeholder="Interval"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold"
+                        <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
                                min="50"/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="button">Test</button>
+                        {/* <button type="button">Test</button> sitas neveikia dar*/}
                         <button type="submit">Save</button>
                         <button type="button" onClick={handleClose}>Cancel</button>
                         <DeleteDomain
