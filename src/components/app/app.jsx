@@ -90,7 +90,6 @@ function App() {
             <Router>
                 <Menu/>
                 {
-                    // Main component is only rendered when domainList is fetched
                     domainList === "error" ?
                         (
                             <ErrorMessage

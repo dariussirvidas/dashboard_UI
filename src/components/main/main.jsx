@@ -7,12 +7,14 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    Redirect
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 import UserMaintainList from "../userMaintainList/userMaintainList";
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 
 function Main(props) {
 
@@ -31,14 +33,30 @@ function Main(props) {
                         />
                     </Route>
                     <Route path="/domains">
-                        <DomainList
-                            endpoint={props.endpoint}
-                            callbackReFetchDomains={props.callbackReFetchDomains}
-                            domainList={props.domainList}
-                            hasDomainListError={props.hasDomainListError}
-                            appendDomainList={props.appendDomainList}
-                            changeDomainList={props.changeDomainList}
-                        />
+                        {
+                            props.domainList === "error" ?
+                                (
+                                    <ErrorMessage
+                                        message="stuff"
+                                    />
+                                )
+                                :
+                                Boolean(props.domainList) === true ?
+                                    (
+                                        <DomainList
+                                            endpoint={props.endpoint}
+                                            callbackReFetchDomains={props.callbackReFetchDomains}
+                                            domainList={props.domainList}
+                                            hasDomainListError={props.hasDomainListError}
+                                            appendDomainList={props.appendDomainList}
+                                            changeDomainList={props.changeDomainList}
+                                        />
+                                    )
+                                    :
+                                    (
+                                        <LoadingSpinner/>
+                                    )
+                        }
                     </Route>
                     <Route path="/signup">
                         <Signup/>
