@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import store from "../../js/store";
+
 
 function Checkbox(props) {
 
@@ -43,7 +43,7 @@ function Checkbox(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    // 'Authorization': 'Bearer ' + store.getState().token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

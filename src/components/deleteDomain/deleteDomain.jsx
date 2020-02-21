@@ -4,14 +4,13 @@ import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Toast from 'react-bootstrap/Toast'
-import store from "../../js/store";
 
 function DeleteDomain(props) {
 
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'domain/del/' + props.domain.id, {
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                // 'Authorization': 'Bearer ' + store.getState().token
             },
                 method: 'PUT'
             }

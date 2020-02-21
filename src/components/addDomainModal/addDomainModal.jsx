@@ -2,8 +2,6 @@ import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './addDomainModal.scss';
-import store from "../../js/store";
-
 
 function AddDomainModal(props) {
 
@@ -140,7 +138,7 @@ function Example(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    // 'Authorization': 'Bearer ' + store.getState().token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

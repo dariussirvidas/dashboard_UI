@@ -26,7 +26,9 @@ function Main(props) {
                         <ExampleComponentStructure/>
                     </Route>
                     <Route path="/login">
-                        <Login/>
+                        <Login
+                        endpoint={props.endpoint}
+                        />
                     </Route>
                     <Route path="/domains">
                         <DomainList

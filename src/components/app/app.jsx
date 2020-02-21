@@ -9,14 +9,14 @@ import {LoadingSpinner, ErrorMessage} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 
-import rootReducer from "../../js/reducers";
-import store from "../../js/store";
-
-
-window.store = store;
+import {render} from 'react-dom'
+import {useSelector} from "react-redux";
 
 
 function App() {
+
+    const token = useSelector(state => state.token);
+
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [domainList, setDomainList] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
@@ -28,15 +28,15 @@ function App() {
 
 
     useEffect(() => {
-        setTimeout(reFetchDomains, 8000)
-        console.log(store.getState().token)
+        setTimeout(reFetchDomains, 8000);
+
     }, []);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint, {
             method: "GET",
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                'Authorization': 'Bearer ' + token
             }
         });
         const data = await response.json();
@@ -117,6 +117,7 @@ function App() {
                 {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>
+
         </>
     );
 }

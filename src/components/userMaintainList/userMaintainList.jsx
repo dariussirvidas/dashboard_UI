@@ -4,7 +4,7 @@ import style from './userMaintainList.scss'
 import Popup from "reactjs-popup";
 import EditUser from '../editUser/editUser';
 import {ErrorMessage} from "../elements/elements";
-import store from "../../js/store";
+
 
 function UserMaintainList(props) {
 
@@ -38,7 +38,7 @@ function UserMaintainList(props) {
         const response = await fetch(props.endpoint + "" + "users", {
                 method: "GET",
                 headers: {
-                    'Authorization': 'Bearer ' + store.getState().token
+                    // 'Authorization': 'Bearer ' + store.getState().token
                 }
             }
         );
