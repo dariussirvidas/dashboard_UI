@@ -45,7 +45,7 @@ function DeleteDomain(props) {
                 
             });
     }
-
+    
 
     const [show, setShow] = useState(false);
     
@@ -54,19 +54,28 @@ function DeleteDomain(props) {
 
     return (
         <>
-            <button variant="primary" className="forma" onClick={handleShow}>
+             <Button variant="primary" className ="interactive"onClick={handleShow}>
             {/* <button type="button" onClick={deleteDomain}>Delete</button> */}
             Delete
-            </button>
+            </Button>
             <Modal show={show} onHide={handleClose}>
             <div className="forma">
                 <form>
                 <h3> Are you sure you want to delete this domain? </h3>
-                {/* <button type="button" className ="primary" onClick={deleteDomain}>Yes</button>
-                <button type="button" className ="interactive" onClick={handleClose}>Cancel</button> */}
                 <Button variant="primary" className ="interactive1" onClick={deleteDomain}>Yes</Button>
                 <Button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</Button>
-                
+                {/*  <Modal.Dialog>
+                    <Modal.Header>
+                        <Modal.Title>Delete Domain</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <p>Are you sure you wish to delete this domain?</p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                    <Button variant="primary" onClick={deleteDomain}>Yes</Button>
+                        <Button variant="secondary" onClick={handleClose}>Cancel</Button>
+                    </Modal.Footer>
+                </Modal.Dialog> */}
                 </form>
                 </div>
                 </Modal>
