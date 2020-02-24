@@ -1,10 +1,12 @@
 @import '../ux_global_design.scss';
+
 .forma {
   position: relative;
   z-index: 1;
   padding: 45px;
   text-align: center;
 }
+
 .forma input {
   font-family: "Roboto", sans-serif;
   outline: 0;
@@ -16,6 +18,7 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+
 .forma button {
   text-transform: uppercase;
   outline: 0;
@@ -26,16 +29,19 @@
   margin: 5px;
   color: #FFFFFF;
   font-size: 14px;
+
   &:hover {
     background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
+
   &:active {
     background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
 }
+
 /* .forma button:hover,.forma button:active,.forma button:focus {
   background: lightskyblue;
 } */
@@ -44,11 +50,13 @@
   color: #b3b3b3;
   font-size: 12px;
 }
+
 .forma .message a {
   color: lightskyblue;
   text-decoration: none;
 }
-.SelectFrom{
+
+.SelectFrom {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -59,14 +67,20 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+
 .txt {
   cursor: pointer;
- 
+
 }
 
-.iconHover{
+.iconHover {
   font-size: 19px;
 }
-.iconHover:hover{
-  color: $clr-caerul ;
+
+.iconHover:hover {
+  color: $clr-caerul;
+}
+
+.modal-dialog{
+  max-width: 90%;
 }

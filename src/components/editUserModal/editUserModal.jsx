@@ -39,10 +39,10 @@ function EditUser(props) {
 
     return (
         <>
-            <a variant="primary" className="txt" onClick={handleShow}>
-                Edit
+            <a className="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
+                <i className="material-icons iconHover">&#xe254;</i>
             </a>
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose} className="UserModal">
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" noValidate>
                         <div className="form-group"/>
