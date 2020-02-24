@@ -197,6 +197,7 @@ function EditDomain(props) {
                     // the input fields
                     const editedDomain = Object.assign({...props.domain}, dataForSending);
                     changeDomainList(editedDomain)
+                    handleClose();
                 } else {
                     console.log("unsuccessful. what now?")
                 }

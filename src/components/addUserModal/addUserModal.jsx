@@ -35,6 +35,7 @@ function UserModal(props) {
     const checkPasswordMatch = function check(){
         setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
     }
+    const [response, setResponse] = useState(); //response from server
 
     return (
         <>
@@ -57,6 +58,7 @@ function UserModal(props) {
                         {/* this is retarded, because it's enabled only if passwords match and doesn't look at other inputs. */}
                         <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
                         <button onClick={handleClose} >Cancel</button>
+                        <div>{response}</div>
                     </form>
                 </div>
             </Modal>
@@ -80,7 +82,6 @@ function UserModal(props) {
         console.log("full object for Posting:", dataForSending);
         console.log("full object for sending JSON:", JSON.stringify(dataForSending));
         submitData(dataForSending);
-        handleClose();
         event.preventDefault();
     }
 
@@ -89,11 +90,20 @@ function UserModal(props) {
             .then((response) => {
                 console.log("POSTING USER status code = " + response.status);
                 if (response.status > 199 && response.status < 300){
+                    console.log(response.statusText)
                     console.log("success!")
+                    setResponse("User created")
                     dataForSending.role = "User" //pradzioj sukurus visi useriai buna. tik poto galima uzdet admin role.
                     props.appendUserList(dataForSending)
+                    handleClose();
                 }
-
+                else{
+                    let duomenys = response.json()
+                    .then((duomenys) => {
+                        setResponse(duomenys.message)
+                        console.log(duomenys.message)
+                    })
+                }
             })
 
             .catch((error) => {
@@ -111,7 +121,7 @@ function UserModal(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        const data = await response;
+        const data = response;
         return data;
     }
 }

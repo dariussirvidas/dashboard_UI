@@ -18,12 +18,16 @@ function EditUserModal(props) {
 function EditUser(props) {
 
     const [show, setShow] = useState(false);
+    const [response, setResponse] = useState(); //response from server
 
     const handleClose = () => {
         setShow(false);
         setPasswordsMatch(true) //after we close and re-enter Modal to have password state reset to default.
     };
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        setShow(true);
+        setResponse();
+    }
 
     //check if passwords match
     const [passwordsMatch, setPasswordsMatch] = useState(true);
@@ -64,8 +68,9 @@ function EditUser(props) {
                         {passwordsMatch ? "":"Passwords don't match"}
                         <hr/>
                         <br/>
-                        <button type="submit" value="send POST">Add</button>
+                        <button type="submit" value="send POST">Update</button>
                         <button onClick={handleClose} type="button">Cancel</button>
+                        <div>{response}</div>
                         <DeleteUser
                         user={props.user}
                         changeUserList={props.changeUserList}
@@ -90,7 +95,6 @@ function EditUser(props) {
         console.log("JSON string:", JSON.stringify(dataForSending));
         console.log("domain obj: ", props.user);
         submitData(props.endpoint, props.changeUserList, dataForSending);
-        // handleClose();
         event.preventDefault();
     }
 
@@ -106,20 +110,26 @@ function EditUser(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        let statusCode = response.status;
-        return statusCode;
+        const data = response;
+        return data;
     }
 
     function submitData(endpoint, changeUserList, dataForSending) {
         fetchPut(endpoint + "users/" + props.user.id, dataForSending)
-            .then((statusCode) => {
-                console.log("status code " + statusCode + "...");
-                if (statusCode > 199 && statusCode < 300) {
-                    console.log("success!");
+            .then((response) => {
+                console.log("status code " + response + "...");
+                if (response.status > 199 && response.status < 300) {
+                    setResponse("User updated")
+
                     const editedUser = Object.assign({...props.user}, dataForSending);
                     changeUserList(editedUser)
-                } else {
-                    console.log("unsuccessful. what now?")
+                    handleClose();
+                }
+                else {
+                    let duomenys = response.json()
+                    .then((duomenys) => {
+                        setResponse(duomenys.message)
+                    })
                 }
             })
             .catch((error) => {
