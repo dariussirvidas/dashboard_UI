@@ -13,9 +13,7 @@ import rootReducer from "../../js/reducers";
 import store from "../../js/store";
 import userMaintainList from "../userMaintainList/userMaintainList";
 
-
 window.store = store;
-
 
 function App() {
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");

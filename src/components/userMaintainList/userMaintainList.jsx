@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import Checkbox from "../checkbox/checkbox";
 import style from './userMaintainList.scss'
 import Popup from "reactjs-popup";
-import EditUser from '../editUser/editUser';
 import {ErrorMessage} from "../elements/elements";
 import store from "../../js/store";
 import AddDomainModal from "../addDomainModal/addDomainModal";
