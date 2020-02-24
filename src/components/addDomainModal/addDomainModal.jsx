@@ -64,8 +64,8 @@ function DomainModal(props) {
             <button variant="primary" className ="Buttonas" onClick={handleShow}>
                 New Domain
             </button>
-{/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
-            <Modal show={show} onHide={handleClose}>
+
+            <Modal classNeme="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>                   
@@ -90,6 +90,7 @@ function DomainModal(props) {
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
                         <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="1" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
+                        <br/>
                         <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
