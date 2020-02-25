@@ -21,8 +21,10 @@ function DomainModal(props) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    const handleShow = () => {
+        setShow(true);
+        setTestResult("");
+    }
     //disabled inputs states:
     const [getSelectedMethod, setSelectedMethod] = useState(0);
     const [getSelectedServiceType, setSelectedServiceType] = useState(0);
@@ -57,6 +59,74 @@ function DomainModal(props) {
             return false;
         }
     };
+    
+    //test button functionality
+
+    const [getTestResult, setTestResult] = useState("");
+
+    const testService = function test(event) {
+        var formData = new FormData(document.querySelector('form'))
+        var inputsFromForm = {};
+        formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
+            inputsFromForm[key] = value
+        }); 
+
+        var dataForSending = {
+            "url": inputsFromForm.url,
+            "service_Type": parseInt(inputsFromForm.serviceType),
+            "method": parseInt(inputsFromForm.method),
+            "basic_Auth": (inputsFromForm.auth == "on" ? true: false),
+            "auth_User": inputsFromForm.user,
+            "auth_Password": inputsFromForm.password,
+            "parameters": inputsFromForm.parameters
+          }
+        
+        
+        fetch(props.endpoint + "/Requests/testservice",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + store.getState().token
+                },
+                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+            }
+        )
+        .then ((response) => {return response.json()
+        })
+        .then((responseObject) => {
+            if(responseObject.status > 199 && responseObject.status < 300)
+            {
+                setTestResult(responseObject); //response objectas is backendo. {domainUrl, status, requestTime}
+            }
+            else{
+                setTestResult({"status": "Request didn't work. Plese check your fields."})
+            }
+        })
+        // console.log("inputs from form?:")
+        // console.log(inputsFromForm);
+        // console.log("data for sending:")
+        // console.log(JSON.stringify(dataForSending));
+        // // var json = JSON.stringify(formData); 
+        // // console.log(json)
+        
+        
+
+        event.preventDefault();
+    }
+
+    const testElement = () => {
+        if(getTestResult.status == 200){
+            return <div>Sucess! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
+        }
+        else{
+            return <div>{getTestResult.status}</div>
+        }
+    }
+    // function alio(props){ //kas yra tuscia  funckija ? const = <div>{New.Date()}</div> yra elementas. function is didziosios raides, jau komponentas, galima pasuot props. Funkcinis komponentas negali tureti state. Todel reikia class extends React.Component. :))
+    //     return <h1>ZDRWA </h1>
+    // }
 
     return (
         <>
@@ -96,7 +166,8 @@ function DomainModal(props) {
                         {/* <button>Test(sitas dar neveikia)</button> */}
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose}>Cancel</button>
-
+                        <button onClick={testService}>Test</button>
+                        {testElement()}
                     </form>
                 </div>
             </Modal>
