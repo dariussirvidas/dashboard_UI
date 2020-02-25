@@ -90,8 +90,9 @@ function DomainModal(props) {
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
                         <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="1" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
+                        <hr/>
+                        <label htmlFor="checkboxTitle2">Active: </label>
                         <br/>
-                        <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
