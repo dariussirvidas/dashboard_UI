@@ -46,10 +46,10 @@ function UserModal(props) {
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>
-                        <input type="text" placeholder="Username" name="userName" required/>
-                        <input type="text" placeholder="First Name" name="firstName" required/>
-                        <input type="text" placeholder="Last Name" name="lastName" required/>
-                        <input type="email" placeholder="Email" name="userEmail" required/>
+                        <input type="text" placeholder="Username" name="userName" min="6" max="64" required/>
+                        <input type="text" placeholder="First Name" name="firstName" required max="64"/>
+                        <input type="text" placeholder="Last Name" name="lastName" required max="64"/>
+                        <input type="email" placeholder="Email" name="userEmail" required max="256"/>
                         <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
                         <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
                         {passwordsMatch ? "":"Passwords don't match"}

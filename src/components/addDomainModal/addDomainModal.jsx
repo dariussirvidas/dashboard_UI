@@ -118,7 +118,7 @@ function DomainModal(props) {
 
     const testElement = () => {
         if(getTestResult.status == 200){
-            return <div>Succ        ess! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
+            return <div>Success! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
         }
         else{
             return <div>{getTestResult.status}</div>
@@ -134,12 +134,12 @@ function DomainModal(props) {
             <button variant="primary" className ="Buttonas" onClick={handleShow}>
                 New Domain
             </button>
-
+            
             <Modal classNeme="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>                   
-                        <input type="text" placeholder="Service name" name="serviceName" required/>
+                        <input type="text" placeholder="Service name" name="serviceName" required max="64"/>
                         <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required> 
                             <option value={0}>GET</option>
                             <option value={1}>POST</option>
@@ -148,17 +148,17 @@ function DomainModal(props) {
                             <option value={0}>Service - REST</option>
                             <option value={1}>Service - SOAP</option>
                         </select>
-                        <input type="url" placeholder="URL" name="url" required/>
-                        <input type="email" placeholder="Email" name="email" required/>
+                        <input type="url" placeholder="URL" name="url" required max="1024"/>
+                        <input type="email" placeholder="Email" name="email" required max="256"/>
                         <hr/>
                         <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
                         <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
-                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required/>
-                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required/>
-                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required></textarea>
-                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="50" required/>
+                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
+                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="1" required/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="10" max="60000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
                         <hr/>
                         <label htmlFor="checkboxTitle2">Active: </label>

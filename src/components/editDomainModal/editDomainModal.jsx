@@ -109,7 +109,7 @@ function EditDomain(props) {
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
-                               placeholder="Service name"/>
+                               placeholder="Service name" required max="64"/>
                         <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
                             <option selected={isGetSelected} value={0}>GET</option>
                             <option selected={isPostSelected} value={1}>POST</option>
@@ -118,25 +118,24 @@ function EditDomain(props) {
                             <option selected={isRestSelected} value={0}>Service - REST</option>
                             <option selected={isSoapSelected} value={1}>Service - SOAP</option>
                         </select>
-                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL"/>
+                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
-                               placeholder="Email"/>
+                               placeholder="Email" required max="256"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
-                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User"/>
+                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
                         <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
-                               placeholder="Password"/>
+                               placeholder="Password" required max="1024"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
-                                  placeholder="Parameters" disabled={isParametersDisabled()}></textarea>
+                                  placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
-                               placeholder="Interval"/>
+                               placeholder="Interval" required min="3" max="2000000"/>
                         <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
-                               min="50"/>
+                               min="50" required min="10" max="60000"/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
 
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        {/* <button type="button">Test</button> sitas neveikia dar*/}
                         <button type="submit">Save</button>
                         <button type="button" onClick={handleClose}>Cancel</button>
                         <DeleteDomain
