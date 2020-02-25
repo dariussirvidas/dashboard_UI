@@ -65,6 +65,7 @@ function DomainModal(props) {
     const [getTestResult, setTestResult] = useState("");
 
     const testService = function test(event) {
+        setTestResult("Waiting...")
         var formData = new FormData(document.querySelector('form'))
         var inputsFromForm = {};
         formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
@@ -93,37 +94,22 @@ function DomainModal(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         )
-        .then ((response) => {return response.json()
+        .then ((response) => {
+            if(response.status < 200 && response.status > 299){ //jei failino kreiptis i backenda
+                setTestResult("Check your fields and try again.")
+                return
+            } 
+            return response.json() //jei prisikonektino i musu backend, grazina, jo response body
         })
         .then((responseObject) => {
-            if(responseObject.status > 199 && responseObject.status < 300)
-            {
-                setTestResult(responseObject); //response objectas is backendo. {domainUrl, status, requestTime}
-            }
-            else{
-                setTestResult({"status": "Request didn't work. Please check your fields."})
-            }
-        })
-        // console.log("inputs from form?:")
-        // console.log(inputsFromForm);
-        // console.log("data for sending:")
-        // console.log(JSON.stringify(dataForSending));
-        // // var json = JSON.stringify(formData); 
-        // // console.log(json)
-        
-        
 
+            const responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+            setTestResult(responseMessage);
+        })  
+        
         event.preventDefault();
     }
 
-    const testElement = () => {
-        if(getTestResult.status == 200){
-            return <div>Success! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
-        }
-        else{
-            return <div>{getTestResult.status}</div>
-        }
-    }
     // function alio(props){ //kas yra tuscia  funckija ? const = <div>{New.Date()}</div> yra elementas. function is didziosios raides, jau komponentas, galima pasuot props. Funkcinis komponentas negali tureti state. Todel reikia class extends React.Component. :))
     //     return <h1>ZDRWA </h1>
     // }
@@ -169,7 +155,7 @@ function DomainModal(props) {
                         <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
-                        {testElement()}
+                        <div>{getTestResult}</div>
                     </form>
                 </div>
             </Modal>

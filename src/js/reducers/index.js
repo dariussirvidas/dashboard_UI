@@ -1,7 +1,7 @@
 const initialState = {
     isLoggedIn: true,
     role: "admin",
-    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyIiwicm9sZSI6IkFkbWluIiwibmJmIjoxNTgyMDUwODI1LCJleHAiOjE1ODI2NTU2MjUsImlhdCI6MTU4MjA1MDgyNX0.ipXN5rP_qbdyxyu6TAR-Z51PXpnv4tS08xm09ZflzrQ"
+    token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IjEyNSIsInJvbGUiOiJBZG1pbiIsIm5iZiI6MTU4MjY1Njk5NCwiZXhwIjoxNTgzMjYxNzk0LCJpYXQiOjE1ODI2NTY5OTR9.stwfis0JMCoMjdO9MyQVsubR379RsrkdDwJcESQbVp8"
 };
 
 function rootReducer(state = initialState, action) {
