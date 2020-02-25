@@ -5,10 +5,8 @@ import Modal from "react-bootstrap/Modal";
 import Style from './deleteUser.scss';
 import { NotificationManager } from 'react-notifications';
 function DeleteUser(props) {
-
+    console.log(props.user)
     async function fetchPutDelete() {
-        console.log("useris: ", props.user);
-        console.log("id: ", props.user.id)
         const response = await fetch(props.endpoint + 'users/' + props.user.id, {
                 headers: {
                     // 'Content-Type': 'application/json',

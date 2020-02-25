@@ -93,8 +93,13 @@ function UserModal(props) {
                     console.log(response.statusText)
                     console.log("success!")
                     setResponse("User created")
-                    dataForSending.role = "User" //pradzioj sukurus visi useriai buna. tik poto galima uzdet admin role.
-                    props.appendUserList(dataForSending)
+                    let responseBody = response.json()
+                    .then((responseBody) => {
+                        dataForSending.id = responseBody.id
+                        dataForSending.role = "User" //pradzioj sukuriant userius, role buna userio.
+                        props.appendUserList(dataForSending)
+                        
+                    })
                     handleClose();
                 }
                 else{

@@ -203,7 +203,6 @@ function DomainModal(props) {
         event.preventDefault();
     }
 
-
     async function fetchPost(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
