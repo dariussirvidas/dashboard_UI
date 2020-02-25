@@ -118,7 +118,7 @@ function DomainModal(props) {
 
     const testElement = () => {
         if(getTestResult.status == 200){
-            return <div>Sucess! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
+            return <div>Success! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
         }
         else{
             return <div>{getTestResult.status}</div>
