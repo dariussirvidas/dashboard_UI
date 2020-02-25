@@ -95,17 +95,21 @@ function DomainModal(props) {
             }
         )
         .then ((response) => {
-            if(response.status < 200 && response.status > 299){ //jei failino kreiptis i backenda
+            if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
                 setTestResult("Check your fields and try again.")
                 return
-            } 
-            return response.json() //jei prisikonektino i musu backend, grazina, jo response body
-        })
-        .then((responseObject) => {
+            }
+            
+            //jei prisikonektino i musu backend, sukuria, jo response body
+            
+            return response.json() 
+            .then((responseObject) => {
 
-            const responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
-            setTestResult(responseMessage);
-        })  
+                const responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+                setTestResult(responseMessage);
+            })  
+        })
+        
         
         event.preventDefault();
     }
