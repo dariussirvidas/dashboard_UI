@@ -4,7 +4,7 @@ import Button from "react-bootstrap/Button";
 import Style from './addDomainModal.scss';
 import store from "../../js/store";
 
-
+    
 function AddDomainModal(props) {
 
     return (
@@ -101,7 +101,7 @@ function DomainModal(props) {
                 setTestResult(responseObject); //response objectas is backendo. {domainUrl, status, requestTime}
             }
             else{
-                setTestResult({"status": "Request didn't work. Plese check your fields."})
+                setTestResult({"status": "Request didn't work. Please check your fields."})
             }
         })
         // console.log("inputs from form?:")
@@ -118,7 +118,7 @@ function DomainModal(props) {
 
     const testElement = () => {
         if(getTestResult.status == 200){
-            return <div>Success! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
+            return <div>Succ        ess! status: {getTestResult.status}, response time: {getTestResult.requestTime}</div>
         }
         else{
             return <div>{getTestResult.status}</div>

@@ -8,6 +8,7 @@ function DeleteUser(props) {
 
     async function fetchPutDelete() {
         console.log("useris: ", props.user);
+        console.log("id: ", props.user.id)
         const response = await fetch(props.endpoint + 'users/' + props.user.id, {
                 headers: {
                     // 'Content-Type': 'application/json',
@@ -17,8 +18,8 @@ function DeleteUser(props) {
             // body: JSON.stringify(props.user.id)
             }
         );
-        await console.log('statusCode:' + response.status);
-        let statusCode = await response.status;
+        console.log('statusCode:' + response.status);
+        let statusCode = response.status;
         return statusCode;
     }
     function deleteUser() {

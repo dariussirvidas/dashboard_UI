@@ -114,7 +114,7 @@ function EditUser(props) {
         const data = response;
         return data;
     }
-console.log(props.user.id)
+
     function submitData(endpoint, changeUserList, dataForSending) {
         fetchPut(endpoint + "users/" + props.user.id, dataForSending)
             .then((response) => {
