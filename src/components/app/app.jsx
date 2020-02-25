@@ -12,6 +12,8 @@ import Signup from "../signup/signup";
 import rootReducer from "../../js/reducers";
 import store from "../../js/store";
 import userMaintainList from "../userMaintainList/userMaintainList";
+import 'react-notifications/lib/notifications.css';
+import { NotificationContainer } from 'react-notifications';
 
 window.store = store;
 
@@ -196,6 +198,7 @@ function App() {
                 {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>
+            <NotificationContainer />
         </>
     );
 }

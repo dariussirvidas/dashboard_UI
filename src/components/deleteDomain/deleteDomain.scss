@@ -5,7 +5,7 @@
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: $clr-caerul !important;
+
   width: 30%;
   border: 0;
   padding: 10px;
@@ -21,4 +21,7 @@
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
+}
+.modal-dialog {
+  max-width: 90% !important;
 }

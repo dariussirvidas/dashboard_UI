@@ -3,9 +3,8 @@ import './deleteDomain.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Toast from 'react-bootstrap/Toast'
 import store from "../../js/store";
-import Style from './deleteDomain.scss';
+import { NotificationManager } from 'react-notifications';
 
 function DeleteDomain(props) {
 
@@ -29,7 +28,7 @@ function DeleteDomain(props) {
                     console.log("status code 200, run changeDomainList function!");
                     let dataForSending = {...props.domain};
                     dataForSending.deleted = true;
-                         
+                    NotificationManager.success('Domain deleted!', 'Successful!', 2500);
                     props.changeDomainList(dataForSending)
                     
                 } else if (statusCode === 400) {
