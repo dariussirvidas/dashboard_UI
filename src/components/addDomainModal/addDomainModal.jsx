@@ -101,11 +101,15 @@ function DomainModal(props) {
             }
             
             //jei prisikonektino i musu backend, sukuria, jo response body
-            
+
             return response.json() 
             .then((responseObject) => {
-
-                const responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+                if(responseObject.status > 199 && responseObject.status < 300){ //ar sekmingas status ? 
+                    var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+                }
+                else{
+                var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
+                }
                 setTestResult(responseMessage);
             })  
         })
