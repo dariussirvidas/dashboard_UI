@@ -28,7 +28,7 @@ function DeleteDomain(props) {
                     console.log("status code 200, run changeDomainList function!");
                     let dataForSending = {...props.domain};
                     dataForSending.deleted = true;
-                    NotificationManager.success('Domain deleted!', 'Successful!', 2500);
+                    NotificationManager.success('Domain deleted!', 'Successful!', 3000);
                     props.changeDomainList(dataForSending)
                     
                 } else if (statusCode === 400) {

@@ -3,7 +3,7 @@ import store from "../../js/store";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Style from './deleteUser.scss';
-
+import { NotificationManager } from 'react-notifications';
 function DeleteUser(props) {
 
     async function fetchPutDelete() {
@@ -28,6 +28,7 @@ function DeleteUser(props) {
                     console.log("status code 200, run changeUserList function!");
                     let dataForSending = {...props.user};
                     dataForSending.deleted = true;
+                    NotificationManager.success('User deleted!', 'Successful!', 3000);
                     props.changeUserList(dataForSending)
 
                 } else if (statusCode === 400) {
@@ -54,7 +55,7 @@ function DeleteUser(props) {
                 <Modal show={show} onHide={handleClose}>
                     <div className="forma">
                         <form>
-                            <h3> Are you sure you want to delete this domain? </h3>
+                            <h3> Are you sure you want to delete this user? </h3>
                             <Button variant="primary" className ="interactive1" onClick={deleteUser}>Yes</Button>
                             <Button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</Button>
                         </form>
