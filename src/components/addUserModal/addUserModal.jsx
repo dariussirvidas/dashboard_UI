@@ -53,9 +53,7 @@ function UserModal(props) {
                         <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
                         <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
                         {passwordsMatch ? "":"Passwords don't match"}
-                        <hr/>
                         <br/>
-                        {/* this is retarded, because it's enabled only if passwords match and doesn't look at other inputs. */}
                         <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
                         <button onClick={handleClose} >Cancel</button>
                         <div>{response}</div>
