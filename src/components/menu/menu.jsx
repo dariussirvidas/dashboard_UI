@@ -23,15 +23,14 @@ function Menu() {
                                     <img src={Menu_icon} width="20" height="20" alt=""/>
                                 </a>
                                 <ul className="dropdown-menu" role="menu" aria-labelledby="imageDropdown">
-                                    <Dropdown.Item><Link to="/">Home</Link></Dropdown.Item>
-                                    <Dropdown.Item><Link to="/domains">Maintaining List</Link></Dropdown.Item>
-                                    <Dropdown.Item><Link to="/users">User Maintaining List</Link></Dropdown.Item>
-                                    <Dropdown.Item><Link to="/login">Login</Link></Dropdown.Item>
+                                    <Dropdown.Item><Link className="btn text-left" to="/">Home</Link></Dropdown.Item>
+                                    <Dropdown.Item><Link className="btn text-left" to="/domains">Maintaining List</Link></Dropdown.Item>
+                                    <Dropdown.Item><Link className="btn text-left" to="/users">User Maintaining List</Link></Dropdown.Item>
+                                    <Dropdown.Item><Link className="btn text-left" to="/login">Login</Link></Dropdown.Item>
                                 </ul>
                             </div>
                         </nav>
                     </div>
-                    {/*<div className="border"></div>*/}
                 </div>
 
             }
