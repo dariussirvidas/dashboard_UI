@@ -36,6 +36,9 @@ function DomainModal(props) {
     const handleShow = () => {
         setShow(true);
         setTestResult("");
+        setSelectedMethod(0);
+        setSelectedServiceType(0);
+        setBasicAuth(false);
     }
     //disabled inputs states:
     const [getSelectedMethod, setSelectedMethod] = useState(0);
@@ -134,9 +137,7 @@ function DomainModal(props) {
         event.preventDefault();
     }
 
-    // function alio(props){ //kas yra tuscia  funckija ? const = <div>{New.Date()}</div> yra elementas. function is didziosios raides, jau komponentas, galima pasuot props. Funkcinis komponentas negali tureti state. Todel reikia class extends React.Component. :))
-    //     return <h1>ZDRWA </h1>
-    // }
+
 
     return (
         <>
