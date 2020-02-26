@@ -27,7 +27,7 @@ function Login(props) {
                 <div className="login-page">
                     <div className="form">
                         <img src={Logo} alt="Festo Logo"/>
-                        <hr/>
+                        <hr className="line"/>
                         <form onSubmit={handleSubmit} className="login-form">
                             <input name="username" type="text" placeholder="username"/>
                             <input name="password" type="password" placeholder="password"/>
