@@ -46,6 +46,7 @@ function EditDomain(props) {
         setRestSoapSelected(props.domain.service_Type)
         setBasicAuth(props.domain.basic_Auth)
         setShow(true);
+        setResponse();
     }
 
     // GET/POST and REST/SOAP states
@@ -91,6 +92,8 @@ function EditDomain(props) {
             event.preventDefault();
         }
 
+    const [response, setResponse] = useState(); //response from server
+
     return (
         <>
             <a class="btn btn-link btn-sm txt" variant="primary"  onClick={handleShow}>
@@ -135,7 +138,8 @@ function EditDomain(props) {
                             changeDomainList={props.changeDomainList}
                             endpoint={props.endpoint}
                         />
-                        <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables
+                        {response}
+                        {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>
             </Modal>
@@ -143,6 +147,7 @@ function EditDomain(props) {
     );
 
     function handleSubmit(event) {
+        setResponse("waiting...")
         let dataForSending = {
             service_Name: event.target.serviceName.value,
             Url: event.target.url.value,
@@ -164,6 +169,27 @@ function EditDomain(props) {
         event.preventDefault();
     }
 
+    function submitData(endpoint, changeDomainList, dataForSending) {
+        fetchPut(endpoint + "domain/" + props.domain.id, dataForSending)
+            .then((response) => {
+                if (response.status > 199 && response.status < 300) {
+                    // creates a new object. uses the prop domain as a base and overwrites any old data with data from
+                    // the input fields
+                    const editedDomain = Object.assign({...props.domain}, dataForSending);
+                    console.log(response)
+                    changeDomainList(editedDomain)
+                    handleClose();
+                    setResponse("Domain successfuly updated")
+                } else {
+                    setResponse("Something went wrong")
+                }
+            })
+
+            .catch((error) => {
+                console.error("FETCH ERROR: ", error);
+            });
+    }
+
     async function fetchPut(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
@@ -176,29 +202,8 @@ function EditDomain(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        let statusCode = response.status;
-        return statusCode;
-    }
-
-    function submitData(endpoint, changeDomainList, dataForSending) {
-        fetchPut(endpoint + "domain/" + props.domain.id, dataForSending)
-            .then((statusCode) => {
-                console.log("status code " + statusCode + "...");
-                if (statusCode > 199 && statusCode < 300) {
-                    console.log("success!");
-                    // creates a new object. uses the prop domain as a base and overwrites any old data with data from
-                    // the input fields
-                    const editedDomain = Object.assign({...props.domain}, dataForSending);
-                    changeDomainList(editedDomain)
-                    handleClose();
-                } else {
-                    console.log("unsuccessful. what now?")
-                }
-            })
-
-            .catch((error) => {
-                console.error("FETCH ERROR: ", error);
-            });
+        const data = response; //response.statuscode
+        return response;
     }
 }
 
