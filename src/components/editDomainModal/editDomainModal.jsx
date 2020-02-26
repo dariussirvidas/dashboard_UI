@@ -84,10 +84,10 @@ function EditDomain(props) {
             }
         }
 
-        function testinam(event) {
-            console.log(getIsRestSoapSelected)
-            event.preventDefault();
-        }
+        // function testinam(event) {
+        //     console.log(getIsRestSoapSelected)
+        //     event.preventDefault();
+        // }
 
     return (
         <>
@@ -133,7 +133,7 @@ function EditDomain(props) {
                             changeDomainList={props.changeDomainList}
                             endpoint={props.endpoint}
                         />
-                        <button onClick={testinam}>TESTUOJAM</button>
+                        {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>
             </Modal>
