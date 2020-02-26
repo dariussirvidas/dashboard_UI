@@ -13,8 +13,13 @@ import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 import UserMaintainList from "../userMaintainList/userMaintainList";
+import {useSelector, useDispatch} from "react-redux";
 
 function Main(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <>
