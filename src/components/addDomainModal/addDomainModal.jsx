@@ -1,11 +1,19 @@
 import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './addDomainModal.scss';
-import store from "../../js/store";
+import './addDomainModal.scss';
+
+
+import {useSelector, useDispatch} from "react-redux";
+
 
     
 function AddDomainModal(props) {
+
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div>
@@ -18,6 +26,10 @@ function AddDomainModal(props) {
 }
 
 function DomainModal(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -89,7 +101,7 @@ function DomainModal(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
@@ -133,7 +145,7 @@ function DomainModal(props) {
                 New Domain
             </button>
             
-            <Modal classNeme="modal-large" show={show} onHide={handleClose}>
+            <Modal className="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>                   
@@ -164,7 +176,7 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST">Add</button>
+                        <button type="submit" value="send POST" className="interactive">Add</button>
                         <button onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
@@ -208,7 +220,7 @@ function DomainModal(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

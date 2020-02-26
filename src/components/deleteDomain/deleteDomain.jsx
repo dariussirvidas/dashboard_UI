@@ -3,15 +3,21 @@ import './deleteDomain.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import store from "../../js/store";
+
+
 import { NotificationManager } from 'react-notifications';
+import {useSelector, useDispatch} from "react-redux";
 
 function DeleteDomain(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'domain/del/' + props.domain.id, {
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                'Authorization': 'Bearer ' + token
             },
                 method: 'PUT'
             }
@@ -53,16 +59,16 @@ function DeleteDomain(props) {
 
     return (
         <>
-             <Button variant="primary" className ="interactive"onClick={handleShow}>
+             <button type="button" className ="interactive" onClick={handleShow}>
             {/* <button type="button" onClick={deleteDomain}>Delete</button> */}
             Delete
-            </Button>
+            </button>
             <Modal show={show} onHide={handleClose}>
             <div className="forma">
                 <form>
                 <h3> Are you sure you want to delete this domain? </h3>
-                <Button variant="primary" className ="interactive1" onClick={deleteDomain}>Yes</Button>
-                <Button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</Button>
+                <button variant="primary" className ="interactive1" onClick={deleteDomain}>Yes</button>
+                <button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</button>
                 {/*  <Modal.Dialog>
                     <Modal.Header>
                         <Modal.Title>Delete Domain</Modal.Title>

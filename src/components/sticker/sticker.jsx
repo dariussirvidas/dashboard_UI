@@ -1,5 +1,5 @@
 import React from "react";
-import Style from "./sticker.scss";
+import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
@@ -29,7 +29,6 @@ function Sticker(props) {
                     <Card.Text>
                         <div className="tooltip-wrap text-left">
                             <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip" data-placement="top" title={props.domainPing.domainUrl}>
-
                                 {
                                     props.domainPing.domainUrl
                                 }

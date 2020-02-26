@@ -2,15 +2,19 @@ import React, {Component} from 'react';
 import Logo from '../../Content/Festo logo.svg';
 import Menu_icon from '../../Content/hamburger_menu.png';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Style from './menu.scss';
+import './menu.scss';
 import {Link} from "react-router-dom";
-import store from "../../js/store";
+import {useSelector, useDispatch} from "react-redux";
 
 function Menu() {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
     return (
         <>
             {
-                store.getState().isLoggedIn === true &&
+                isLogged === true &&
                 <div className="border-bottom border-primary">
                     <div className="container NavBarOnTop">
                         <nav className="navbar navbar-light bg-white">

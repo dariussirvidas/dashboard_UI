@@ -4,7 +4,10 @@ import Logo from "../../Content/logo.png";
 import {Link} from "react-router-dom";
 
 import {useSelector, useDispatch} from "react-redux";
+
+
 import {increment, logIn, logInToken, authRole} from "../../actions/index";
+
 
 
 function Login(props) {
@@ -24,7 +27,7 @@ function Login(props) {
                 <div className="login-page">
                     <div className="form">
                         <img src={Logo} alt="Festo Logo"/>
-                        <hr/>
+                        <hr className="line"/>
                         <form onSubmit={handleSubmit} className="login-form">
                             <input name="username" type="text" placeholder="username"/>
                             <input name="password" type="password" placeholder="password"/>

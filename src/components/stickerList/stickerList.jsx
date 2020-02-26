@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
 
 import CardDeck from "react-bootstrap/CardDeck";
-import Style from './stickerList.scss';
+import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
-import store from "../../js/store";
+import {useSelector, useDispatch} from "react-redux";
 
 
 function StickerList(props) {
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
     return (
         <div>
             <div className="container">
@@ -52,6 +56,9 @@ function SingleService(props) {
     const [requestLatency,setRequestLatency] = useState({status: "No response yet"});
     const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
     const [latencyError, setLatencyError] = useState("false"); //erroras isbackendo invividualiam requestui
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     useEffect(() => {
 
@@ -87,7 +94,7 @@ function SingleService(props) {
         const response = await fetch(endpoint, {
             method: "GET",
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                'Authorization': 'Bearer ' + token
             }
         });
 
