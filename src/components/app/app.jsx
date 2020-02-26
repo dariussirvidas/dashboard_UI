@@ -25,6 +25,8 @@ function App() {
 
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
+
+
         fetchDomains(endpoint);
     }, []);
 
@@ -170,9 +172,16 @@ function App() {
                     // Main component is only rendered when domainList is fetched
                     domainList === "error" ?
                         (
-                            <ErrorMessage
-                                message="stuff"
-                            />
+                            <>
+                                <ErrorMessage
+                                    message="stuff"
+                                />
+
+                                <Login
+                                endpoint={endpoint}
+                                />
+                            </>
+
                         )
                         :
                         Boolean(domainList) === true ?
