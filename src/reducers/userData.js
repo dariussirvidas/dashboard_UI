@@ -1,4 +1,4 @@
-const roleReducer = (state = null, action) => {
+const userDataReducer = (state = null, action) => {
     switch (action.type) {
         case 'SET_ROLE':
             return action.payload;
@@ -7,4 +7,4 @@ const roleReducer = (state = null, action) => {
     }
 };
 
-export default roleReducer;
+export default userDataReducer;

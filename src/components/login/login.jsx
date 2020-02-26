@@ -9,16 +9,14 @@ import {useSelector, useDispatch} from "react-redux";
 import {increment, logIn, logInToken, authRole} from "../../actions/index";
 
 
-
 function Login(props) {
 
 
     const counter = useSelector(state => state.counter);
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
     const dispatch = useDispatch();
-
 
 
     return (
@@ -39,7 +37,6 @@ function Login(props) {
             </div>
         </>
     );
-
 
 
     function handleSubmit(event) {
@@ -63,31 +60,34 @@ function Login(props) {
 
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
-                dispatch(authRole(response.role));
-
-                window.localStorage.setItem("token", token);
-                window.localStorage.setItem("isLogged", isLogged);
-                window.localStorage.setItem("role", role);
-
-
+                dispatch(userData(
+                    {
+                    role: response.role,
+                username: response.username
             })
-            .catch(error => {
-                console.error("error while logging in reeee:", error);
-            });
-    }
+    );
 
-    async function fetchFromApi(userInformation) {
-        const response = await fetch(props.endpoint + "users/authenticate/", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
 
-        });
-        return await response.json();
-    }
+
+})
+.
+catch(error => {
+    console.error("error while logging in reeee:", error);
+});
+}
+
+async function fetchFromApi(userInformation) {
+    const response = await fetch(props.endpoint + "users/authenticate/", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
+
+    });
+    return await response.json();
+}
 
 }
 
