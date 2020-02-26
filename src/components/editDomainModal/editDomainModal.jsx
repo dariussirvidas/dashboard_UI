@@ -42,7 +42,7 @@ function EditDomain(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => { //kai atsiranda modalas, kad restartintu value.
-        setGetPostSelected(props.domain.method)
+        setGetPostSelected(props.domain.method) //kai atidarom pakeiciam, uzdarom, vel atidarius buna vis dar seni propsai. Jie nepasiupdatina
         setRestSoapSelected(props.domain.service_Type)
         setBasicAuth(props.domain.basic_Auth)
         setShow(true);
@@ -85,10 +85,11 @@ function EditDomain(props) {
             }
         }
 
-        // function testinam(event) {
-        //     console.log(getIsRestSoapSelected)
-        //     event.preventDefault();
-        // }
+        function testinam(event) {
+            console.log(props.domain.auth_User)
+            console.log(props.domain.auth_Password)
+            event.preventDefault();
+        }
 
     return (
         <>
@@ -114,8 +115,8 @@ function EditDomain(props) {
                                placeholder="Email" required max="256"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
-                        <input name="user" defaultValue={props.domain.Auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
-                        <input name="password" defaultValue={props.domain.Auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
+                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
+                        <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
                                placeholder="Password" required max="1024"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
                                   placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
@@ -134,7 +135,7 @@ function EditDomain(props) {
                             changeDomainList={props.changeDomainList}
                             endpoint={props.endpoint}
                         />
-                        {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
+                        <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables
                     </form>
                 </div>
             </Modal>
