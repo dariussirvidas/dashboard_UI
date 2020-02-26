@@ -3,11 +3,18 @@ import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
-import store from "../../js/store";
+
 import Icon from './../../Content/edit_icon.png';
+
+
+import {useSelector, useDispatch} from "react-redux";
+
 
 function EditDomainModal(props) {
 
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
     return (
         <div>
             <EditDomain
@@ -21,6 +28,10 @@ function EditDomainModal(props) {
 }
 
 function EditDomain(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
 
     //Default selection on select tags, when you open this edit Modal.
@@ -175,7 +186,7 @@ function EditDomain(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

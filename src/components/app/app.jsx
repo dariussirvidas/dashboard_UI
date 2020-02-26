@@ -9,15 +9,19 @@ import {LoadingSpinner, ErrorMessage} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 
-import rootReducer from "../../js/reducers";
-import store from "../../js/store";
 import userMaintainList from "../userMaintainList/userMaintainList";
 import 'react-notifications/lib/notifications.css';
 import { NotificationContainer } from 'react-notifications';
+import {useSelector, useDispatch} from "react-redux";
 
-window.store = store;
 
 function App() {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
+
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [domainList, setDomainList] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
@@ -33,14 +37,14 @@ function App() {
 
     useEffect(() => {
         setTimeout(reFetchDomains, 8000)
-        console.log(store.getState().token)
+        console.log(token)
     }, []);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint, {
             method: "GET",
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                'Authorization': 'Bearer ' + token
             }
         });
         const data = await response.json();
@@ -154,7 +158,7 @@ function App() {
         const response = await fetch(endpoint + "users", {
                 method: "GET",
                 headers: {
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 }
             }
         );

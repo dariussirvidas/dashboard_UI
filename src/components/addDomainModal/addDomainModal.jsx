@@ -2,10 +2,18 @@ import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import Style from './addDomainModal.scss';
-import store from "../../js/store";
+
+
+import {useSelector, useDispatch} from "react-redux";
+
 
     
 function AddDomainModal(props) {
+
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div>
@@ -18,6 +26,10 @@ function AddDomainModal(props) {
 }
 
 function DomainModal(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -89,7 +101,7 @@ function DomainModal(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
@@ -208,7 +220,7 @@ function DomainModal(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
