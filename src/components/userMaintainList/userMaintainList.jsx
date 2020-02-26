@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import Checkbox from "../checkbox/checkbox";
-import style from './userMaintainList.scss'
+import './userMaintainList.scss'
 import Popup from "reactjs-popup";
 import {ErrorMessage} from "../elements/elements";
 

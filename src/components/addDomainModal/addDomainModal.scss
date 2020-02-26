@@ -20,15 +20,14 @@
 }
 
 .forma button {
-
+  font-family: $fnt-mpr !important;
   text-transform: uppercase;
   outline: 0;
   background: $clr-hero !important;
-  width: 10% !important;
   border: 0;
   padding: 10px;
   margin: 5px;
-  color: #FFFFFF;
+  color: $clr-white !important;
   font-size: 14px;
 
   &:hover {
@@ -37,7 +36,7 @@
   }
 
   &:active {
-    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
@@ -53,7 +52,7 @@
 }
 
 .forma .message a {
-  color: lightskyblue;
+  color: $clr-hero !important;
   text-decoration: none;
 }
 
@@ -137,7 +136,7 @@ label.checkboxTitle2 {
 }
 
 .Buttonas {
-
+  font-family: $fnt-mpr;
   text-transform: uppercase;
   outline: 0;
   background: $clr-hero !important;
@@ -153,7 +152,7 @@ label.checkboxTitle2 {
   }
 
   &:active {
-    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 

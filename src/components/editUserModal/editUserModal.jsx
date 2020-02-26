@@ -78,13 +78,13 @@ function EditUser(props) {
                         <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
                         {passwordsMatch ? "":"Passwords don't match"}
                         <br/>
-                        <button type="submit" value="send POST">Update</button>
-                        <button onClick={handleClose} type="button">Cancel</button>
-                        <div>{response}</div>
+                        <button type="submit" value="send POST" className="interactive">Update</button>
+                        <button onClick={handleClose} type="button" className="interactive">Cancel</button>
                         <DeleteUser
                         user={props.user}
                         changeUserList={props.changeUserList}
                         endpoint={props.endpoint}/>
+                        <div>{response}</div>
                     </form>
                 </div>
             </Modal>

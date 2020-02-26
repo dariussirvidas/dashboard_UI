@@ -3,7 +3,7 @@ import React, {Component, useState} from 'react';
 
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
-import Style from './deleteUser.scss';
+import './deleteUser.scss';
 import { NotificationManager } from 'react-notifications';
 import {useSelector, useDispatch} from "react-redux";
 
@@ -56,21 +56,21 @@ function DeleteUser(props) {
         const handleShow = () => setShow(true);
 
         return (
-            <div>
-                <button class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
-                Delete
-                </button>
-                <Modal show={show} onHide={handleClose}>
-                    <div className="forma">
-                        <form>
-                            <h3> Are you sure you want to delete this user? </h3>
-                            <Button variant="primary" className ="interactive1" onClick={deleteUser}>Yes</Button>
-                            <Button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</Button>
-                        </form>
-                    </div>
+            <>
+            <button type="button" className ="interactive" onClick={handleShow}>
+            Delete
+            </button>
+            <Modal show={show} onHide={handleClose}>
+            <div className="forma">
+                <form>
+                <h3> Are you sure you want to delete this user? </h3>
+                <button variant="primary" className ="interactive1" onClick={deleteUser}>Yes</button>
+                <button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</button>
+                </form>
+                </div>
                 </Modal>
-            </div>
-        );
+                </>
+        )
 }
 
 export default DeleteUser;

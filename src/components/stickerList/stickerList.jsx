@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
 
 import CardDeck from "react-bootstrap/CardDeck";
-import Style from './stickerList.scss';
+import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
 

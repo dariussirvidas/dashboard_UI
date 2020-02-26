@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
 import AddDomainModal from "../addDomainModal/addDomainModal";
-import Style from './addUserModal.scss';
+import './addUserModal.scss';
 
 import {useSelector, useDispatch} from "react-redux";
 

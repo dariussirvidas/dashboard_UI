@@ -1,25 +1,12 @@
 @import '../ux_global_design.scss';
 
-.forma1 {
-  
-  font-family: $fnt-mpr;
-
-  width: 60% !important;
-  /* border: 0;
-  padding: 10px;
-  margin: 5px;
-  color: #FFFFFF;
-  font-size: 14px; */
-  &:hover {
-    background-color: mix($clr-black, $clr-hero, 10%);
-    color: mix($clr-black, $clr-white, 20%) !important;
-  }
-  &:active {
-    background-color: mix($clr-black, $clr-hero, 10%);
-    color: mix($clr-black, $clr-white, 20%) !important;
-  }
-
+.forma {
+  position: relative;
+  z-index: 1;
+  padding: 45px;
+  text-align: center;
 }
+
 
 /* Comment out for original notification color*/
 .notification {
