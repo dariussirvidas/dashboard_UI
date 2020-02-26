@@ -58,14 +58,13 @@ function Login(props) {
 
                 // sets isLoggedIn to true
 
-                dispatch(logInToken(response.token));
-                dispatch(logIn());
                 dispatch(authRole(
                     {
                     role: response.role,
                 username: response.username
-            })
-    );
+            }));
+                dispatch(logInToken(response.token));
+                dispatch(logIn());
 
 
 
