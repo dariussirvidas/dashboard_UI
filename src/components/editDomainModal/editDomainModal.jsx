@@ -34,60 +34,40 @@ function EditDomain(props) {
     const role = useSelector(state => state.role);
 
 
-    //Default selection on select tags, when you open this edit Modal.
+    //cia modalo state
 
-    let isRestSelected = false;
-    let isSoapSelected = false;
-
-    function getDefaultSelectionServiceType() {
-        switch (props.domain.service_Type) {
-            case 0 :
-                isRestSelected = true;
-                break;
-            case 1 :
-                isSoapSelected = true;
-                break;
-        }
-    }
-
-    // let isPostSelected = false;
-    // let isGetSelected = false;
-
-    const [getIsGetSelected, setGetSelected] = useState(
-        props.domain.method == 0? true : false
-    )
-    const [getIsPostSelected, setPostSelected] = useState(
-        props.domain.method == 1? true : false
-    )
-    
     // show or hide this modal state
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => {
-        // setGetSelected();
-        // setPostSelected();
+    const handleShow = () => { //kai atsiranda modalas, kad restartintu value.
+        setGetPostSelected(props.domain.method)
+        setRestSoapSelected(props.domain.service_Type)
+        setBasicAuth(props.domain.basic_Auth)
         setShow(true);
     }
 
-    //disabled inputs states: 
-        const [getSelectedMethod, setSelectedMethod] = useState(0);
-        const [getSelectedServiceType, setSelectedServiceType] = useState(0);
-        const [getBasicAuth, setBasicAuth] = useState(false);
+    // GET/POST and REST/SOAP states
+    const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method) //jei 0 GET, jei 1 POST
+    const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType) //jei 0 REST, jei 1 SOAP
+    const [getBasicAuth, setBasicAuth] = useState(props.domain.basic_Auth);
     
+    // onChange functions for input fields:
 
         function changeMethodOption(event) { //<select name="method"
-            setSelectedMethod(event.target.value)
+            setGetPostSelected(event.target.value)
         }
         function changeServiceTypeOption(event) { //<select name="serviceType"
-            setSelectedServiceType(event.target.value)
+            setRestSoapSelected(event.target.value)
         }
         function changeAuth(event){
             setBasicAuth(event.target.checked)
         }
     
+
+    //functions to check if fields should be disabled
         const isUsernamePasswordDisabled = function checkIfDisabled() {
-            if(getBasicAuth == true){ 
+            if(getBasicAuth){ 
                 return false;
             }
             else{
@@ -96,12 +76,17 @@ function EditDomain(props) {
         }
     
         const isParametersDisabled = function checkIfDisabled() {
-            if(getSelectedMethod == 0){ //tipo jei GET 
+            if(getIsGetPostSelected == 0){ //tipo jei GET 
                 return true;
             }
             else{
                 return false;
             }
+        }
+
+        function testinam(event) {
+            console.log(getIsRestSoapSelected)
+            event.preventDefault();
         }
 
     return (
@@ -115,24 +100,21 @@ function EditDomain(props) {
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
                                placeholder="Service name" required max="64"/>
-                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
-                            {console.log(props.domain.method)}
-                            {/* {console.log(getIsPostSelected)}
-                            {console.log(getIsPostSelected)} */}
-                            <option selected={getIsGetSelected} value={0}>GET</option>
-                            <option selected={getIsPostSelected} value={1}>POST</option>
+                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>
+                            <option selected={getIsGetPostSelected == 0? true:false} value={0}>GET</option>
+                            <option selected={getIsGetPostSelected == 1? true:false} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
-                            <option selected={isRestSelected} value={0}>Service - REST</option>
-                            <option selected={isSoapSelected} value={1}>Service - SOAP</option>
+                            <option selected={getIsRestSoapSelected == 0? true:false} value={0}>Service - REST</option>
+                            <option selected={getIsRestSoapSelected == 1? true:false} value={1}>Service - SOAP</option>
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
                                placeholder="Email" required max="256"/>
-                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
+                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
-                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
-                        <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
+                        <input name="user" defaultValue={props.domain.Auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
+                        <input name="password" defaultValue={props.domain.Auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
                                placeholder="Password" required max="1024"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
                                   placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
@@ -151,6 +133,7 @@ function EditDomain(props) {
                             changeDomainList={props.changeDomainList}
                             endpoint={props.endpoint}
                         />
+                        <button onClick={testinam}>TESTUOJAM</button>
                     </form>
                 </div>
             </Modal>
