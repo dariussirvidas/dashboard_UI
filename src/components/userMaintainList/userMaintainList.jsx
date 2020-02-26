@@ -9,8 +9,13 @@ import AddUserModal from "../addUserModal/addUserModal";
 import DeleteUser from "../deleteUser/deleteUser";
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import EditUserModal from "../editUserModal/editUserModal";
+import {useSelector, useDispatch} from "react-redux";
 
 function UserMaintainList(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div className="container-fluid">
