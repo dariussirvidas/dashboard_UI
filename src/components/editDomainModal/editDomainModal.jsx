@@ -1,7 +1,7 @@
 import React, {Component, useEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './editDomainModal.scss';
+import './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
 import store from "../../js/store";
 import Icon from './../../Content/edit_icon.png';
@@ -136,8 +136,8 @@ function EditDomain(props) {
 
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="submit">Save</button>
-                        <button type="button" onClick={handleClose}>Cancel</button>
+                        <button type="submit" className="interactive">Save</button>
+                        <button type="button" className="interactive" onClick={handleClose}>Cancel</button>
                         <DeleteDomain
                             domain={props.domain}
                             changeDomainList={props.changeDomainList}

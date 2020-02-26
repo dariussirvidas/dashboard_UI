@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './addDomainModal.scss';
+import './addDomainModal.scss';
 import store from "../../js/store";
 
     
@@ -129,7 +129,7 @@ function DomainModal(props) {
                 New Domain
             </button>
             
-            <Modal classNeme="modal-large" show={show} onHide={handleClose}>
+            <Modal className="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>                   
@@ -160,7 +160,7 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST">Add</button>
+                        <button type="submit" value="send POST" className="interactive">Add</button>
                         <button onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>

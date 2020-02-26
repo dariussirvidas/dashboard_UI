@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Logo from '../../Content/Festo logo.svg';
 import Menu_icon from '../../Content/hamburger_menu.png';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Style from './menu.scss';
+import './menu.scss';
 import {Link} from "react-router-dom";
 import store from "../../js/store";
 

@@ -3,7 +3,7 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import store from "../../js/store";
 import AddDomainModal from "../addDomainModal/addDomainModal";
-import Style from './addUserModal.scss';
+import './addUserModal.scss';
 
 function AddUserModal(props) {
 

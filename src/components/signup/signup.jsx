@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Logo from "../../Content/logo.png";
-import signup from './signup.scss';
+import './signup.scss';
 import {Link} from "react-router-dom";
 function Signup() {
 
