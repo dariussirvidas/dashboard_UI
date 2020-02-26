@@ -2,12 +2,16 @@ import React, {useState, useEffect} from 'react';
 import Sticker from "../sticker/sticker";
 
 import CardDeck from "react-bootstrap/CardDeck";
-import Style from './stickerList.scss';
+import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
-import store from "../../js/store";
+import {useSelector, useDispatch} from "react-redux";
 
 
 function StickerList(props) {
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
     return (
         <div>
             <div className="container">
@@ -49,12 +53,22 @@ function StickerList(props) {
 function SingleService(props) {
     const [domainPingResponseCode, setDomainPingResponseCode] = useState();
     const [requestResponseData, setRequestResponseData] = useState({status: "No response yet"});
+    const [requestLatency,setRequestLatency] = useState({status: "No response yet"});
     const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
+    const [latencyError, setLatencyError] = useState("false"); //erroras isbackendo invividualiam requestui
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     useEffect(() => {
 
         pingDomain();
-        console.log("USESTATE___________");
+
+    }, []);
+
+    useEffect(() => {
+
+        pingLatency();
 
     }, []);
 
@@ -80,7 +94,7 @@ function SingleService(props) {
         const response = await fetch(endpoint, {
             method: "GET",
             headers: {
-                'Authorization': 'Bearer ' + store.getState().token
+                'Authorization': 'Bearer ' + token
             }
         });
 
@@ -95,21 +109,7 @@ function SingleService(props) {
 
     function pingDomain() {
 
-        let endpointToFetch = "";
-        switch (props.item.service_Type) {
-            case(0): //WebApp(Portal)
-                endpointToFetch = props.endpoint + "requests/getportal/";
-                break
-            case(1): //ServiceRest
-            case(2): //ServiceSoap
-                endpointToFetch = props.endpoint + "requests/getservice/";
-                break
-            default:
-                console.log("tokio service mes neturim")
-
-        }
-
-        fetchFromApi(endpointToFetch + props.item.id) //fetchinam single service .../getservice/243
+        fetchFromApi(props.endpoint + "requests/getservice/" + props.item.id) //fetchinam single service .../getservice/243
             .then(data => {
                 setRequestResponseData(data);
 
@@ -124,6 +124,23 @@ function SingleService(props) {
             });
     }
 
+    function pingLatency() {
+
+        fetchFromApi(props.endpoint + "domain/" + props.item.id) //fetchinam single service .../getservice/243
+            .then(data => {
+                setRequestLatency(data);
+
+                // if the ping response is not success, refetch that single domain to get last failure date
+                if (data.status !== "Success")
+                    fetchSingleDomain(props.endpoint)
+            })
+            .catch(error => {
+                console.error("error while fetching domains: " + error);
+                setLatencyError(true);
+                setRequestLatency("error");
+            });
+    }
+
     function fetchSingleDomain(endpoint) {
         fetchFromApi(endpoint + "domain/" + props.item.id)
             .then(data => {
@@ -134,16 +151,17 @@ function SingleService(props) {
                 console.error("error while fetching SINGLE domain:" + error);
             });
     }
-
     return (
+
         <>
             {
                 props.item.deleted === false && props.item.active === true &&
                 <Sticker
                     item={props.item}
                     domainPing={requestResponseData}
-                    // domainPingError={domainPingError}
+                    domainLatency={requestLatency}
                     checkIn={timer}
+                    fetshSingleDomain={fetchSingleDomain}
                 />
             }
         </>

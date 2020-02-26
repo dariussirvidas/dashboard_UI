@@ -1,12 +1,14 @@
 @import '../ux_global_design.scss';
+
 .forma {
   position: relative;
   z-index: 1;
   padding: 45px;
   text-align: center;
 }
+
 .forma input {
-  font-family: "Roboto", sans-serif;
+
   outline: 0;
   background: #f2f2f2;
   width: 95%;
@@ -16,27 +18,30 @@
   box-sizing: border-box;
   font-size: 14px;
 }
+
 .forma button {
-  font-family: "Roboto", sans-serif;
+  font-family: $fnt-mpr !important;
   text-transform: uppercase;
   outline: 0;
-  background: $clr-hero;
-  width: 30%;
+  background: $clr-hero !important;
   border: 0;
   padding: 10px;
   margin: 5px;
-  color: #FFFFFF;
+  color: $clr-white !important;
   font-size: 14px;
+
   &:hover {
-    background-color: mix($clr-black, lightskyblue, 10%) !important;
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 10%) !important;
   }
+
   &:active {
-    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
 }
+
 /* .forma button:hover,.forma button:active,.forma button:focus {
   background: lightskyblue;
 } */
@@ -45,22 +50,25 @@
   color: #b3b3b3;
   font-size: 12px;
 }
+
 .forma .message a {
-  color: lightskyblue;
+  color: $clr-hero !important;
   text-decoration: none;
 }
-.SelectFrom{
+
+.SelectFrom {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
-  width: 45%;
+  width: 46.88% !important;
   border: 0;
   margin: 0px 10px 10px 10px;
   padding: 15px;
   box-sizing: border-box;
   font-size: 14px;
 }
-.textArea{
+
+.textArea {
   font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
@@ -71,46 +79,85 @@
   box-sizing: border-box;
   font-size: 14px;
 }
-label{
+
+label {
   display: inline !important;
- /*  margin-bottom: 15px !important; */     /*COMMENTED THESE OUT SINCE THEY HAVE NO EFFECT WHEN USED WITH DISPLAY:INLINE */
+  
+   /* margin-bottom: 15px !important; */
+  /*COMMENTED THESE OUT SINCE THEY HAVE NO EFFECT WHEN USED WITH DISPLAY:INLINE */
 }
-.SelectCheckbox{
+label.checkboxTitle2 {
+  font-size: 40px !important;
+}
+
+.SelectCheckbox {
   display: inline !important;
   padding: 0 !important;
   margin-right: 0% !important;
- /*  width: 10% !important;
-  margin-bottom: 15px !important; */
+  /*  width: 10% !important;
+   margin-bottom: 15px !important; */
 
 }
-.SelectCheckbox2{
-  display: inline !important;
- /*  margin-bottom: 15px !important; */
- /*  width: 10% !important; */
-}
-.SelectCheckbox3{
+
+.SelectCheckbox2 {
   display: inline !important;
   padding: 0 !important;
   margin-right: 0% !important;
- /*  margin-bottom: 15px !important;
-  width: 10% !important; */
+
 }
 
-.SelectInterval{
-  width: 78% !important;
+.SelectCheckbox3 {
+  display: inline !important;
+  padding: 0 !important;
+  margin-right: 0% !important;
 }
-.SelectIntervalSeconds{
+
+.SelectInterval {
+  width: 79.7% !important;
+}
+
+.SelectIntervalSeconds {
   width: 15% !important;
   margin-left: 5px !important;
 }
+
 .interactive {
   background-color: $clr-hero !important;
+
   &:hover {
     background-color: mix($clr-black, $clr-hero, 10%) !important;
     color: mix($clr-black, $clr-white, 10%) !important;
   }
+
   &:active {
     background-color: mix($clr-black, $clr-hero, 20%) !important;
     color: mix($clr-black, $clr-white, 20%) !important;
   }
+}
+
+.Buttonas {
+  font-family: $fnt-mpr;
+  text-transform: uppercase;
+  outline: 0;
+  background: $clr-hero !important;
+  border: 0;
+  padding: 10px;
+  margin: 5px;
+  color: #FFFFFF;
+  font-size: 14px;
+
+  &:hover {
+    background-color: mix($clr-black, $clr-hero, 10%) !important;
+    color: mix($clr-black, $clr-white, 10%) !important;
+  }
+
+  &:active {
+    background-color: mix($clr-black, $clr-hero, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+
+}
+
+.modal-dialog {
+  max-width: 33% !important;
 }

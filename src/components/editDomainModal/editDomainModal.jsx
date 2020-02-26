@@ -1,20 +1,23 @@
 import React, {Component, useEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './editDomainModal.scss';
+import './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
-import store from "../../js/store";
 
-// currently functions as another Add service
-// jei webapp, metodas GET, keisti negalima, nereikia parametru
-// jei auth checked, neduoda user ir password
+import Icon from './../../Content/edit_icon.png';
+
+
+import {useSelector, useDispatch} from "react-redux";
 
 
 function EditDomainModal(props) {
 
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
     return (
         <div>
-            <Example
+            <EditDomain
                 domain={props.domain}
                 callbackFetch={props.callbackReFetchDomains}
                 changeDomainList={props.changeDomainList}
@@ -24,7 +27,14 @@ function EditDomainModal(props) {
 
 }
 
-function Example(props) {
+function EditDomain(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
+
+    //Default selection on select tags, when you open this edit Modal.
 
     let isRestSelected = false;
     let isSoapSelected = false;
@@ -40,79 +50,102 @@ function Example(props) {
         }
     }
 
-    // soapui - postas
-    // restui get ir post
-    // webapp tik get
+    // let isPostSelected = false;
+    // let isGetSelected = false;
 
-    // basic auth tiek soapui tiek restui (gal ir webappui)
-
-    let isPostSelected = false;
-    let isGetSelected = false;
-
-    function getDefaultSelectionMethod() {
-        switch (props.domain.method) {
-            case 0 :
-                isGetSelected = true;
-                break;
-            case 1 :
-                isPostSelected = true;
-                break;
-        }
-    }
-
-
+    const [getIsGetSelected, setGetSelected] = useState(
+        props.domain.method == 0? true : false
+    )
+    const [getIsPostSelected, setPostSelected] = useState(
+        props.domain.method == 1? true : false
+    )
+    
+    // show or hide this modal state
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        // setGetSelected();
+        // setPostSelected();
+        setShow(true);
+    }
 
+    //disabled inputs states: 
+        const [getSelectedMethod, setSelectedMethod] = useState(0);
+        const [getSelectedServiceType, setSelectedServiceType] = useState(0);
+        const [getBasicAuth, setBasicAuth] = useState(false);
+    
+
+        function changeMethodOption(event) { //<select name="method"
+            setSelectedMethod(event.target.value)
+        }
+        function changeServiceTypeOption(event) { //<select name="serviceType"
+            setSelectedServiceType(event.target.value)
+        }
+        function changeAuth(event){
+            setBasicAuth(event.target.checked)
+        }
+    
+        const isUsernamePasswordDisabled = function checkIfDisabled() {
+            if(getBasicAuth == true){ 
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+    
+        const isParametersDisabled = function checkIfDisabled() {
+            if(getSelectedMethod == 0){ //tipo jei GET 
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
 
     return (
         <>
-            <a variant="primary" className="txt" onClick={handleShow}>
-                Edit
+            <a class="btn btn-link btn-sm txt" variant="primary"  onClick={handleShow}>
+                <i className="material-icons iconHover">&#xe254;</i>
             </a>
-
-            {
-                getDefaultSelectionServiceType()
-            }
-            {
-                getDefaultSelectionMethod()
-            }
 
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
-                               placeholder="Service name"/>
-                        <select name="method" className="SelectFrom" required>>
-                            <option selected={isGetSelected} value={0}>GET</option>
-                            <option selected={isPostSelected} value={1}>POST</option>
+                               placeholder="Service name" required max="64"/>
+                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
+                            {console.log(props.domain.method)}
+                            {/* {console.log(getIsPostSelected)}
+                            {console.log(getIsPostSelected)} */}
+                            <option selected={getIsGetSelected} value={0}>GET</option>
+                            <option selected={getIsPostSelected} value={1}>POST</option>
                         </select>
-                        <select name="serviceType" className="SelectFrom" required>
+                        <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
                             <option selected={isRestSelected} value={0}>Service - REST</option>
                             <option selected={isSoapSelected} value={1}>Service - SOAP</option>
                         </select>
-                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL"/>
+                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
-                               placeholder="Email"/>
+                               placeholder="Email" required max="256"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
-                                                   name="auth" id="authActive"></input>
-                        <input name="user" defaultValue={props.domain.auth_User} type="text" placeholder="User"/>
-                        <input name="password" defaultValue={props.domain.auth_Password} type="password"
-                               placeholder="Password"/>
+                                                   name="auth" id="authActive" onClick={changeAuth}></input>
+                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
+                        <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
+                               placeholder="Password" required max="1024"/>
                         <textarea name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
-                                  placeholder="Parameters"></textarea>
+                                  placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
-                               placeholder="Interval"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold"
-                               min="50"/>
+                               placeholder="Interval" required min="3" max="2000000"/>
+                        <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
+                               min="50" required min="10" max="60000"/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
+
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="button">Test</button>
-                        <button type="submit">Save</button>
-                        <button type="button" onClick={handleClose}>Cancel</button>
+                        <button type="submit" className="interactive">Save</button>
+                        <button type="button" className="interactive" onClick={handleClose}>Cancel</button>
                         <DeleteDomain
                             domain={props.domain}
                             changeDomainList={props.changeDomainList}
@@ -121,7 +154,6 @@ function Example(props) {
                     </form>
                 </div>
             </Modal>
-
         </>
     );
 
@@ -143,7 +175,6 @@ function Example(props) {
         console.log("full object for sending:", dataForSending);
         console.log("JSON string:", JSON.stringify(dataForSending));
         console.log("domain obj: ", props.domain);
-
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
@@ -155,7 +186,7 @@ function Example(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
@@ -174,6 +205,7 @@ function Example(props) {
                     // the input fields
                     const editedDomain = Object.assign({...props.domain}, dataForSending);
                     changeDomainList(editedDomain)
+                    handleClose();
                 } else {
                     console.log("unsuccessful. what now?")
                 }

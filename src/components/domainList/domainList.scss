@@ -2,15 +2,16 @@
 
 table {
   border-collapse: collapse;
-  width: 1265px !important;
+  width: 1260px !important;
   justify-content: center;
-  border: 1px solid $clr-icdg-1;
+  border: 1px solid $clr-icdg-1 !important;
   margin-bottom: 1%;
   table-layout: fixed;
 }
-th{
+
+th {
   background: $clr-caerul;
-  color: #d8dce1;
+  color: #FFFFFF;
 }
 
 th, td {
@@ -26,19 +27,22 @@ tr:nth-child(even) {
   vertical-align: middle;
 }
 
-.domainButton{
-  margin-right: -6px;
+.domainButton {
+  margin-bottom: 15px;
 }
+
 .txt {
   cursor: pointer;
 }
-.editDomainModal{
+
+.editDomainModal {
   margin-top: 17px;
 }
 
 .tooltip-wrap {
   position: relative !important;
 }
+
 .tooltip-wrap .tooltip-content {
   display: none;
   position: absolute;
@@ -49,8 +53,11 @@ tr:nth-child(even) {
   padding: .5em;
 
 }
+
 .tooltip-wrap:hover .tooltip-content {
   display: block;
+}
 
-
+.space {
+  margin-top: 50px !important;
 }

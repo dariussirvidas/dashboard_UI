@@ -1,15 +1,23 @@
 import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
-import Style from './addDomainModal.scss';
-import store from "../../js/store";
+import './addDomainModal.scss';
 
 
+import {useSelector, useDispatch} from "react-redux";
+
+
+    
 function AddDomainModal(props) {
+
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div>
-            <Example
+            <DomainModal
                 callbackFetch={props.callbackReFetchDomains}
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}/>
@@ -17,22 +25,26 @@ function AddDomainModal(props) {
     );
 }
 
+function DomainModal(props) {
 
-
-function Example(props) {
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
+    const handleShow = () => {
+        setShow(true);
+        setTestResult("");
+    }
     //disabled inputs states:
     const [getSelectedMethod, setSelectedMethod] = useState(0);
     const [getSelectedServiceType, setSelectedServiceType] = useState(0);
     const [getBasicAuth, setBasicAuth] = useState(false);
 
 
-    function changeMethodOption(event) { //<select name="method"
+    //Cia gal const reikia vietoj funkcijos ?
+    function changeMethodOption(event) { //<select name="method" 
         setSelectedMethod(event.target.value)
     }
     function changeServiceTypeOption(event) { //<select name="serviceType"
@@ -49,29 +61,95 @@ function Example(props) {
         else{
             return true;
         }
-    }
+    };
 
     const isParametersDisabled = function checkIfDisabled() {
-        if(getSelectedMethod == 0 || getSelectedServiceType == 0){ //tipo jei GET ar WEBapp 
+        if(getSelectedMethod == 0){ //tipo jei GET 
             return true;
         }
         else{
             return false;
         }
+    };
+    
+    //test button functionality
+
+    const [getTestResult, setTestResult] = useState("");
+
+    const testService = function test(event) {
+        setTestResult("Waiting...")
+        var formData = new FormData(document.querySelector('form'))
+        var inputsFromForm = {};
+        formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
+            inputsFromForm[key] = value
+        }); 
+
+        var dataForSending = {
+            "url": inputsFromForm.url,
+            "service_Type": parseInt(inputsFromForm.serviceType),
+            "method": parseInt(inputsFromForm.method),
+            "basic_Auth": (inputsFromForm.auth == "on" ? true: false),
+            "auth_User": inputsFromForm.user,
+            "auth_Password": inputsFromForm.password,
+            "parameters": inputsFromForm.parameters
+          }
+        
+        console.log(JSON.stringify(dataForSending))
+        fetch(props.endpoint + "/Requests/testservice",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+            }
+        )
+        
+        .then ((response) => {
+            console.log(response)
+            console.log("JAU PO RESPONSE")
+            console.log(JSON.stringify(dataForSending)  )
+            if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
+                setTestResult("Check your fields and try again.")
+                return
+            }
+            
+            //jei prisikonektino i musu backend, sukuria, jo response body
+
+            return response.json() 
+            .then((responseObject) => {
+                if(responseObject.status > 199 && responseObject.status < 300){ //ar sekmingas status ? 
+                    var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+                }
+                else{
+                var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
+                }
+                setTestResult(responseMessage);
+            })  
+        })
+        
+        
+        event.preventDefault();
     }
+
+    // function alio(props){ //kas yra tuscia  funckija ? const = <div>{New.Date()}</div> yra elementas. function is didziosios raides, jau komponentas, galima pasuot props. Funkcinis komponentas negali tureti state. Todel reikia class extends React.Component. :))
+    //     return <h1>ZDRWA </h1>
+    // }
 
     return (
         <>
         
-            <Button variant="primary" className ="interactive"onClick={handleShow}>
-                Add Domain new
-            </Button>
-{/* //on change turetu leist iskart state pakeist, kada nereiktu funkcijos.  kuir select tagas*/}
-            <Modal show={show} onHide={handleClose}>
+            <button variant="primary" className ="Buttonas" onClick={handleShow}>
+                New Domain
+            </button>
+            
+            <Modal className="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
                         <div className="form-group"/>                   
-                        <input type="text" placeholder="Service name" name="serviceName" required/>
+                        <input type="text" placeholder="Service name" name="serviceName" required max="64"/>
                         <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required> 
                             <option value={0}>GET</option>
                             <option value={1}>POST</option>
@@ -80,25 +158,28 @@ function Example(props) {
                             <option value={0}>Service - REST</option>
                             <option value={1}>Service - SOAP</option>
                         </select>
-                        <input type="url" placeholder="URL" name="url" required/>
-                        <input type="email" placeholder="Email" name="email" required/>
+                        <input type="url" placeholder="URL" name="url" required max="1024"/>
+                        <input type="email" placeholder="Email" name="email" required max="256"/>
                         <hr/>
                         <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
                         <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
-                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required/>
-                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required/>
-                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required></textarea>
-                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="50" required/>
+                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
+                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="1" required/>
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="10" max="60000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
-                        <label className="SelectCheckbox2" htmlFor="checkboxTitle2">Active: </label>
+                        <hr/>
+                        <label htmlFor="checkboxTitle2">Active: </label>
+                        <br/>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST">Add</button>
+                        <button type="submit" value="send POST" className="interactive">Add</button>
                         <button onClick={handleClose}>Cancel</button>
-
+                        <button onClick={testService}>Test</button>
+                        <div>{getTestResult}</div>
                     </form>
                 </div>
             </Modal>
@@ -132,7 +213,6 @@ function Example(props) {
         event.preventDefault();
     }
 
-
     async function fetchPost(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
@@ -140,7 +220,7 @@ function Example(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

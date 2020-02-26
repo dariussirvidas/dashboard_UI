@@ -1,3 +1,5 @@
+@import '../ux_global_design.scss';
+
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -14,7 +16,6 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
-  font-family: "Roboto", sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -25,10 +26,9 @@
   font-size: 14px;
 }
 .form button {
-  font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: lightskyblue;
+  background: $clr-hero !important;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -37,7 +37,7 @@
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: lightskyblue;
+  background-color: mix($clr-black, $clr-hero, 10%) !important;
 }
 .form .message {
   margin: 15px 0 0;
@@ -81,13 +81,17 @@
   color: #000000;
   text-decoration: none;
 }
-.container .info span .fa {
-  color: #EF3B3A;
-}
+
 body {
   background: #dddddd; /* fallback for old browsers */
-
-  font-family: "Roboto", sans-serif;
+  $fnt-mpr: "MetaPro-Regular";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.line{
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
+}
+.message{
+  margin-top: 15px !important;
 }

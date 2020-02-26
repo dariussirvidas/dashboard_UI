@@ -1,3 +1,5 @@
+@import "../_ux_global_design.scss";
+
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -14,7 +16,7 @@
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 .form input {
-  font-family: "Roboto", sans-serif;
+  font-family: $fnt-mpb !important;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
@@ -25,10 +27,10 @@
   font-size: 14px;
 }
 .form button {
-  font-family: "Roboto", sans-serif;
+  font-family: $fnt-mpb !important;
   text-transform: uppercase;
   outline: 0;
-  background: lightskyblue;
+  background: $clr-caerul !important;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -37,20 +39,20 @@
   cursor: pointer;
 }
 .form button:hover,.form button:active,.form button:focus {
-  background: lightskyblue;
+  background-color: mix($clr-black, $clr-hero, 10%);
 }
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
   font-size: 12px;
+  font-family: $fnt-mpb !important;
 }
 .form .message a {
   color: lightskyblue;
   text-decoration: none;
+  font-family: $fnt-mpb !important;
 }
-.form .register-form {
 
-}
 .container {
   position: relative;
   z-index: 1;
@@ -86,8 +88,11 @@
 }
 body {
   background: #dddddd; /* fallback for old browsers */
-
-  font-family: "Roboto", sans-serif;
+  font-family: $fnt-mpr !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+.line{
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }
