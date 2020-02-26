@@ -2,10 +2,18 @@ import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import './addDomainModal.scss';
-import store from "../../js/store";
+
+
+import {useSelector, useDispatch} from "react-redux";
+
 
     
 function AddDomainModal(props) {
+
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     return (
         <div>
@@ -18,6 +26,10 @@ function AddDomainModal(props) {
 }
 
 function DomainModal(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -82,19 +94,23 @@ function DomainModal(props) {
             "parameters": inputsFromForm.parameters
           }
         
-        
+        console.log(JSON.stringify(dataForSending))
         fetch(props.endpoint + "/Requests/testservice",
             {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         )
+        
         .then ((response) => {
+            console.log(response)
+            console.log("JAU PO RESPONSE")
+            console.log(JSON.stringify(dataForSending)  )
             if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
                 setTestResult("Check your fields and try again.")
                 return
@@ -204,7 +220,7 @@ function DomainModal(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

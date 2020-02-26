@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import Logo from "../../Content/logo.png";
 import './signup.scss';
 import {Link} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
 function Signup() {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
 
         return (
             <div>

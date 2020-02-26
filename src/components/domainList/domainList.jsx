@@ -5,7 +5,8 @@ import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
 import DeleteDomain from "../deleteDomain/deleteDomain";
-import store from "../../js/store";
+
+import {useSelector, useDispatch} from "react-redux";
 
 
 function DomainList(props) {
@@ -76,6 +77,11 @@ function DomainList(props) {
 
 function SingleDomain(props) {
 
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
+
+
     // this is currently fetching one by one, very sluggish if theres a lot of domains
     const [editBox, setEditBox] = useState(false);
 
@@ -87,7 +93,7 @@ function SingleDomain(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
