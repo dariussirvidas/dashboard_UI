@@ -24,6 +24,7 @@ function EditDomain(props) {
 
 
     //Default selection on select tags, when you open this edit Modal.
+
     let isRestSelected = false;
     let isSoapSelected = false;
 
@@ -38,32 +39,32 @@ function EditDomain(props) {
         }
     }
 
-    let isPostSelected = false;
-    let isGetSelected = false;
+    // let isPostSelected = false;
+    // let isGetSelected = false;
 
-    function getDefaultSelectionMethod() {
-        switch (props.domain.method) {
-            case 0 :
-                isGetSelected = true;
-                break;
-            case 1 :
-                isPostSelected = true;
-                break;
-        }
-    }
-
+    const [getIsGetSelected, setGetSelected] = useState(
+        props.domain.method == 0? true : false
+    )
+    const [getIsPostSelected, setPostSelected] = useState(
+        props.domain.method == 1? true : false
+    )
+    
     // show or hide this modal state
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleShow = () => {
+        // setGetSelected();
+        // setPostSelected();
+        setShow(true);
+    }
 
-    //disabled inputs states: (su sitais dabar dirtbi)
+    //disabled inputs states: 
         const [getSelectedMethod, setSelectedMethod] = useState(0);
         const [getSelectedServiceType, setSelectedServiceType] = useState(0);
         const [getBasicAuth, setBasicAuth] = useState(false);
     
-    
+
         function changeMethodOption(event) { //<select name="method"
             setSelectedMethod(event.target.value)
         }
@@ -98,21 +99,17 @@ function EditDomain(props) {
                 <i className="material-icons iconHover">&#xe254;</i>
             </a>
 
-            {
-                getDefaultSelectionServiceType()
-            }
-            {
-                getDefaultSelectionMethod()
-            }
-
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
                                placeholder="Service name" required max="64"/>
                         <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
-                            <option selected={isGetSelected} value={0}>GET</option>
-                            <option selected={isPostSelected} value={1}>POST</option>
+                            {console.log(props.domain.method)}
+                            {/* {console.log(getIsPostSelected)}
+                            {console.log(getIsPostSelected)} */}
+                            <option selected={getIsGetSelected} value={0}>GET</option>
+                            <option selected={getIsPostSelected} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
                             <option selected={isRestSelected} value={0}>Service - REST</option>
