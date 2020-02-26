@@ -9,13 +9,9 @@ function Sticker(props) {
         if ( props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms )
             return "tile-amber";
         else if (props.domainPing.status >= 200 && props.domainPing.status <= 299)
-
             return "tile-success";
-
-        else if (props.domainPing.status >= 400 && props.domainPing.status <= 499)
-            return "tile-fail";
         else
-            return "tile-unclear"
+            return "tile-fail";
     }
 
     return (
