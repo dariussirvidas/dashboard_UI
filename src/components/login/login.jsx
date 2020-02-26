@@ -12,6 +12,8 @@ function Login(props) {
 
     const counter = useSelector(state => state.counter);
     const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const role = useSelector(state => state.role);
     const dispatch = useDispatch();
 
 
@@ -38,6 +40,7 @@ function Login(props) {
 
 
     function handleSubmit(event) {
+
         const userInformation = {
             username: event.target.username.value,
             password: event.target.password.value
@@ -58,6 +61,11 @@ function Login(props) {
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
                 dispatch(authRole(response.role));
+
+                window.localStorage.setItem("token", token);
+                window.localStorage.setItem("isLogged", isLogged);
+                window.localStorage.setItem("role", role);
+
 
             })
             .catch(error => {
