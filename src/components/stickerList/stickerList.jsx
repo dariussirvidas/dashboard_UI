@@ -10,7 +10,7 @@ import {useSelector, useDispatch} from "react-redux";
 function StickerList(props) {
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     return (
         <div>
@@ -58,7 +58,7 @@ function SingleService(props) {
     const [latencyError, setLatencyError] = useState("false"); //erroras isbackendo invividualiam requestui
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     useEffect(() => {
 

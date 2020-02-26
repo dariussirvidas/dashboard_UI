@@ -79,7 +79,7 @@ function SingleDomain(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
 
     // this is currently fetching one by one, very sluggish if theres a lot of domains

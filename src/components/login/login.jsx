@@ -60,7 +60,7 @@ function Login(props) {
 
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
-                dispatch(userData(
+                dispatch(authRole(
                     {
                     role: response.role,
                 username: response.username

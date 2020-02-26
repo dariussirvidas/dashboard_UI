@@ -19,7 +19,7 @@ function App() {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
 
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");

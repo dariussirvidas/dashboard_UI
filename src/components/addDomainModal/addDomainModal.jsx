@@ -13,7 +13,7 @@ function AddDomainModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     return (
         <div>
@@ -29,7 +29,7 @@ function DomainModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
