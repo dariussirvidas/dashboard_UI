@@ -3,7 +3,7 @@ import Checkbox from "../checkbox/checkbox";
 import style from './userMaintainList.scss'
 import Popup from "reactjs-popup";
 import {ErrorMessage} from "../elements/elements";
-import store from "../../js/store";
+
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import AddUserModal from "../addUserModal/addUserModal";
 import DeleteUser from "../deleteUser/deleteUser";

@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-import store from "../../js/store";
+
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
 import {useSelector, useDispatch} from "react-redux";
