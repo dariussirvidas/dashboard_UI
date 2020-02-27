@@ -135,6 +135,9 @@ function EditUser(props) {
                     handleClose();
                     NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
                 }
+                if(response.status == 403){ //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
+                    setResponse("You can't change your role")
+                }
                 else {
                     let duomenys = response.json()
                     .then((duomenys) => {

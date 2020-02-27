@@ -24,3 +24,11 @@ export const logInToken = (token) => {
     };
 };
 
+
+export const logOut = () => {
+    return {
+        type: "LOG_OUT",
+        payload: null
+    };
+};
+
