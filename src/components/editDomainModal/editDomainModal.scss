@@ -30,15 +30,7 @@
   color: #FFFFFF;
   font-size: 14px;
 
-  &:hover {
-    background-color: mix($clr-black, $clr-hero, 10%) !important;
-    color: mix($clr-black, $clr-white, 10%) !important;
-  }
-
-  &:active {
-    background-color: mix($clr-black, $clr-hero, 20%) !important;
-    color: mix($clr-black, $clr-white, 20%) !important;
-  }
+  
 
 }
 
