@@ -8,6 +8,7 @@ import Icon from './../../Content/edit_icon.png';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
 function EditDomainModal(props) {
@@ -180,8 +181,10 @@ function EditDomain(props) {
                     changeDomainList(editedDomain)
                     handleClose();
                     setResponse("Domain successfuly updated")
+                    NotificationManager.success('Domain changes saved!', 'Edit Successful!', 3000);
                 } else {
                     setResponse("Something went wrong")
+                    NotificationManager.error('Failed to save changes!', 'Error!', 3000);
                 }
             })
 

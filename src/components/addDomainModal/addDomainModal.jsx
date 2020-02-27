@@ -5,6 +5,7 @@ import './addDomainModal.scss';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
     
@@ -234,10 +235,12 @@ function DomainModal(props) {
         fetchPost(endpoint + "domain/", dataForSending)
             .then((data) => {
                 callbackAppendDomainList(data)
+                NotificationManager.success('New domain added!', 'Successful!', 3000);
             })
 
             .catch((error) => {
                 console.error("error while fetching domains:" + error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
 }
