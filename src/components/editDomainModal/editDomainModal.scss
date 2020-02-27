@@ -82,8 +82,73 @@
 }
 
 /* THIS IS INHERITED TO ALL MODALS, DON'T DUPLICATE TO OTHER SCSS FILES*/
-.modal-dialog{
-  max-width: 33%;
-}
+/* .modal-dialog{
+  max-width: 40% !important;
+} */
 
 /* MEDIA QUERIES, THESE ARE INHERITED AS WELL FOR MODALS*/
+@media only screen and (max-width: 1920px) {
+  .modal-dialog{
+    max-width: 45% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 1440px) {
+  .modal-dialog{
+    max-width: 50% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 1280px) {
+  .modal-dialog{
+    max-width: 50% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  .modal-dialog{
+    max-width: 65% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .modal-dialog{
+    max-width: 90% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .modal-dialog{
+    max-width: 100% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .modal-dialog{
+    max-width: 100% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
+@media only screen and (max-width: 320px) {
+  .modal-dialog{
+    max-width: 100% !important;
+  }
+  div.fade.modal.show {
+    padding: 0 !important;
+  }
+}
