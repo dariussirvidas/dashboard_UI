@@ -37,6 +37,7 @@ function App() {
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
+        fetchUsers(endpoint)
     }, [token]);
 
 
@@ -64,15 +65,29 @@ function App() {
             });
     }
 
+    async function fetchFromApiUsers(endpoint) {
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    }
+
     function fetchUsers(endpoint) {
-        fetchFromApi(endpoint + "users/admin/register")
+        console.log("FETCHING USERS ____________________________________________________________________________________________________________")
+        console.log("token:", token);
+        fetchFromApiUsers(endpoint + "users/")
             .then(data => {
                 setUserList(data)
             })
             .catch(error => {
                 console.error("error while fetching Users:" + error);
                 setHasUserListError(true);
-                setUserList("error");
+                // setUserList("error");
             });
     }
 
