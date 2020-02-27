@@ -1,7 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
+import {connect} from 'react-redux';
 import login from './login.scss'
 import Logo from "../../Content/logo.png";
-import {Link} from "react-router-dom";
+import {
+    Link,
+    Redirect
+} from "react-router-dom";
 
 import {useSelector, useDispatch} from "react-redux";
 
@@ -11,31 +15,39 @@ import {increment, logIn, logInToken, authRole} from "../../actions/index";
 
 function Login(props) {
 
+    const [redirectPath, setRedirectPath] = useState(null);
 
-    const counter = useSelector(state => state.counter);
+    const {counter} = useSelector(
+        state => ({counter: state.counter})
+    );
+
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
+
+
     const dispatch = useDispatch();
 
 
     return (
-        <>
-            <div>
-                <div className="login-page">
-                    <div className="form">
-                        <img src={Logo} alt="Festo Logo"/>
-                        <hr className="line"/>
-                        <form onSubmit={handleSubmit} className="login-form">
-                            <input name="username" type="text" placeholder="username"/>
-                            <input name="password" type="password" placeholder="password"/>
-                            <button type="submit">login</button>
-                            <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>
-                        </form>
+
+            <>
+                <div>
+                    <div className="login-page">
+                        <div className="form">
+                            <img src={Logo} alt="Festo Logo"/>
+                            <hr className="line"/>
+                            <form onSubmit={handleSubmit} className="login-form">
+                                <input name="username" type="text" placeholder="username"/>
+                                <input name="password" type="password" placeholder="password"/>
+                                <button type="submit">login</button>
+                                <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
+            </>
+
     );
 
 
@@ -60,34 +72,37 @@ function Login(props) {
 
                 dispatch(authRole(
                     {
-                    role: response.role,
-                username: response.username
-            }));
+                        role: response.role,
+                        username: response.username
+                    }));
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
 
+                setRedirectPath('/')
+
+                console.log(token)
 
 
-})
-.
-catch(error => {
-    console.error("error while logging in reeee:", error);
-});
+            })
+            .catch(error => {
+                console.error("error while logging in reeee:", error);
+            });
+    }
+
+    async function fetchFromApi(userInformation) {
+        const response = await fetch(props.endpoint + "users/authenticate/", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
+
+        });
+        return await response.json();
+    }
+
 }
 
-async function fetchFromApi(userInformation) {
-    const response = await fetch(props.endpoint + "users/authenticate/", {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
-
-    });
-    return await response.json();
-}
-
-}
 
 export default Login;

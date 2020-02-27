@@ -18,7 +18,7 @@ function AddDomainModal(props) {
     return (
         <div>
             <DomainModal
-                callbackFetch={props.callbackReFetchDomains}
+
                 appendDomainList={props.appendDomainList}
                 endpoint={props.endpoint}/>
         </div>
