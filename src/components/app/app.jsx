@@ -151,11 +151,9 @@ function App() {
 
     return (
         <>
-        <NotificationContainer />
             <Router>
                 <Menu/>
                 {
-                                
 
                     domainListResponseCode === undefined ?
                         (<>
@@ -165,6 +163,7 @@ function App() {
                                         <ErrorMessage
                                             message="no response from back end"
                                         />
+                                    </>)
                                     :
                                     (<>
                                         <LoadingSpinner/>
@@ -214,19 +213,19 @@ function App() {
                 {
                     isLogged === false &&
                     <>
+                        <Route path="/login">
                         <Login
                             endpoint={endpoint}
                         />
+                        </Route>
+                        <Route path="/signup">
+                            <Signup/>
+                        </Route>
                     </>
                 }
-
             </Router>
-            <NotificationContainer />
+            <NotificationContainer/>
         </>
     );
-
-
 }
-
-
 export default App;

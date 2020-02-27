@@ -44,9 +44,7 @@ function Main(props) {
                             changeDomainList={props.changeDomainList}
                         />
                     </Route>
-                    <Route path="/signup">
-                        <Signup/>
-                    </Route>
+
                     <Route path="/users">
                         <UserMaintainList
                             endpoint={props.endpoint}
