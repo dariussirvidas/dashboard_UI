@@ -177,8 +177,8 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST" className="interactive">Add</button>
-                        <button onClick={handleClose}>Cancel</button>
+                        <button type="submit" value="send POST">Add</button>
+                        <button variant="primary" onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
                     </form>

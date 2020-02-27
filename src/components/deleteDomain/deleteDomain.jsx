@@ -61,7 +61,7 @@ function DeleteDomain(props) {
 
     return (
         <>
-             <button type="button" className ="interactive" onClick={handleShow}>
+             <button type="button"  onClick={handleShow}>
             
             Delete
             </button>
@@ -74,8 +74,8 @@ function DeleteDomain(props) {
                         showAlert();
                     }}
                     >Yes</button> */}
-                <button type="button" className ="interactive1" onClick={deleteDomain}>Yes</button>
-                <button type="button" className ="interactive1" onClick={handleClose}>Cancel</button>
+                <button type="button"  onClick={deleteDomain}>Yes</button>
+                <button type="button"  onClick={handleClose}>Cancel</button>
                 {/*  <Modal.Dialog>
                     <Modal.Header>
                         <Modal.Title>Delete Domain</Modal.Title>
