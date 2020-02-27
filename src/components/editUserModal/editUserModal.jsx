@@ -4,13 +4,13 @@ import Modal from "react-bootstrap/Modal";
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
 import {useSelector, useDispatch} from "react-redux";
-
+import { NotificationManager } from 'react-notifications';
 
 function EditUserModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     return (
         <div>
@@ -28,8 +28,7 @@ function EditUser(props) {
     const [response, setResponse] = useState(); //response from server
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
-
+    const userData = useSelector(state => state.userData);
 
     const handleClose = () => {
         setShow(false);
@@ -134,6 +133,10 @@ function EditUser(props) {
                     const editedUser = Object.assign({...props.user}, dataForSending);
                     changeUserList(editedUser)
                     handleClose();
+                    NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
+                }
+                if(response.status == 403){ //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
+                    setResponse("You can't change your role")
                 }
                 else {
                     let duomenys = response.json()
@@ -144,6 +147,7 @@ function EditUser(props) {
             })
             .catch((error) => {
                 console.error("FETCH ERROR: ", error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
 }

@@ -8,13 +8,15 @@ import Icon from './../../Content/edit_icon.png';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
 function EditDomainModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
+
     return (
         <div>
             <EditDomain
@@ -34,60 +36,41 @@ function EditDomain(props) {
     const role = useSelector(state => state.role);
 
 
-    //Default selection on select tags, when you open this edit Modal.
+    //cia modalo state
 
-    let isRestSelected = false;
-    let isSoapSelected = false;
-
-    function getDefaultSelectionServiceType() {
-        switch (props.domain.service_Type) {
-            case 0 :
-                isRestSelected = true;
-                break;
-            case 1 :
-                isSoapSelected = true;
-                break;
-        }
-    }
-
-    // let isPostSelected = false;
-    // let isGetSelected = false;
-
-    const [getIsGetSelected, setGetSelected] = useState(
-        props.domain.method == 0? true : false
-    )
-    const [getIsPostSelected, setPostSelected] = useState(
-        props.domain.method == 1? true : false
-    )
-    
     // show or hide this modal state
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
-    const handleShow = () => {
-        // setGetSelected();
-        // setPostSelected();
+    const handleShow = () => { //kai atsiranda modalas, kad restartintu value.
+        setGetPostSelected(props.domain.method) //kai atidarom pakeiciam, uzdarom, vel atidarius buna vis dar seni propsai. Jie nepasiupdatina
+        setRestSoapSelected(props.domain.service_Type)
+        setBasicAuth(props.domain.basic_Auth)
         setShow(true);
+        setResponse();
     }
 
-    //disabled inputs states: 
-        const [getSelectedMethod, setSelectedMethod] = useState(0);
-        const [getSelectedServiceType, setSelectedServiceType] = useState(0);
-        const [getBasicAuth, setBasicAuth] = useState(false);
+    // GET/POST and REST/SOAP states
+    const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method) //jei 0 GET, jei 1 POST
+    const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType) //jei 0 REST, jei 1 SOAP
+    const [getBasicAuth, setBasicAuth] = useState(props.domain.basic_Auth);
     
+    // onChange functions for input fields:
 
         function changeMethodOption(event) { //<select name="method"
-            setSelectedMethod(event.target.value)
+            setGetPostSelected(event.target.value)
         }
         function changeServiceTypeOption(event) { //<select name="serviceType"
-            setSelectedServiceType(event.target.value)
+            setRestSoapSelected(event.target.value)
         }
         function changeAuth(event){
             setBasicAuth(event.target.checked)
         }
     
+
+    //functions to check if fields should be disabled
         const isUsernamePasswordDisabled = function checkIfDisabled() {
-            if(getBasicAuth == true){ 
+            if(getBasicAuth){ 
                 return false;
             }
             else{
@@ -96,13 +79,21 @@ function EditDomain(props) {
         }
     
         const isParametersDisabled = function checkIfDisabled() {
-            if(getSelectedMethod == 0){ //tipo jei GET 
+            if(getIsGetPostSelected == 0){ //tipo jei GET 
                 return true;
             }
             else{
                 return false;
             }
         }
+
+        function testinam(event) {
+            console.log(props.domain.auth_User)
+            console.log(props.domain.auth_Password)
+            event.preventDefault();
+        }
+
+    const [response, setResponse] = useState(); //response from server
 
     return (
         <>
@@ -115,21 +106,18 @@ function EditDomain(props) {
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
                                placeholder="Service name" required max="64"/>
-                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>>
-                            {console.log(props.domain.method)}
-                            {/* {console.log(getIsPostSelected)}
-                            {console.log(getIsPostSelected)} */}
-                            <option selected={getIsGetSelected} value={0}>GET</option>
-                            <option selected={getIsPostSelected} value={1}>POST</option>
+                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>
+                            <option selected={getIsGetPostSelected == 0? true:false} value={0}>GET</option>
+                            <option selected={getIsGetPostSelected == 1? true:false} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
-                            <option selected={isRestSelected} value={0}>Service - REST</option>
-                            <option selected={isSoapSelected} value={1}>Service - SOAP</option>
+                            <option selected={getIsRestSoapSelected == 0? true:false} value={0}>Service - REST</option>
+                            <option selected={getIsRestSoapSelected == 1? true:false} value={1}>Service - SOAP</option>
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
                                placeholder="Email" required max="256"/>
-                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_auth} type="checkbox"
+                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
                         <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
                         <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
@@ -144,13 +132,15 @@ function EditDomain(props) {
 
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="submit" className="interactive">Save</button>
-                        <button type="button" className="interactive" onClick={handleClose}>Cancel</button>
+                        <button type="submit" >Save</button>
+                        <button type="button"  onClick={handleClose}>Cancel</button>
                         <DeleteDomain
                             domain={props.domain}
                             changeDomainList={props.changeDomainList}
                             endpoint={props.endpoint}
                         />
+                        {response}
+                        {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>
             </Modal>
@@ -158,6 +148,7 @@ function EditDomain(props) {
     );
 
     function handleSubmit(event) {
+        setResponse("waiting...")
         let dataForSending = {
             service_Name: event.target.serviceName.value,
             Url: event.target.url.value,
@@ -179,6 +170,29 @@ function EditDomain(props) {
         event.preventDefault();
     }
 
+    function submitData(endpoint, changeDomainList, dataForSending) {
+        fetchPut(endpoint + "domain/" + props.domain.id, dataForSending)
+            .then((response) => {
+                if (response.status > 199 && response.status < 300) {
+                    // creates a new object. uses the prop domain as a base and overwrites any old data with data from
+                    // the input fields
+                    const editedDomain = Object.assign({...props.domain}, dataForSending);
+                    console.log(response)
+                    changeDomainList(editedDomain)
+                    handleClose();
+                    setResponse("Domain successfuly updated")
+                    NotificationManager.success('Domain changes saved!', 'Edit Successful!', 3000);
+                } else {
+                    setResponse("Something went wrong")
+                    NotificationManager.error('Failed to save changes!', 'Error!', 3000);
+                }
+            })
+
+            .catch((error) => {
+                console.error("FETCH ERROR: ", error);
+            });
+    }
+
     async function fetchPut(endpoint, dataForSending) {
         const response = await fetch(endpoint,
             {
@@ -191,29 +205,8 @@ function EditDomain(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         );
-        let statusCode = response.status;
-        return statusCode;
-    }
-
-    function submitData(endpoint, changeDomainList, dataForSending) {
-        fetchPut(endpoint + "domain/" + props.domain.id, dataForSending)
-            .then((statusCode) => {
-                console.log("status code " + statusCode + "...");
-                if (statusCode > 199 && statusCode < 300) {
-                    console.log("success!");
-                    // creates a new object. uses the prop domain as a base and overwrites any old data with data from
-                    // the input fields
-                    const editedDomain = Object.assign({...props.domain}, dataForSending);
-                    changeDomainList(editedDomain)
-                    handleClose();
-                } else {
-                    console.log("unsuccessful. what now?")
-                }
-            })
-
-            .catch((error) => {
-                console.error("FETCH ERROR: ", error);
-            });
+        const data = response; //response.statuscode
+        return response;
     }
 }
 

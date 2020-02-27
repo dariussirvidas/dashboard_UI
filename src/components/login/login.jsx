@@ -7,8 +7,7 @@ import {useSelector, useDispatch} from "react-redux";
 
 
 import {increment, logIn, logInToken, authRole} from "../../actions/index";
-
-
+import { NotificationManager } from 'react-notifications';
 
 function Login(props) {
 
@@ -16,9 +15,8 @@ function Login(props) {
     const counter = useSelector(state => state.counter);
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
     const dispatch = useDispatch();
-
 
 
     return (
@@ -41,7 +39,6 @@ function Login(props) {
     );
 
 
-
     function handleSubmit(event) {
 
         const userInformation = {
@@ -61,33 +58,36 @@ function Login(props) {
 
                 // sets isLoggedIn to true
 
+                dispatch(authRole(
+                    {
+                    role: response.role,
+                username: response.username
+            }));
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
-                dispatch(authRole(response.role));
-
-                window.localStorage.setItem("token", token);
-                window.localStorage.setItem("isLogged", isLogged);
-                window.localStorage.setItem("role", role);
+                NotificationManager.success('Logged In!', 'Successful!', 3000);
 
 
-            })
-            .catch(error => {
-                console.error("error while logging in reeee:", error);
-            });
-    }
+})
+.
+catch(error => {
+    console.error("error while logging in reeee:", error);
+    NotificationManager.error('Invalid credentials!', 'Error!', 3000);
+});
+}
 
-    async function fetchFromApi(userInformation) {
-        const response = await fetch(props.endpoint + "users/authenticate/", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
+async function fetchFromApi(userInformation) {
+    const response = await fetch(props.endpoint + "users/authenticate/", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json',
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: JSON.stringify(userInformation) // body data type must match "Content-Type" header
 
-        });
-        return await response.json();
-    }
+    });
+    return await response.json();
+}
 
 }
 

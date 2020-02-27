@@ -4,15 +4,14 @@ import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 
-
-import { NotificationManager } from 'react-notifications';
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 function DeleteDomain(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     async function fetchPutDelete() {
         const response = await fetch(props.endpoint + 'domain/del/' + props.domain.id, {
@@ -25,6 +24,7 @@ function DeleteDomain(props) {
         await console.log('statusCode:' + response.status);
         let statusCode = await response.status;
         return statusCode;
+        
     }
 
     function deleteDomain() {
@@ -34,9 +34,8 @@ function DeleteDomain(props) {
                     console.log("status code 200, run changeDomainList function!");
                     let dataForSending = {...props.domain};
                     dataForSending.deleted = true;
-                    NotificationManager.success('Domain deleted!', 'Successful!', 3000);
                     props.changeDomainList(dataForSending)
-                    
+                    NotificationManager.success('Domain deleted!', 'Successful!', 3000);
                 } else if (statusCode === 400) {
                     console.log("status code 400, do something else");
                     // alert('reeeeeeee')
@@ -47,11 +46,14 @@ function DeleteDomain(props) {
             })
             .catch((error) => {
                 console.error("error while PUT delete domain: " + error);
+                NotificationManager.error('Domain delete failed!', 'Error!', 3000);
                 
             });
     }
-    
-
+   /*  function showAlert() {
+        NotificationManager.success('Domain deleted!', 'Successful!', 3000);
+    }
+ */
     const [show, setShow] = useState(false);
     
     const handleClose = () => setShow(false);
@@ -59,16 +61,21 @@ function DeleteDomain(props) {
 
     return (
         <>
-             <button type="button" className ="interactive" onClick={handleShow}>
-            {/* <button type="button" onClick={deleteDomain}>Delete</button> */}
+             <button type="button"  onClick={handleShow}>
+            
             Delete
             </button>
             <Modal show={show} onHide={handleClose}>
             <div className="forma">
                 <form>
                 <h3> Are you sure you want to delete this domain? </h3>
-                <button variant="primary" className ="interactive1" onClick={deleteDomain}>Yes</button>
-                <button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</button>
+                {/* <button type="button" className ="interactive1" onClick={() => {
+                        deleteDomain();
+                        showAlert();
+                    }}
+                    >Yes</button> */}
+                <button type="button"  onClick={deleteDomain}>Yes</button>
+                <button type="button"  onClick={handleClose}>Cancel</button>
                 {/*  <Modal.Dialog>
                     <Modal.Header>
                         <Modal.Title>Delete Domain</Modal.Title>

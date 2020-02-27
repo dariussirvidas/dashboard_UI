@@ -9,6 +9,7 @@ import {createStore} from "redux";
 import rootReducer from "./reducers/index";
 import {Provider} from 'react-redux';
 
+//ads
 
 // redux and localstorage stuff
 const persistedState = localStorage.getItem('reduxState') ? JSON.parse(localStorage.getItem('reduxState')) : {};

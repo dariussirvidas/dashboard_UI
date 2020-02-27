@@ -5,6 +5,7 @@ import './addDomainModal.scss';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
     
@@ -13,7 +14,7 @@ function AddDomainModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     return (
         <div>
@@ -29,13 +30,16 @@ function DomainModal(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => {
         setShow(true);
         setTestResult("");
+        setSelectedMethod(0);
+        setSelectedServiceType(0);
+        setBasicAuth(false);
     }
     //disabled inputs states:
     const [getSelectedMethod, setSelectedMethod] = useState(0);
@@ -134,9 +138,7 @@ function DomainModal(props) {
         event.preventDefault();
     }
 
-    // function alio(props){ //kas yra tuscia  funckija ? const = <div>{New.Date()}</div> yra elementas. function is didziosios raides, jau komponentas, galima pasuot props. Funkcinis komponentas negali tureti state. Todel reikia class extends React.Component. :))
-    //     return <h1>ZDRWA </h1>
-    // }
+
 
     return (
         <>
@@ -176,8 +178,8 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST" className="interactive">Add</button>
-                        <button onClick={handleClose}>Cancel</button>
+                        <button type="submit" value="send POST">Add</button>
+                        <button variant="primary" onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
                     </form>
@@ -233,10 +235,12 @@ function DomainModal(props) {
         fetchPost(endpoint + "domain/", dataForSending)
             .then((data) => {
                 callbackAppendDomainList(data)
+                NotificationManager.success('New domain added!', 'Successful!', 3000);
             })
 
             .catch((error) => {
                 console.error("error while fetching domains:" + error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
 }

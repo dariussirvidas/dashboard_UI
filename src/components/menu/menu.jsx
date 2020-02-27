@@ -5,13 +5,17 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import './menu.scss';
 import {Link} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
+import User_icon from '../../Content/user_icon.png';
 
 function Menu() {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const role = useSelector(state => state.role);
+    const userData = useSelector(state => state.userData);
+
+
     return (
+
         <>
             {
                 isLogged === true &&
@@ -22,6 +26,7 @@ function Menu() {
                                 <img src={Logo} width="112" height="20" alt=""/>
                             </Link>
                             <h5 className="Menu_text">Monitoring Dashboard</h5>
+                            <h5><img src={User_icon} alt="user icon" width="20" height="20"/>{userData.username}</h5>
                             <div className="dropleft">
                                 <a className="offset-5" href="#" id="imageDropdown" data-toggle="dropdown">
                                     <img src={Menu_icon} width="20" height="20" alt=""/>
