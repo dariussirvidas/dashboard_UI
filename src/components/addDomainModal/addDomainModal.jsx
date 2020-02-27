@@ -125,7 +125,7 @@ function DomainModal(props) {
             return response.json() 
             .then((responseObject) => {
                 if(responseObject.status > 199 && responseObject.status < 300){ //ar sekmingas status ? 
-                    var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime}</p>
+                    var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime} ms</p>
                 }
                 else{
                 var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
