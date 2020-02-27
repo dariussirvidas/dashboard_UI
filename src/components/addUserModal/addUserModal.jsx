@@ -54,7 +54,7 @@ function UserModal(props) {
             </button>
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
-                    <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
+                    <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
                         <input type="text" placeholder="Username" name="userName" min="6" max="64" required/>
                         <input type="text" placeholder="First Name" name="firstName" required max="64"/>
