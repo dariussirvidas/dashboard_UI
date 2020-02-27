@@ -8,6 +8,7 @@ import Icon from './../../Content/edit_icon.png';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
 function EditDomainModal(props) {
@@ -131,8 +132,8 @@ function EditDomain(props) {
 
                         <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
                                                 value="active"></input>
-                        <button type="submit" className="interactive">Save</button>
-                        <button type="button" className="interactive" onClick={handleClose}>Cancel</button>
+                        <button type="submit" >Save</button>
+                        <button type="button"  onClick={handleClose}>Cancel</button>
                         <DeleteDomain
                             domain={props.domain}
                             changeDomainList={props.changeDomainList}
@@ -180,8 +181,10 @@ function EditDomain(props) {
                     changeDomainList(editedDomain)
                     handleClose();
                     setResponse("Domain successfuly updated")
+                    NotificationManager.success('Domain changes saved!', 'Edit Successful!', 3000);
                 } else {
                     setResponse("Something went wrong")
+                    NotificationManager.error('Failed to save changes!', 'Error!', 3000);
                 }
             })
 

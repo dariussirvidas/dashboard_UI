@@ -11,7 +11,7 @@ import {useSelector, useDispatch} from "react-redux";
 
 
 import {increment, logIn, logInToken, authRole} from "../../actions/index";
-
+import { NotificationManager } from 'react-notifications';
 
 function Login(props) {
 
@@ -77,7 +77,7 @@ function Login(props) {
                     }));
                 dispatch(logInToken(response.token));
                 dispatch(logIn());
-
+                NotificationManager.success('Logged In!', 'Successful!', 3000);
                 setRedirectPath('/')
 
                 console.log(token)
@@ -86,6 +86,7 @@ function Login(props) {
             })
             .catch(error => {
                 console.error("error while logging in reeee:", error);
+    NotificationManager.error('Invalid credentials!', 'Error!', 3000);
             });
     }
 

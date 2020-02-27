@@ -48,6 +48,7 @@ function DeleteUser(props) {
             })
             .catch((error) => {
                 console.error("error while delete user: " + error);
+                NotificationManager.error('Failed to delete user!', 'Error!', 3000);
             });
     }
 
@@ -64,8 +65,8 @@ function DeleteUser(props) {
             <div className="forma">
                 <form>
                 <h3> Are you sure you want to delete this user? </h3>
-                <button variant="primary" className ="interactive1" onClick={deleteUser}>Yes</button>
-                <button variant="primary" className ="interactive1" onClick={handleClose}>Cancel</button>
+                <button type="button" className ="interactive1" onClick={deleteUser}>Yes</button>
+                <button type="button" className ="interactive1" onClick={handleClose}>Cancel</button>
                 </form>
                 </div>
                 </Modal>

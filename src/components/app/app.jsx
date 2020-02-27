@@ -151,9 +151,11 @@ function App() {
 
     return (
         <>
+        <NotificationContainer />
             <Router>
                 <Menu/>
                 {
+                                
 
                     domainListResponseCode === undefined ?
                         (<>
@@ -163,7 +165,6 @@ function App() {
                                         <ErrorMessage
                                             message="no response from back end"
                                         />
-                                    </>)
                                     :
                                     (<>
                                         <LoadingSpinner/>
@@ -220,7 +221,7 @@ function App() {
                 }
 
             </Router>
-            <NotificationContainer/>
+            <NotificationContainer />
         </>
     );
 

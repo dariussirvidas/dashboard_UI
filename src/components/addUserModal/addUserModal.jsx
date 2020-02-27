@@ -6,6 +6,7 @@ import AddDomainModal from "../addDomainModal/addDomainModal";
 import './addUserModal.scss';
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 function AddUserModal(props) {
 
@@ -54,7 +55,7 @@ function UserModal(props) {
             </button>
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
-                    <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
+                    <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
                         <input type="text" placeholder="Username" name="userName" min="6" max="64" required/>
                         <input type="text" placeholder="First Name" name="firstName" required max="64"/>
@@ -111,6 +112,7 @@ function UserModal(props) {
                         
                     })
                     handleClose();
+                    NotificationManager.success('New user added!', 'Successful!', 3000);
                 }
                 else{
                     let duomenys = response.json()
@@ -123,6 +125,7 @@ function UserModal(props) {
 
             .catch((error) => {
                 console.error("error while fetching users:" + error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
     async function fetchPost(dataForSending) {
