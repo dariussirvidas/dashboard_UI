@@ -13,7 +13,6 @@ function Menu() {
     const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
 
-
     return (
 
         <>
@@ -26,7 +25,7 @@ function Menu() {
                                 <img src={Logo} width="112" height="20" alt=""/>
                             </Link>
                             <h5 className="Menu_text">Monitoring Dashboard</h5>
-                            <h5><img src={User_icon} alt="user icon" width="20" height="20"/>{userData.username}</h5>
+                            <h5 className="userName"><img src={User_icon} alt="user icon" width="20" height="20"/>{userData.username}</h5>
                             <div className="dropleft">
                                 <a className="offset-5" href="#" id="imageDropdown" data-toggle="dropdown">
                                     <img src={Menu_icon} width="20" height="20" alt=""/>
@@ -41,22 +40,9 @@ function Menu() {
                         </nav>
                     </div>
                 </div>
-
             }
-
         </>
-
     );
 }
-
-
-// <ul className="menu">
-//     <li><Link to="/">Home Page</Link></li>
-//     <li><Link to="/domains">Maintaining list</Link></li>
-//     <li><Link to="/topics">Comment</Link></li>
-//     <li><Link to="/login">Login</Link></li>
-//     <li><Link to="/users">User maintaining list</Link></li>
-// </ul>
-
 
 export default Menu;

@@ -155,7 +155,7 @@ function DomainModal(props) {
                             <option value={0}>GET</option>
                             <option value={1}>POST</option>
                         </select>
-                        <select className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
+                        <select  className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
                             <option value={0}>Service - REST</option>
                             <option value={1}>Service - SOAP</option>
                         </select>
@@ -164,8 +164,8 @@ function DomainModal(props) {
                         <hr/>
                         <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
                         <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
-                        <input type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
-                        <input type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <input className="BasicAuthDisable" type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <input className="BasicAuthDisable" type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
                         <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
                         <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
@@ -176,7 +176,6 @@ function DomainModal(props) {
                         <br/>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
-                        {/* <button>Test(sitas dar neveikia)</button> */}
                         <button type="submit" value="send POST" className="interactive">Add</button>
                         <button onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>

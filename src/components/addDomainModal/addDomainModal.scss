@@ -161,3 +161,10 @@ label.checkboxTitle2 {
 .modal-dialog {
   max-width: 33% !important;
 }
+
+.BasicAuthDisable:disabled{
+  background : #e1e1e1;
+}
+textArea:disabled{
+  background: #e1e1e1;
+}

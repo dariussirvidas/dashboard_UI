@@ -29,7 +29,7 @@ function Login(props) {
                         <form onSubmit={handleSubmit} className="login-form">
                             <input name="username" type="text" placeholder="username"/>
                             <input name="password" type="password" placeholder="password"/>
-                            <button type="submit">login</button>
+                            <button Link to="/" type="submit">login</button>
                             <p className="message">Not registered? <Link to="/signup">Create an account</Link></p>
                         </form>
                     </div>
