@@ -119,8 +119,8 @@ function EditDomain(props) {
                                placeholder="Email" required max="256"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
-                        <input name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
-                        <input name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
+                        <input className="BasicAuthDisable" name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
+                        <input className="BasicAuthDisable" name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
                                placeholder="Password" required max="1024"/>
                         <textarea className="BasicAuthDisable" name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
                                   placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
