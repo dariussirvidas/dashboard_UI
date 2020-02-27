@@ -8,7 +8,7 @@ import {useSelector, useDispatch} from "react-redux";
 import User_icon from '../../Content/user_icon.png';
 import {logIn, logOut} from "../../actions";
 
-function Menu() {
+function Menu(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
@@ -48,6 +48,7 @@ function Menu() {
                                         <button className="btn text-left" type="button" onClick={() => {
 
                                             dispatch(logOut());
+                                            props.purgeLocalState();
                                         }}>Log Out
                                         </button>
                                     </Dropdown.Item>

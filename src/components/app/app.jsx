@@ -76,11 +76,20 @@ function App() {
             });
     }
 
+    function purgeLocalState() {
+        setDomainList([]);
+        setUserList([]);
+    }
+
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
         console.log("append this:", newDomain);
-        setDomainList([...domainList, newDomain]);
+        if (domainList.status === 404) {
+
+            setDomainList([newDomain])
+        } else
+            setDomainList([...domainList, newDomain]);
     }
 
     // appends the local userList array with one new domain
@@ -152,7 +161,9 @@ function App() {
     return (
         <>
             <Router>
-                <Menu/>
+                <Menu
+                    purgeLocalState={purgeLocalState}
+                />
                 {
 
                     domainListResponseCode === undefined ?
@@ -214,9 +225,9 @@ function App() {
                     isLogged === false &&
                     <>
                         <Route path="/login">
-                        <Login
-                            endpoint={endpoint}
-                        />
+                            <Login
+                                endpoint={endpoint}
+                            />
                         </Route>
                         <Route path="/signup">
                             <Signup/>
@@ -228,4 +239,5 @@ function App() {
         </>
     );
 }
+
 export default App;

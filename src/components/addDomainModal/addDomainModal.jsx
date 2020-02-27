@@ -18,6 +18,7 @@ function AddDomainModal(props) {
 
     return (
         <div>
+
             <DomainModal
 
                 appendDomainList={props.appendDomainList}
