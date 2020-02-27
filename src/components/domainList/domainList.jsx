@@ -25,7 +25,7 @@ function DomainList(props) {
                 <div className="TableDiv">
                     <div className="d-flex justify-content-start domainButton">
                         <AddDomainModal
-                            callbackFetch={props.callbackReFetchDomains}
+
                             appendDomainList={props.appendDomainList}
                             endpoint={props.endpoint}/>
                     </div>
@@ -48,7 +48,7 @@ function DomainList(props) {
                                             props.domainList.map((item) => {
                                                 return <SingleDomain
                                                     d={item}
-                                                    callbackFetch={props.callbackReFetchDomains}
+
                                                     endpoint={props.endpoint}
                                                     changeDomainList={props.changeDomainList}
                                                 />

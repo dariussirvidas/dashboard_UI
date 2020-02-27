@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from 'react';
+import 'react-redux';
 import './app.scss';
-import {BrowserRouter as Router} from "react-router-dom";
+import {connect} from 'react-redux';
+import {
+    BrowserRouter as Router,
+    Redirect, Route, Switch
+} from "react-router-dom";
 
 import Main from '../main/main';
 import Menu from "../menu/menu";
@@ -11,11 +16,12 @@ import Signup from "../signup/signup";
 
 import userMaintainList from "../userMaintainList/userMaintainList";
 import 'react-notifications/lib/notifications.css';
-import { NotificationContainer } from 'react-notifications';
+import {NotificationContainer} from 'react-notifications';
 import {useSelector, useDispatch} from "react-redux";
 
 
 function App() {
+
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
@@ -24,21 +30,15 @@ function App() {
 
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [domainList, setDomainList] = useState();
+    const [domainListResponseCode, setDomainListResponseCode] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
     const [hasUserListError, setHasUserListError] = useState(false);
 
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
-
-
         fetchDomains(endpoint);
-    }, []);
+    }, [token]);
 
-
-    useEffect(() => {
-        setTimeout(reFetchDomains, 8000)
-        console.log(token)
-    }, []);
 
     async function fetchFromApi(endpoint) {
         const response = await fetch(endpoint, {
@@ -47,6 +47,7 @@ function App() {
                 'Authorization': 'Bearer ' + token
             }
         });
+        setDomainListResponseCode(response.status);
         const data = await response.json();
         return data;
     }
@@ -60,9 +61,6 @@ function App() {
                 console.error("error while fetching domains:" + error);
                 setHasDomainListError(true);
 
-                // cia teoriskai bukai gal, bet imetu error stringa kad main elemente
-                // Boolean("error") resolvintusi kaip true ir renderintu toliau
-                setDomainList("error");
             });
     }
 
@@ -78,20 +76,6 @@ function App() {
             });
     }
 
-
-    // (re)fetches domainList
-    function reFetchDomains() {
-        console.log("refetching!");
-        setTimeout(reFetchDomains, 5000)
-        fetchDomains(endpoint);
-    }
-
-    // (re)fetches userList
-    function reFetchUsers() {
-        console.log("refetching users!");
-        setTimeout(reFetchUsers, 5000)
-        fetchUsers(endpoint);
-    }
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
@@ -122,9 +106,6 @@ function App() {
         setUserList(userListCopy);
     }
 
-    function queryBackEnd(intervalMilliseconds) {
-        setInterval(reFetchDomains, intervalMilliseconds);
-    }
 
     //UserMaintaiList GET info
 
@@ -170,54 +151,81 @@ function App() {
 
     return (
         <>
-        <NotificationContainer />
             <Router>
                 <Menu/>
                 {
-                    // Main component is only rendered when domainList is fetched
-                    domainList === "error" ?
-                        (
-                            <>
-                                
-                                <ErrorMessage
-                                    message="stuff"
-                                />
 
-                                <Login
-                                endpoint={endpoint}
-                                />
-                                
-                            </>
-
-                        )
+                    domainListResponseCode === undefined ?
+                        (<>
+                            {
+                                hasDomainListError === true ?
+                                    (<>
+                                        <ErrorMessage
+                                            message="no response from back end"
+                                        />
+                                    </>)
+                                    :
+                                    (<>
+                                        <LoadingSpinner/>
+                                    </>)
+                            }
+                        </>)
                         :
-                        Boolean(domainList) === true ?
-                            (
-                                <Main
-                                    endpoint={endpoint}
-                                    callbackReFetchDomains={reFetchDomains}
-                                    callbackReFetchUsers={reFetchUsers}
-                                    domainList={domainList}
-                                    userList={userList}
-                                    hasDomainListError={hasDomainListError}
-                                    appendDomainList={appendDomainList}
-                                    appendUserList={appendUserList}
-                                    changeDomainList={changeDomainList}
-                                    changeUserList={changeUserList}
-                                />
-                            )
-                            :
-                            (
-                                <LoadingSpinner/>
-                            )
+                        (<>
+                            {
+                                Boolean(domainList) === true && isLogged === true ?
+                                    (<>
+                                        <Main
+                                            endpoint={endpoint}
+
+                                            domainList={domainList}
+                                            userList={userList}
+                                            hasDomainListError={hasDomainListError}
+                                            appendDomainList={appendDomainList}
+                                            appendUserList={appendUserList}
+                                            changeDomainList={changeDomainList}
+                                            changeUserList={changeUserList}
+                                        />
+
+
+                                    </>)
+                                    :
+                                    (<>
+                                        {
+                                            domainListResponseCode === 401 ?
+                                                (<>
+                                                    <Redirect to="/login"/>
+                                                </>)
+                                                :
+                                                (<>
+                                                    <ErrorMessage
+                                                        message={"status code " + domainListResponseCode}
+                                                    />
+                                                </>)
+                                        }
+                                    </>)
+                            }
+                        </>)
+
                 }
-                {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
-                {/*<Footer/>*/}
+
+
+                {
+                    isLogged === false &&
+                    <>
+                        <Route path="/login">
+                        <Login
+                            endpoint={endpoint}
+                        />
+                        </Route>
+                        <Route path="/signup">
+                            <Signup/>
+                        </Route>
+                    </>
+                }
             </Router>
-            
+            <NotificationContainer/>
         </>
     );
 }
-
-
 export default App;

@@ -33,7 +33,6 @@
 } */
 
 
-
 /* .forma button:hover,.forma button:active,.forma button:focus {
   background-color: mix($clr-black, $clr-hero, 10%) !important;
 } */
@@ -152,7 +151,8 @@ label.checkboxTitle2 {
 
 /* .modal-dialog {
   max-width: 33% !important;
-} */
+<<<<<<< HEAD
+}
 
 .BasicAuthDisable:disabled{
   background : #e1e1e1;
@@ -160,3 +160,6 @@ label.checkboxTitle2 {
 textArea:disabled{
   background: #e1e1e1;
 }
+=======
+} */
+>>>>>>> origin/develop

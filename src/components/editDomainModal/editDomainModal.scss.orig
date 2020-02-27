@@ -81,6 +81,13 @@
   color: $clr-caerul;
 }
 
+<<<<<<< HEAD
+.modal-dialog{
+  max-width: 33%;
+}
+.BasicAuthDisable:disabled{
+  background : #e1e1e1;
+=======
 /* THIS IS INHERITED TO ALL MODALS, DON'T DUPLICATE TO OTHER SCSS FILES*/
 /* .modal-dialog{
   max-width: 40% !important;
@@ -151,7 +158,5 @@
   div.fade.modal.show {
     padding: 0 !important;
   }
-}
-.BasicAuthDisable:disabled{
-  background : #e1e1e1;
+>>>>>>> origin/develop
 }

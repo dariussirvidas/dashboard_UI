@@ -7,7 +7,8 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    Redirect
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
@@ -31,23 +32,19 @@ function Main(props) {
                         <ExampleComponentStructure/>
                     </Route>
                     <Route path="/login">
-                        <Login
-                            endpoint={props.endpoint}
-                        />
+                        <Redirect to="/"></Redirect>
                     </Route>
                     <Route path="/domains">
                         <DomainList
                             endpoint={props.endpoint}
-                            callbackReFetchDomains={props.callbackReFetchDomains}
+
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             appendDomainList={props.appendDomainList}
                             changeDomainList={props.changeDomainList}
                         />
                     </Route>
-                    <Route path="/signup">
-                        <Signup/>
-                    </Route>
+
                     <Route path="/users">
                         <UserMaintainList
                             endpoint={props.endpoint}
@@ -59,7 +56,7 @@ function Main(props) {
                     <Route path="/">
                         <StickerList
                             endpoint={props.endpoint}
-                            callbackReFetchDomains={props.callbackReFetchDomains}
+
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
@@ -72,6 +69,28 @@ function Main(props) {
     );
 }
 
+function PrivateRoute({children, ...rest}) {
+
+    const isLogged = useSelector(state => state.isLogged);
+
+    return (
+        <Route
+            {...rest}
+            render={({location}) =>
+                isLogged ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: {from: location}
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
 
 function ExampleComponentStructure() {
 
