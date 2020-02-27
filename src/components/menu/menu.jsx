@@ -38,9 +38,12 @@ function Menu() {
                                                          to="/">Home</Link></Dropdown.Item>
                                     <Dropdown.Item><Link className="btn text-left" to="/domains">Maintaining
                                         List</Link></Dropdown.Item>
-                                    <Dropdown.Item><Link className="btn text-left" to="/users">User
-                                        Maintaining
-                                        List</Link></Dropdown.Item>
+                                    {
+                                        userData.role === "Admin" &&
+                                        <Dropdown.Item><Link className="btn text-left" to="/users">User
+                                            Maintaining
+                                            List</Link></Dropdown.Item>
+                                    }
                                     <Dropdown.Item>
                                         <button className="btn text-left" type="button" onClick={() => {
 
