@@ -170,6 +170,7 @@ function App() {
 
     return (
         <>
+        <NotificationContainer />
             <Router>
                 <Menu/>
                 {
@@ -177,6 +178,7 @@ function App() {
                     domainList === "error" ?
                         (
                             <>
+                                
                                 <ErrorMessage
                                     message="stuff"
                                 />
@@ -184,6 +186,7 @@ function App() {
                                 <Login
                                 endpoint={endpoint}
                                 />
+                                
                             </>
 
                         )
@@ -211,7 +214,7 @@ function App() {
                 {/*/!*{queryBackEnd(15000)}*!/  something is wrong with refetching on interval*/}
                 {/*<Footer/>*/}
             </Router>
-            <NotificationContainer />
+            
         </>
     );
 }

@@ -1,15 +1,15 @@
 @import '../ux_global_design.scss';
 
-.forma {
+/* .forma {
   position: relative;
   z-index: 1;
   padding: 45px;
   text-align: center;
-}
+} */
 
 
 /* Comment out for original notification color*/
-.notification {
-  background-color:#0091dc !important;
-  
+
+.notification-success {
+  background-color: #0091dc !important;
 }

@@ -156,7 +156,7 @@ function DomainModal(props) {
                             <option value={0}>GET</option>
                             <option value={1}>POST</option>
                         </select>
-                        <select className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
+                        <select  className="SelectFrom" name="serviceType" value={getSelectedServiceType} onChange={changeServiceTypeOption} required>
                             <option value={0}>Service - REST</option>
                             <option value={1}>Service - SOAP</option>
                         </select>
@@ -177,9 +177,14 @@ function DomainModal(props) {
                         <br/>
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
+<<<<<<< HEAD
+                        <button type="submit" value="send POST" className="interactive">Add</button>
+                        <button onClick={handleClose}>Cancel</button>
+=======
                         {/* <button>Test(sitas dar neveikia)</button> */}
                         <button type="submit" value="send POST">Add</button>
                         <button variant="primary" onClick={handleClose}>Cancel</button>
+>>>>>>> origin/develop
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
                     </form>

@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
 import {useSelector, useDispatch} from "react-redux";
-
+import { NotificationManager } from 'react-notifications';
 
 function EditUserModal(props) {
 
@@ -133,6 +133,7 @@ function EditUser(props) {
                     const editedUser = Object.assign({...props.user}, dataForSending);
                     changeUserList(editedUser)
                     handleClose();
+                    NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
                 }
                 else {
                     let duomenys = response.json()
@@ -143,6 +144,7 @@ function EditUser(props) {
             })
             .catch((error) => {
                 console.error("FETCH ERROR: ", error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
 }
