@@ -6,6 +6,7 @@ import AddDomainModal from "../addDomainModal/addDomainModal";
 import './addUserModal.scss';
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 function AddUserModal(props) {
 
@@ -111,6 +112,7 @@ function UserModal(props) {
                         
                     })
                     handleClose();
+                    NotificationManager.success('New user added!', 'Successful!', 3000);
                 }
                 else{
                     let duomenys = response.json()
@@ -123,6 +125,7 @@ function UserModal(props) {
 
             .catch((error) => {
                 console.error("error while fetching users:" + error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
     async function fetchPost(dataForSending) {

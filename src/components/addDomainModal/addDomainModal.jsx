@@ -5,6 +5,7 @@ import './addDomainModal.scss';
 
 
 import {useSelector, useDispatch} from "react-redux";
+import { NotificationManager } from 'react-notifications';
 
 
     
@@ -177,8 +178,8 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST" className="interactive">Add</button>
-                        <button onClick={handleClose}>Cancel</button>
+                        <button type="submit" value="send POST">Add</button>
+                        <button variant="primary" onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
                     </form>
@@ -234,10 +235,12 @@ function DomainModal(props) {
         fetchPost(endpoint + "domain/", dataForSending)
             .then((data) => {
                 callbackAppendDomainList(data)
+                NotificationManager.success('New domain added!', 'Successful!', 3000);
             })
 
             .catch((error) => {
                 console.error("error while fetching domains:" + error);
+                NotificationManager.error('Something went wrong!', 'Error!', 3000);
             });
     }
 }
