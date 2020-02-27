@@ -37,6 +37,7 @@ function App() {
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
+        fetchUsers(endpoint)
     }, [token]);
 
 
@@ -64,23 +65,46 @@ function App() {
             });
     }
 
+    async function fetchFromApiUsers(endpoint) {
+        const response = await fetch(endpoint, {
+            method: "GET",
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    }
+
     function fetchUsers(endpoint) {
-        fetchFromApi(endpoint + "users/admin/register")
+        console.log("FETCHING USERS ____________________________________________________________________________________________________________")
+        console.log("token:", token);
+        fetchFromApiUsers(endpoint + "users/")
             .then(data => {
                 setUserList(data)
             })
             .catch(error => {
                 console.error("error while fetching Users:" + error);
                 setHasUserListError(true);
-                setUserList("error");
+                // setUserList("error");
             });
+    }
+
+    function purgeLocalState() {
+        setDomainList([]);
+        setUserList([]);
     }
 
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
         console.log("append this:", newDomain);
-        setDomainList([...domainList, newDomain]);
+        if (domainList.status === 404) {
+
+            setDomainList([newDomain])
+        } else
+            setDomainList([...domainList, newDomain]);
     }
 
     // appends the local userList array with one new domain
@@ -152,7 +176,9 @@ function App() {
     return (
         <>
             <Router>
-                <Menu/>
+                <Menu
+                    purgeLocalState={purgeLocalState}
+                />
                 {
 
                     domainListResponseCode === undefined ?
@@ -214,9 +240,9 @@ function App() {
                     isLogged === false &&
                     <>
                         <Route path="/login">
-                        <Login
-                            endpoint={endpoint}
-                        />
+                            <Login
+                                endpoint={endpoint}
+                            />
                         </Route>
                         <Route path="/signup">
                             <Signup/>
@@ -228,4 +254,5 @@ function App() {
         </>
     );
 }
+
 export default App;

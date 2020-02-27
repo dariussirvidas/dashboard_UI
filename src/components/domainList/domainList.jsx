@@ -29,6 +29,7 @@ function DomainList(props) {
                             appendDomainList={props.appendDomainList}
                             endpoint={props.endpoint}/>
                     </div>
+
                     <table className="Table table-hover" align="center">
                         <tr>
                             <th className="text-center" width="5%">Active</th>

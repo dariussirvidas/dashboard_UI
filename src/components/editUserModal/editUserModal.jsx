@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
 import {useSelector, useDispatch} from "react-redux";
-import { NotificationManager } from 'react-notifications';
+import {NotificationManager} from 'react-notifications';
 
 function EditUserModal(props) {
 
@@ -42,7 +42,7 @@ function EditUser(props) {
     //check if passwords match
     const [passwordsMatch, setPasswordsMatch] = useState(true);
 
-    const checkPasswordMatch = function check(){
+    const checkPasswordMatch = function check() {
         setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
     }
 
@@ -56,33 +56,42 @@ function EditUser(props) {
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
-                        <input type="text" placeholder="Username" defaultValue={props.user.username} name="userName" required min="6" max="64"/>
-                        <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName" required max="64"/>
-                        <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName" required max="64"/>
-                        <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail" required max="256"/>
+                        <input type="text" placeholder="Username" defaultValue={props.user.username} name="userName"
+                               required min="6" max="64"/>
+                        <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName"
+                               required max="64"/>
+                        <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName"
+                               required max="64"/>
+                        <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
+                               required max="256"/>
                         {
-                        props.user.role == "Admin" ? 
-                        <select name="role" className="SelectFrom" required>
-                            <option value="User">User</option>
-                            <option value="Admin" selected={true}>Admin</option>
-                        </select>
-                        :
-                        <select name="role" className="SelectFrom" required>
-                            <option value="User" selected={true}>User</option>
-                            <option value="Admin">Admin</option>
-                        </select>
-                        }   
+                            props.user.role == "Admin" ?
+                                <select name="role" className="SelectFrom" required>
+                                    <option value="User">User</option>
+                                    <option value="Admin" selected={true}>Admin</option>
+                                </select>
+                                :
+                                <select name="role" className="SelectFrom" required>
+                                    <option value="User" selected={true}>User</option>
+                                    <option value="Admin">Admin</option>
+                                </select>
+                        }
                         {/* Backendas neatsiuncia passwordo */}
-                        <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/> 
-                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
-                        {passwordsMatch ? "":"Passwords don't match"}
+                        <input id="password" type="password" placeholder="Password" name="password"
+                               onChange={checkPasswordMatch}
+                               pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
+                               title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number"
+                               required/>
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password"
+                               name="confirmPassword" onChange={checkPasswordMatch} required/>
+                        {passwordsMatch ? "" : "Passwords don't match"}
                         <br/>
                         <button type="submit" value="send POST" className="interactive">Update</button>
                         <button onClick={handleClose} type="button" className="interactive">Cancel</button>
                         <DeleteUser
-                        user={props.user}
-                        changeUserList={props.changeUserList}
-                        endpoint={props.endpoint}/>
+                            user={props.user}
+                            changeUserList={props.changeUserList}
+                            endpoint={props.endpoint}/>
                         <div>{response}</div>
                     </form>
                 </div>
@@ -98,7 +107,7 @@ function EditUser(props) {
             userEmail: event.target.userEmail.value,
             password: event.target.password.value,
             confirmPassword: event.target.confirmPassword.value,
-            role: event.target.role.value  
+            role: event.target.role.value
         };
         console.log("full object for sending:", dataForSending);
         console.log("JSON string:", JSON.stringify(dataForSending));
@@ -126,7 +135,7 @@ function EditUser(props) {
     function submitData(endpoint, changeUserList, dataForSending) {
         fetchPut(endpoint + "users/" + props.user.id, dataForSending)
             .then((response) => {
-                console.log("status code " + response + "...");
+                console.log("status code " + response.status + "...");
                 if (response.status > 199 && response.status < 300) {
                     setResponse("User updated")
 
@@ -135,16 +144,19 @@ function EditUser(props) {
                     handleClose();
                     NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
                 }
-                if(response.status == 403){ //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
+                console.log('response status!!! " ' + response.status);
+                console.log('response in general:', response);
+                if (response.status == 403) { //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
                     setResponse("You can't change your role")
                 }
-                else {
-                    let duomenys = response.json()
-                    .then((duomenys) => {
-                        setResponse(duomenys.message)
-                    })
+                if(response.status == 400){
+                    return response.json()
                 }
-            })
+
+                else {
+                    console.log("Something went wrong: ", response)
+                }
+            }).then((responseJson)=>{typeof responseJson != "undefined"? setResponse(responseJson.message) : void(0)})
             .catch((error) => {
                 console.error("FETCH ERROR: ", error);
                 NotificationManager.error('Something went wrong!', 'Error!', 3000);
