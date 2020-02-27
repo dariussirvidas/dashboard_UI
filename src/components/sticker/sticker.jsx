@@ -5,11 +5,12 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 function Sticker(props) {
-    function getClassNameFromStatus() { //class name grazina, pagal status
-        if ( props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms )
-            return "tile-amber";
-        else if (props.domainPing.status >= 200 && props.domainPing.status <= 299)
-            return "tile-success";
+    function getClassNameFromStatus() {
+        if (props.domainPing.status >= 200 && props.domainPing.status <= 299) {
+            if (props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms)
+                return "tile-amber";
+            else return "tile-success";
+        }
         else
             return "tile-fail";
     }
@@ -28,7 +29,8 @@ function Sticker(props) {
                 <Card.Body>
                     <Card.Text>
                         <div className="tooltip-wrap text-left">
-                            <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip" data-placement="top" title={props.domainPing.domainUrl}>
+                            <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip"
+                               data-placement="top" title={props.domainPing.domainUrl}>
                                 {
                                     props.domainPing.domainUrl
                                 }
@@ -46,7 +48,8 @@ function Sticker(props) {
                         </p>
                         <hr/>
                         <div className="tooltip-wrap text-left">
-                            <p className="text-truncate cl-copy-14 text-left" data-toggle="tooltip" data-placement="top" title={props.domainPing.requestTime + ' ms'}>
+                            <p className="text-truncate cl-copy-14 text-left" data-toggle="tooltip" data-placement="top"
+                               title={props.domainPing.requestTime + ' ms'}>
 
                                 Response time: &nbsp;
                                 {
