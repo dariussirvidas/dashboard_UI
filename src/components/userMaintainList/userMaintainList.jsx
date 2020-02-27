@@ -1,68 +1,43 @@
 import React, {useState, useEffect} from 'react';
 import Checkbox from "../checkbox/checkbox";
-import style from './userMaintainList.scss'
+import './userMaintainList.scss'
 import Popup from "reactjs-popup";
-import EditUser from '../editUser/editUser';
 import {ErrorMessage} from "../elements/elements";
-import store from "../../js/store";
+
+import AddDomainModal from "../addDomainModal/addDomainModal";
+import AddUserModal from "../addUserModal/addUserModal";
+import DeleteUser from "../deleteUser/deleteUser";
+import DeleteDomain from "../deleteDomain/deleteDomain";
+import EditUserModal from "../editUserModal/editUserModal";
+import {useSelector, useDispatch} from "react-redux";
 
 function UserMaintainList(props) {
 
-    const [userList, setUserList] = useState();
-    useEffect(() => {
-        getData();
-    }, []);
-    const [userListError, setUserListError] = useState();
-
-    function getData() {
-        fetchGet()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                setUserListError(true);
-                console.error("Error while fetching user list: " + error);
-            });
-    }
-
-    async function fetchGet() {
-
-        const response = await fetch(props.endpoint + "" + "users", {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + store.getState().token
-                }
-            }
-        );
-        const userList = await response.json();
-        await setUserList(userList);
-        console.log(userList);
-        return response.status;
-    }
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const userData = useSelector(state => state.userData);
 
     return (
-        <div>
+        <div className="container-fluid">
+            <div className="container table-responsive space">
             <div className="TableDiv">
+                <div className="d-flex justify-content-start domainButton">
+                    <AddUserModal
+                        callbackFetch={props.callbackReFetchDomains}
+                        appendUserList={props.appendUserList}
+                        endpoint={props.endpoint}/>
+                </div>
                 <table className="Table" align="center">
                     <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Email</th>
-                        <th>Active</th>
-                        <th>Maintenance</th>
+                        <th className="text-left" width="13%">Username</th>
+                        <th className="text-left" width="12%">Name</th>
+                        <th className="text-left" width="12%">Surname</th>
+                        <th className="text-left" width="17%">Email</th>
+                        <th className="text-left" width="7%">Role</th>
+                        <th className="text-center" width="10%">Maintenance</th>
                     </tr>
-
                     {
-                        // checks for errors, if there are any, do not render domains
-                        userListError === true ?
+                        props.userListError === true ?
                             (
                                 <ErrorMessage
                                     message="User List error"
@@ -70,32 +45,91 @@ function UserMaintainList(props) {
                             )
                             :
                             (
-                                Boolean(userList) === true &&
-                                userList.map((item) => {
+                                Boolean(props.userList) === true &&
+                                props.userList.map((item) => {
                                     return <SingleUser
                                         user={item}
+                                        endpoint={props.endpoint}
+                                        changeUserList={props.changeUserList}
                                     />
                                 })
                             )
                     }
+
                 </table>
+            </div>
             </div>
         </div>
     );
 }
 
-
 function SingleUser(props) {
     return (
-        <tr align="center">
-            <td>{props.user.firstName}</td>
-            <td>{props.user.lastName}</td>
-            <td>{props.user.userEmail}</td>
-            <td>
-                <Checkbox/>
-            </td>
-            <td><a href="">Edit</a></td>
-        </tr>
+        <>
+            {
+                props.user.deleted === true ?
+                    (
+                        <>
+                        </>
+                    )
+                    :
+                    (
+                        <tr align="center">
+                            <td className="text-truncate">
+                                <div className="tooltip-wrap text-left">
+                                    <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                       title={props.user.username}>
+                                        {props.user.username}
+                                    </p>
+                                </div>
+                            </td>
+                            <td className="text-truncate text-left">
+                                <div className="tooltip-wrap">
+                                    <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                       title={props.user.firstName}>
+                                        {props.user.firstName}
+                                    </p>
+                                </div>
+                            </td>
+                            <td className="text-truncate text-left">
+                                <div className="tooltip-wrap">
+                                    <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                       title={props.user.lastName}>
+                                        {props.user.lastName}
+                                    </p>
+                                </div>
+                            </td>
+                            <td className="text-truncate text-left">
+                                <div className="tooltip-wrap">
+                                    <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                       title={props.user.userEmail}>
+                                        {props.user.userEmail}
+                                    </p>
+                                </div>
+                            </td>
+                            <td className="text-truncate text-left">
+                                <div className="tooltip-wrap">
+                                    <p className="text-truncate" data-toggle="tooltip" data-placement="top"
+                                       title={props.user.role}>
+                                        {props.user.role}
+                                    </p>
+                                </div>
+                            </td>
+                            <td>
+                                <div className="text-center">
+                                    <EditUserModal
+                                       user={props.user}
+                                       changeUserList={props.changeUserList}
+                                       endpoint={props.endpoint}
+                                       appendUserList={props.appendUserList}
+
+                                    />
+                                </div>
+                            </td>
+                        </tr>
+                    )
+            }
+        </>
     )
 }
 

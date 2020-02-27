@@ -7,14 +7,20 @@ import {
     Route,
     Link,
     useRouteMatch,
-    useParams
+    useParams,
+    Redirect
 } from "react-router-dom";
 import StickerList from "../stickerList/stickerList";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 import UserMaintainList from "../userMaintainList/userMaintainList";
+import {useSelector, useDispatch} from "react-redux";
 
 function Main(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const userData = useSelector(state => state.userData);
 
     return (
         <>
@@ -26,30 +32,31 @@ function Main(props) {
                         <ExampleComponentStructure/>
                     </Route>
                     <Route path="/login">
-                        <Login/>
+                        <Redirect to="/"></Redirect>
                     </Route>
                     <Route path="/domains">
                         <DomainList
                             endpoint={props.endpoint}
-                            callbackReFetchDomains={props.callbackReFetchDomains}
+
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             appendDomainList={props.appendDomainList}
                             changeDomainList={props.changeDomainList}
                         />
                     </Route>
-                    <Route path="/signup">
-                        <Signup/>
-                    </Route>
+
                     <Route path="/users">
                         <UserMaintainList
                             endpoint={props.endpoint}
+                            appendUserList={props.appendUserList}
+                            changeUserList={props.changeUserList}
+                            userList={props.userList}
                         />
                     </Route>
                     <Route path="/">
                         <StickerList
                             endpoint={props.endpoint}
-                            callbackReFetchDomains={props.callbackReFetchDomains}
+
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
@@ -62,6 +69,28 @@ function Main(props) {
     );
 }
 
+function PrivateRoute({children, ...rest}) {
+
+    const isLogged = useSelector(state => state.isLogged);
+
+    return (
+        <Route
+            {...rest}
+            render={({location}) =>
+                isLogged ? (
+                    children
+                ) : (
+                    <Redirect
+                        to={{
+                            pathname: "/login",
+                            state: {from: location}
+                        }}
+                    />
+                )
+            }
+        />
+    );
+}
 
 function ExampleComponentStructure() {
 

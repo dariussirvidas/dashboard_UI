@@ -5,16 +5,14 @@ import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 
 function Sticker(props) {
-
-    function getClassNameFromStatus() { //class name grazina, pagal status
-        if (props.domainPing.requestTime > props.domainPing.Latency_Threshold_Ms)
-            return "tile-amber";
-        else if (props.domainPing.status >= 200 && props.domainPing.status <= 299)
-            return "tile-success";
-        else if (props.domainPing.status >= 400 && props.domainPing.status <= 499)
-            return "tile-fail";
+    function getClassNameFromStatus() {
+        if (props.domainPing.status >= 200 && props.domainPing.status <= 299) {
+            if (props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms)
+                return "tile-amber";
+            else return "tile-success";
+        }
         else
-            return "tile-unclear"
+            return "tile-fail";
     }
 
     return (
@@ -23,21 +21,23 @@ function Sticker(props) {
                 <Card.Header
                     className={
 
-                        "cl-h3 text-center Card " + getClassNameFromStatus()
+                        "text-truncate cl-h3 text-center Card " + getClassNameFromStatus()
                     }
                 >
                     {props.item.service_Name}
                 </Card.Header>
                 <Card.Body>
                     <Card.Text>
-                        <p className="cl-copy-14 FixedSize text-left">
-
-                            {
-                                props.domainPing.domainUrl
-                            }
-                        </p>
+                        <div className="tooltip-wrap text-left">
+                            <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip"
+                               data-placement="top" title={props.domainPing.domainUrl}>
+                                {
+                                    props.domainPing.domainUrl
+                                }
+                            </p>
+                        </div>
                         <hr/>
-                        <p className="cl-copy-14 text-left">
+                        <p className="text-truncate cl-copy-14 text-left">
                             Status: &nbsp;
                             {
                                 props.domainPing &&
@@ -47,24 +47,29 @@ function Sticker(props) {
                             }
                         </p>
                         <hr/>
-                        <p className="cl-copy-14 text-left">
-                            Response time: &nbsp;
-                            {
-                                props.domainPing.requestTime &&
-                                <>
-                                    {props.domainPing.requestTime + ' ms'}
-                                </>
-                            }
-                        </p>
+                        <div className="tooltip-wrap text-left">
+                            <p className="text-truncate cl-copy-14 text-left" data-toggle="tooltip" data-placement="top"
+                               title={props.domainPing.requestTime + ' ms'}>
+
+                                Response time: &nbsp;
+                                {
+                                    props.domainPing.requestTime &&
+                                    <>
+                                        {props.domainPing.requestTime + ' ms'}
+                                    </>
+                                }
+                            </p>
+                        </div>
+
                         <hr/>
-                        <p className="cl-copy-14 text-left">Last Failure: &nbsp;
+                        <p className="text-truncate cl-copy-14 text-left">Last Failure: &nbsp;
                             {
                                 props.item.last_Fail.slice(0, 10) !== '0001-01-01' &&
                                 props.item.last_Fail.slice(0, 10) + " " + props.item.last_Fail.slice(11, 16)
                             }
                         </p>
                         <hr/>
-                        <p className="cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
+                        <p className="text-truncate cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
                     </Card.Text>
                 </Card.Body>
             </Card>

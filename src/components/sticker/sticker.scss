@@ -13,7 +13,6 @@
 .tile-amber {
   background: $clr-amber !important;
 }
-
 // When pinged and not ok
 .tile-fail {
   background-color: $clr-fail !important;
@@ -36,4 +35,26 @@ p{
 }
 .cardButton{
   justify-content: center;
+}
+.tooltip-wrap {
+  position: relative !important;
+}
+.tooltip-wrap .tooltip-content {
+  display: none;
+  position: absolute;
+  bottom: 5%;
+  left: 5%;
+  right: 5%;
+  background-color: #fff;
+  padding: .5em;
+
+}
+.tooltip-wrap:hover .tooltip-content {
+  display: block;
+}
+.userButton{
+  margin-right: 328px;
+}
+.space {
+  margin-top: 50px !important;
 }

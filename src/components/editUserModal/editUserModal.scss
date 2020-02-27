@@ -1,0 +1,69 @@
+@import '../ux_global_design.scss';
+
+
+.forma {
+  position: relative;
+  z-index: 1;
+  padding: 45px;
+  text-align: center;
+}
+.forma input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #f2f2f2;
+  width: 95%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+/* .forma button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: lightskyblue;
+  width: 30%;
+  border: 0;
+  padding: 10px;
+  margin: 5px;
+  color: #FFFFFF;
+  font-size: 14px;
+  &:hover {
+    background-color: mix($clr-black, lightskyblue, 10%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+  &:active {
+    background-color: mix($clr-black, lightskyblue, 20%) !important;
+    color: mix($clr-black, $clr-white, 20%) !important;
+  }
+
+} */
+/* .forma button:hover,.forma button:active,.forma button:focus {
+  background: lightskyblue;
+} */
+.forma .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
+}
+.forma .message a {
+  color: lightskyblue;
+  text-decoration: none;
+}
+.SelectFrom{
+  outline: 0;
+  background: #f2f2f2;
+  width: 95% !important;
+  border: 0;
+  margin: 0px 10px 10px 10px;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 14px;
+}
+.txt {
+  cursor: pointer;
+}
+/* .modal-dialog{
+  max-width: 33% !important;
+} */

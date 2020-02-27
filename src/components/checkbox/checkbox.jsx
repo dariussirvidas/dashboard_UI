@@ -1,7 +1,12 @@
 import React, {Component} from 'react';
-import store from "../../js/store";
+
+import {useSelector, useDispatch} from "react-redux";
 
 function Checkbox(props) {
+
+    const isLogged = useSelector(state => state.isLogged);
+    const token = useSelector(state => state.token);
+    const userData = useSelector(state => state.userData);
 
     return (
         <>
@@ -43,7 +48,7 @@ function Checkbox(props) {
                 headers: {
                     'Content-Type': 'application/json',
                     // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + store.getState().token
+                    'Authorization': 'Bearer ' + token
                 },
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }

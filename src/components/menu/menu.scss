@@ -1,14 +1,29 @@
-.Menu_text{
+.Menu_text {
   margin-top: 5px;
 }
-.Dropdown{
+
+.Dropdown {
   z-index: 99 !important;
 }
-@media only screen and (max-width: 1200px){
-  .Menu_text{
+
+@media only screen and (max-width: 1200px) {
+  .Menu_text {
     display: none;
   }
 }
-.NavBarOnTop{
+
+.NavBarOnTop {
   z-index: 99 !important;
+}
+
+.btn {
+  display: block !important;
+  height: 100%;
+}
+
+.btn:focus {
+  color: white !important;
+}
+.userName{
+  margin-top:2px;
 }
