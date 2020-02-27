@@ -135,7 +135,7 @@ function EditUser(props) {
     function submitData(endpoint, changeUserList, dataForSending) {
         fetchPut(endpoint + "users/" + props.user.id, dataForSending)
             .then((response) => {
-                console.log("status code " + response + "...");
+                console.log("status code " + response.status + "...");
                 if (response.status > 199 && response.status < 300) {
                     setResponse("User updated")
 
@@ -148,14 +148,15 @@ function EditUser(props) {
                 console.log('response in general:', response);
                 if (response.status == 403) { //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
                     setResponse("You can't change your role")
-                } else {
-
-
-                    console.log('duomenys: ', response)
-                    setResponse(response.message)
-
                 }
-            })
+                if(response.status == 400){
+                    return response.json()
+                }
+
+                else {
+                    console.log("Something went wrong: ", response)
+                }
+            }).then((responseJson)=>{typeof responseJson != "undefined"? setResponse(responseJson.message) : void(0)})
             .catch((error) => {
                 console.error("FETCH ERROR: ", error);
                 NotificationManager.error('Something went wrong!', 'Error!', 3000);
