@@ -78,12 +78,11 @@ function EditUser(props) {
                         }
                         {/* Backendas neatsiuncia passwordo */}
                         <input id="password" type="password" placeholder="Password" name="password"
-                               onChange={checkPasswordMatch}
                                pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
                                title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number"
                                required/>
                         <input id="confirmPassword" type="password" placeholder="Confirm Password"
-                               name="confirmPassword" onChange={checkPasswordMatch} required/>
+                               name="confirmPassword" onBlur={checkPasswordMatch} required/>
                         {passwordsMatch ? "" : "Passwords don't match"}
                         <br/>
                         <button type="submit" value="send POST" className="interactive">Update</button>
