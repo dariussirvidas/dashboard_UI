@@ -61,8 +61,8 @@ function UserModal(props) {
                         <input type="text" placeholder="First Name" name="firstName" required max="64"/>
                         <input type="text" placeholder="Last Name" name="lastName" required max="64"/>
                         <input type="email" placeholder="Email" name="userEmail" required max="256"/>
-                        <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
-                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
+                        <input id="password" type="password" placeholder="Password" name="password"  pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onBlur={checkPasswordMatch} required/>
                         {passwordsMatch ? "":"Passwords don't match"}
                         <br/>
                         <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
