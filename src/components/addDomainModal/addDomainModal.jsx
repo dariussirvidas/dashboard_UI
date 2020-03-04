@@ -7,8 +7,6 @@ import './addDomainModal.scss';
 import {useSelector, useDispatch} from "react-redux";
 import { NotificationManager } from 'react-notifications';
 
-
-    
 function AddDomainModal(props) {
 
 
@@ -28,6 +26,39 @@ function AddDomainModal(props) {
 }
 
 function DomainModal(props) {
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    const [validJSONorXML, setValidJSONorXML] = useState(true);
+
+    const checkValidJSONorXML = function check(){
+        let parameters = document.querySelector("textArea[name=\"parameters\"]").value;
+        if (getSelectedServiceType == 0) {
+            setValidJSONorXML(IsValidJSON(parameters));
+        }
+        else {
+            setValidJSONorXML(IsValidXML(parameters));
+        }
+    }
+
+    function IsValidJSON(str) {
+        try {
+            JSON.parse(str);
+        } catch (e) {
+            return false;
+        }
+        return true;
+    }
+
+    function IsValidXML(str) {
+        let parser = new DOMParser();
+        let xml = parser.parseFromString(str, "application/xml");
+        let isValid = xml.querySelector("parsererror") == null ? true : false;
+        return isValid;
+    }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
@@ -168,7 +199,9 @@ function DomainModal(props) {
                         <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
                         <input className="BasicAuthDisable" type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
                         <input className="BasicAuthDisable" type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
-                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
+                        <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"
+                                  onBlur={checkValidJSONorXML}></textarea>
+                        {validJSONorXML ? "":"Invalid JSON/XML"}
                         <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required/>
                         <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
                         <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="10" max="60000" required/>
@@ -179,7 +212,7 @@ function DomainModal(props) {
                         <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         <br/>
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST">Add</button>
+                        <button type="submit" value="send POST" disabled={!validJSONorXML}>Add</button>
                         <button variant="primary" onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
