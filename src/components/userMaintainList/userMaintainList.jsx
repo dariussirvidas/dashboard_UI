@@ -23,13 +23,13 @@ function UserMaintainList(props) {
             (
         <div className="container-fluid">
             <div className="container table-responsive space">
-                <div className="TableDiv">
-                    <div className="d-flex justify-content-start domainButton">
+            <div className="d-flex justify-content-start domainButton">
                         <AddUserModal
                             callbackFetch={props.callbackReFetchDomains}
                             appendUserList={props.appendUserList}
                             endpoint={props.endpoint}/>
                     </div>
+                <div className="TableDiv">
                     <table className="Table" align="center">
                         <tr>
                             <th className="text-left" width="13%">Username</th>
