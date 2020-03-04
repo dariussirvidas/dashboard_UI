@@ -63,7 +63,7 @@ function EditUser(props) {
                         <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName"
                                pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
-                               required max="256"/>
+                               required maxLength="256"/>
                         {
                             props.user.role == "Admin" ?
                                 <select name="role" className="SelectFrom" required>
