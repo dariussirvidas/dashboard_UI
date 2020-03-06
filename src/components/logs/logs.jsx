@@ -8,53 +8,50 @@ function Logs(props) {
     const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
 
-    const [logs, setLogs] = useState();
-    const [logsResponse, setLogsResponse] = useState();
-    const [hasLogsError, setLogsError] = useState({});
+    const [logs, setLogs] = useState({});
+    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
+    const [logsError, setLogsError] = useState();
 
-    // async function fetchLogsFromApi(endpoint) {
-    //
-    //     const response = await fetch(endpoint + "logs", {
-    //         method: "GET",
-    //         headers: {
-    //             'Authorization': 'Bearer ' + token
-    //         }
-    //     });
-    //
-    //     const data = await response.json();
-    //
-    //     setLogsResponse(response.status);
-    //
-    //     return data;
-    // }
-    //
-    // function FetchLogs(endpoint) {
-    //     fetchLogsFromApi(endpoint + "logs")
-    //         .then(data => {
-    //             setLogs(data)
-    //         })
-    //         .catch(error => {
-    //             console.error("error while fetching Logs:" + error);
-    //         });
-    // }
-    //
-    // useEffect(() =>
-    //      FetchLogs()
-    // );
+    useEffect(() => {
+        getData();
+        fetchGet(endpoint)
+    }, []);
 
-    useEffect((endpoint) => {
-        const fetchLogs = () =>
-            fetch(endpoint + "logs")
-                .then(res => res.json())
-                .then(data => {
-                    setLogs(data)
-                })
-        fetchLogs()
-    }, [])
+    console.log(logs)
 
+    function getData() {
+        fetchGet()
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200");
+                } else if (statusCode === 401) {
+                    console.log("status code 401, do something else");
+                    alert('Unauthenticated')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
 
+            })
+            .catch((error) => {
+                setLogsError(true);
+                console.error("Error while fetching log list: " + error);
+            });
+    }
 
-    console.log("Data you are looking for: " + logs);
+    async function fetchGet() {
+
+        const response = await fetch(endpoint + "logs", {
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        );
+        const logs = await response.json();
+        await setLogs(logs);
+        return response.status;
+    }
+
 
     return (
         <div className="container-fluid">
@@ -71,11 +68,18 @@ function Logs(props) {
                             <th className="text-center" width="6%">Threshold</th>
                             <th className="text-center" width="7%">Maintenance</th>
                         </tr>
-                        <tr align="center">
-                            <td className="text-center">
+                        {
 
-                            </td>
-                        </tr>
+
+                            Boolean(logs) === true &&
+                            logs.map((item) => {
+                                return <SingleLog
+                                    logs={item}
+                                    endpoint={props.endpoint}
+                                />
+                            })
+
+                        }
                     </table>
                 </div>
             </div>
@@ -88,7 +92,7 @@ function SingleLog() {
         <div>
             <tr align="center">
                 <td className="text-center">
-                    <p></p>
+                    <p>{}</p>
                 </td>
             </tr>
 
