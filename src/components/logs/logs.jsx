@@ -1,23 +1,22 @@
 import React, {useEffect, useState} from 'react';
-import {ErrorMessage} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
-import Checkbox from "../checkbox/checkbox";
+import Style from './logs.scss';
+
 
 function Logs(props) {
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
 
-    const [logs, setLogs] = useState({});
+    const [LogsList, setLogs] = useState([]);
     const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [logsError, setLogsError] = useState();
 
     useEffect(() => {
         getData();
-        fetchGet(endpoint)
+        fetchGet()
     }, []);
 
-    console.log(logs)
 
     function getData() {
         fetchGet()
@@ -47,11 +46,12 @@ function Logs(props) {
                 }
             }
         );
-        const logs = await response.json();
-        await setLogs(logs);
+        const LogList = await response.json();
+        await setLogs(LogList);
         return response.status;
     }
 
+    console.log(LogsList)
 
     return (
         <div className="container-fluid">
@@ -59,26 +59,17 @@ function Logs(props) {
                 <div className="TableDiv">
                     <table className="Table table-hover" align="center">
                         <tr>
-                            <th className="text-center" width="5%">Active</th>
-                            <th className="text-left" width="9%">Service Name</th>
-                            <th className="text-center" width="7%">Service Type</th>
-                            <th className="text-left" width="15%">URL</th>
-                            <th className="text-left" width="15%">Emails</th>
-                            <th className="text-center" width="8%">Check interval</th>
-                            <th className="text-center" width="6%">Threshold</th>
-                            <th className="text-center" width="7%">Maintenance</th>
+                            <th className="text-left">Service Name</th>
+                            <th className="text-center">Date</th>
+                            <th className="text-center">Time</th>
+                            <th className="text-center">Error</th>
                         </tr>
                         {
-
-
-                            Boolean(logs) === true &&
-                            logs.map((item) => {
+                            LogsList.slice(0, 9).map((item) => {
                                 return <SingleLog
                                     logs={item}
-                                    endpoint={props.endpoint}
                                 />
                             })
-
                         }
                     </table>
                 </div>
@@ -87,16 +78,44 @@ function Logs(props) {
     );
 }
 
-function SingleLog() {
+function SingleLog(props) {
     return (
-        <div>
+        <>
             <tr align="center">
-                <td className="text-center">
-                    <p>{}</p>
+                <td className="text-truncate text-center">
+                    <div className="tooltip-wrap text-left">
+                        <p className="text-truncate text-left" data-toggle="tooltip" data-placement="top"
+                           title={props.logs.domain_Id}
+                           >
+                            {props.logs.domain_Id}
+                        </p>
+                    </div>
+                </td><td className="text-truncate text-center">
+                    <div className="tooltip-wrap text-left">
+                        <p className="text-truncate text-center" data-toggle="tooltip" data-placement="top"
+                           >
+                            {props.logs.log_Date.slice(0, 10)}
+                        </p>
+                    </div>
+                </td>
+                <td className="text-truncate text-center">
+                    <div className="tooltip-wrap text-left">
+                        <p className="text-truncate text-center" data-toggle="tooltip" data-placement="top"
+                           >
+                            {props.logs.log_Date.slice(11, 16)}
+                        </p>
+                    </div>
+                </td>
+                <td className="text-truncate ">
+                    <div className="tooltip-wrap">
+                        <p className="text-truncate text-center" data-toggle="tooltip" data-placement="top"
+                           >
+                            {props.logs.error_Text}
+                        </p>
+                    </div>
                 </td>
             </tr>
-
-        </div>
+        </>
     );
 }
 
