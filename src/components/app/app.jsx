@@ -34,10 +34,11 @@ function App() {
     const [hasDomainListError, setHasDomainListError] = useState(false);
     const [hasUserListError, setHasUserListError] = useState(false);
 
+
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
-        fetchUsers(endpoint)
+        fetchUsers(endpoint);
     }, [token]);
 
 
@@ -74,12 +75,15 @@ function App() {
         });
 
         const data = await response.json();
+
         return data;
     }
 
+
+
+
+
     function fetchUsers(endpoint) {
-        console.log("FETCHING USERS ____________________________________________________________________________________________________________")
-        console.log("token:", token);
         fetchFromApiUsers(endpoint + "users/")
             .then(data => {
                 setUserList(data)
@@ -134,9 +138,11 @@ function App() {
     //UserMaintaiList GET info
 
     const [userList, setUserList] = useState();
+
     useEffect(() => {
         getData();
     }, []);
+
     const [userListError, setUserListError] = useState();
 
     function getData() {
@@ -173,6 +179,8 @@ function App() {
         return response.status;
     }
 
+
+
     return (
         <>
             <Router>
@@ -180,7 +188,6 @@ function App() {
                     purgeLocalState={purgeLocalState}
                 />
                 {
-
                     domainListResponseCode === undefined ?
                         (<>
                             {
@@ -203,7 +210,6 @@ function App() {
                                     (<>
                                         <Main
                                             endpoint={endpoint}
-
                                             domainList={domainList}
                                             userList={userList}
                                             hasDomainListError={hasDomainListError}
@@ -211,8 +217,7 @@ function App() {
                                             appendUserList={appendUserList}
                                             changeDomainList={changeDomainList}
                                             changeUserList={changeUserList}
-                                        />
-
+                                                                                    />
 
                                     </>)
                                     :
