@@ -85,9 +85,9 @@ function SingleLog(props) {
                 <td className="text-truncate text-center">
                     <div className="tooltip-wrap text-left">
                         <p className="text-truncate text-left" data-toggle="tooltip" data-placement="top"
-                           title={props.logs.domain_Id}
+                           title={props.logs.Service_Name}
                            >
-                            {props.logs.domain_Id}
+                            {props.logs.Service_Name}
                         </p>
                     </div>
                 </td><td className="text-truncate text-center">
