@@ -65,7 +65,7 @@ function Main(props) {
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
-                            logs={props.logs}
+
                         />
                     </Route>
                 </Switch>

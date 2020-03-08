@@ -186,7 +186,7 @@ function App() {
 
     useEffect(() => {
         getData();
-        fetchGet()
+
     }, []);
 
 
@@ -210,7 +210,6 @@ function App() {
     }
 
     async function fetchGet() {
-
         const response = await fetch(endpoint + "logs", {
                 method: "GET",
                 headers: {

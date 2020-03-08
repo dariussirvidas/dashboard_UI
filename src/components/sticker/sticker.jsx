@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import {useSelector} from "react-redux";
 
 function Sticker(props) {
     function getClassNameFromStatus() {
@@ -10,13 +11,30 @@ function Sticker(props) {
             if (props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms)
                 return "tile-amber";
             else return "tile-success";
-        }
-        else
+        } else
             return "tile-fail";
     }
-    
+
+
+    // log stuff
+
+    const [isLogsVisible, setIsLogsVisible] = useState(false);
+
+
     return (
-        <div>
+        <div onClick={() => {
+            setIsLogsVisible(!isLogsVisible)
+        }}>
+
+            {
+                isLogsVisible === true &&
+                <>
+                    <LogsList
+                    logs={props.logs}
+                    />
+                </>
+            }
+
             <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '16rem'}}>
                 <Card.Header
                     className={
@@ -78,6 +96,17 @@ function Sticker(props) {
         </div>
     );
 
+}
+
+function LogsList(props) {
+
+    return(
+        <>
+            <p>modal and logic here</p>
+
+
+        </>
+    )
 }
 
 export default Sticker;
