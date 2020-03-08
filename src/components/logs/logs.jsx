@@ -4,54 +4,6 @@ import Style from './logs.scss';
 
 
 function Logs(props) {
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
-    const [LogsList, setLogs] = useState([]);
-    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
-    const [logsError, setLogsError] = useState();
-
-    useEffect(() => {
-        getData();
-        fetchGet()
-    }, []);
-
-
-    function getData() {
-        fetchGet()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                setLogsError(true);
-                console.error("Error while fetching log list: " + error);
-            });
-    }
-
-    async function fetchGet() {
-
-        const response = await fetch(endpoint + "logs", {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-        );
-        const LogList = await response.json();
-        await setLogs(LogList);
-        return response.status;
-    }
-
-    console.log(LogsList)
 
     return (
         <div className="container-fluid">
@@ -65,7 +17,7 @@ function Logs(props) {
                             <th className="text-center">Error</th>
                         </tr>
                         {
-                            LogsList.slice(0, 9).map((item) => {
+                            props.logs.slice(0, 9).map((item) => {
                                 return <SingleLog
                                     logs={item}
                                 />

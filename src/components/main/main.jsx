@@ -57,6 +57,7 @@ function Main(props) {
                     <Route path="/logs">
                         <Logs
                             endpoint={props.endpoint}
+                            logs={props.logs}
                         />
                     </Route>
                     <Route path="/">
