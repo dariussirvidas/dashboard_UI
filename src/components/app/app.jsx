@@ -34,10 +34,11 @@ function App() {
     const [hasDomainListError, setHasDomainListError] = useState(false);
     const [hasUserListError, setHasUserListError] = useState(false);
 
+
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
-        fetchUsers(endpoint)
+        fetchUsers(endpoint);
     }, [token]);
 
 
@@ -74,12 +75,15 @@ function App() {
         });
 
         const data = await response.json();
+
         return data;
     }
 
+
+
+
+
     function fetchUsers(endpoint) {
-        console.log("FETCHING USERS ____________________________________________________________________________________________________________")
-        console.log("token:", token);
         fetchFromApiUsers(endpoint + "users/")
             .then(data => {
                 setUserList(data)
@@ -134,9 +138,11 @@ function App() {
     //UserMaintaiList GET info
 
     const [userList, setUserList] = useState();
+
     useEffect(() => {
         getData();
     }, []);
+
     const [userListError, setUserListError] = useState();
 
     function getData() {
@@ -173,6 +179,50 @@ function App() {
         return response.status;
     }
 
+    //LOGS
+
+    const [LogsList, setLogs] = useState([]);
+    const [logsError, setLogsError] = useState();
+
+    useEffect(() => {
+        getData();
+
+    }, []);
+
+
+    function getData() {
+        fetchGet()
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200");
+                } else if (statusCode === 401) {
+                    console.log("status code 401, do something else");
+                    alert('Unauthenticated')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
+
+            })
+            .catch((error) => {
+                setLogsError(true);
+                console.error("Error while fetching log list: " + error);
+            });
+    }
+
+    async function fetchGet() {
+        const response = await fetch(endpoint + "logs", {
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        );
+        const LogList = await response.json();
+        await setLogs(LogList);
+        return response.status;
+    }
+
+
     return (
         <>
             <Router>
@@ -180,7 +230,6 @@ function App() {
                     purgeLocalState={purgeLocalState}
                 />
                 {
-
                     domainListResponseCode === undefined ?
                         (<>
                             {
@@ -203,7 +252,6 @@ function App() {
                                     (<>
                                         <Main
                                             endpoint={endpoint}
-
                                             domainList={domainList}
                                             userList={userList}
                                             hasDomainListError={hasDomainListError}
@@ -211,8 +259,7 @@ function App() {
                                             appendUserList={appendUserList}
                                             changeDomainList={changeDomainList}
                                             changeUserList={changeUserList}
-                                        />
-
+                                            logs={LogsList}/>
 
                                     </>)
                                     :

@@ -57,13 +57,13 @@ function EditUser(props) {
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
                         <input type="text" placeholder="Username" defaultValue={props.user.username} name="userName"
-                               required min="6" max="64"/>
+                               pattern="^[a-zA-Z0-9]{6,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                         <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName"
-                               required max="64"/>
+                               pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                         <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName"
-                               required max="64"/>
+                               pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
-                               required max="256"/>
+                               required maxLength="256"/>
                         {
                             props.user.role == "Admin" ?
                                 <select name="role" className="SelectFrom" required>

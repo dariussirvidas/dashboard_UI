@@ -29,10 +29,10 @@ function Signup() {
                         <img src={Logo} alt="Festo Logo"/>
                         <hr className="line"/>
                         <form className="login-form" onSubmit={handleSubmit} id="formForSignUp">
-                            <input type="text" placeholder="Username" name="userName" min="6" max="64" required/>
-                            <input type="text" placeholder="First Name" name="firstName" required max="64"/>
-                            <input type="text" placeholder="Last Name" name="lastName" required max="64"/>
-                            <input type="email" placeholder="Email" name="userEmail" required max="256"/>
+                            <input type="text" placeholder="Username" name="userName" pattern="^[a-zA-Z0-9]{6,64}$" title="Your username needs to be between 6 and 64 characters long." required/>
+                            <input type="text" placeholder="First Name" name="firstName" pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
+                            <input type="text" placeholder="Last Name" name="lastName" pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
+                            <input type="email" placeholder="Email" name="userEmail" required maxLength="256"/>
                             <input id="password" type="password" placeholder="Password" name="password"  pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
                             <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onBlur={checkPasswordMatch} required/>
                             {passwordsMatch ? "":"Passwords don't match"}

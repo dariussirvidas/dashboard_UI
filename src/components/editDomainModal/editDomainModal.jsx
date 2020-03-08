@@ -116,7 +116,7 @@ function EditDomain(props) {
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
-                               placeholder="Email" required max="256"/>
+                               placeholder="Email" required maxLength="256"/>
                         <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
                                                    name="auth" id="authActive" onClick={changeAuth}></input>
                         <input className="BasicAuthDisable" name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>

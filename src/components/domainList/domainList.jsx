@@ -22,14 +22,12 @@ function DomainList(props) {
     return (
         <div className="container-fluid">
             <div className="container table-responsive space">
-                <div className="TableDiv">
-                    <div className="d-flex justify-content-start domainButton">
+            <div className="d-flex justify-content-start domainButton">
                         <AddDomainModal
-
                             appendDomainList={props.appendDomainList}
                             endpoint={props.endpoint}/>
                     </div>
-
+                <div className="TableDiv">
                     <table className="Table table-hover" align="center">
                         <tr>
                             <th className="text-center" width="5%">Active</th>
@@ -37,7 +35,8 @@ function DomainList(props) {
                             <th className="text-center" width="7%">Service Type</th>
                             <th className="text-left" width="15%">URL</th>
                             <th className="text-left" width="15%">Emails</th>
-                            <th className="text-center" width="7%">Check interval</th>
+                            <th className="text-center" width="8%">Check interval</th>
+                            <th className="text-center" width="6%">Threshold</th>
                             <th className="text-center" width="7%">Maintenance</th>
                         </tr>
                         {
@@ -194,7 +193,9 @@ function SingleDomain(props) {
                         </div>
                     </td>
                     <td className="text-center">{Math.trunc(props.d.interval_Ms / 1000)} s</td>
+                    <td className="text-center">{props.d.latency_Threshold_Ms} ms</td>
                     <div>
+                        <td>
                         <div className="editDomainModal editIcon">
 
                             <EditDomainModal
@@ -203,6 +204,7 @@ function SingleDomain(props) {
                                 endpoint={props.endpoint}
                             />
                         </div>
+                        </td>
                     </div>
                 </tr>
             }
