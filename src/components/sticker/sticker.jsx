@@ -14,10 +14,7 @@ function Sticker(props) {
         else
             return "tile-fail";
     }
-
-    //MATCHING LOGS
-    const intersection = props.item.filter(element => props.logs.includes(element));
-
+    
     return (
         <div>
             <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '16rem'}}>
@@ -74,7 +71,7 @@ function Sticker(props) {
                         <hr/>
                         <p className="text-truncate cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
                         <hr/>
-                        <p>{intersection}</p>
+                        <p></p>
                     </Card.Text>
                 </Card.Body>
             </Card>
