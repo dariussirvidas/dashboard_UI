@@ -222,7 +222,7 @@ function App() {
         await setLogs(LogList);
         return response.status;
     }
-    
+
 
     return (
         <>

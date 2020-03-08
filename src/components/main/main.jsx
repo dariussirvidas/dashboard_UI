@@ -38,7 +38,6 @@ function Main(props) {
                     <Route path="/domains">
                         <DomainList
                             endpoint={props.endpoint}
-
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             appendDomainList={props.appendDomainList}
@@ -66,9 +65,9 @@ function Main(props) {
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
+                            logs={props.logs}
                         />
                     </Route>
-
                 </Switch>
             </div>
         </>

@@ -28,6 +28,7 @@ function StickerList(props) {
                                                         item={item}
                                                         endpoint={props.endpoint}
                                                         changeDomainList={props.changeDomainList}
+                                                        logs={props.logs}
                                                     />
                                                 )
                                         })
@@ -162,6 +163,7 @@ function SingleService(props) {
                     domainLatency={requestLatency}
                     checkIn={timer}
                     fetshSingleDomain={fetchSingleDomain}
+                    logs={props.logs}
                 />
             }
         </>
