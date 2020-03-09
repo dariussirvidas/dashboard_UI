@@ -45,11 +45,6 @@ function Menu(props) {
                                             List</Link></Dropdown.Item>
                                     }
                                     <Dropdown.Item>
-                                        <Link className="btn text-left" to="/logs">
-                                            Logs
-                                        </Link>
-                                    </Dropdown.Item>
-                                    <Dropdown.Item>
                                         <button className="btn text-left" type="button" onClick={() => {
 
                                             dispatch(logOut());
@@ -66,7 +61,6 @@ function Menu(props) {
         </>
     );
 }
-
 // <ul className="menu">
 //     <li><Link to="/">Home Page</Link></li>
 //     <li><Link to="/domains">Maintaining list</Link></li>

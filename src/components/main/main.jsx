@@ -15,7 +15,6 @@ import Login from '../login/login'
 import Signup from "../signup/signup";
 import UserMaintainList from "../userMaintainList/userMaintainList";
 import {useSelector, useDispatch} from "react-redux";
-import Logs from "../logs/logs";
 
 function Main(props) {
 
@@ -54,14 +53,10 @@ function Main(props) {
                             userList={props.userList}
                         />
                     </Route>
-                    <Route path="/logs">
-                        <Logs
-                            endpoint={props.endpoint}
-                        />
-                    </Route>
                     <Route path="/">
                         <StickerList
                             endpoint={props.endpoint}
+
                             domainList={props.domainList}
                             hasDomainListError={props.hasDomainListError}
                             changeDomainList={props.changeDomainList}
