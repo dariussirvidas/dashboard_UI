@@ -9,7 +9,6 @@ function Logs(props) {
     const userData = useSelector(state => state.userData);
 
     const [LogsList, setLogs] = useState([]);
-    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
     const [logsError, setLogsError] = useState();
 
     useEffect(() => {
@@ -39,7 +38,7 @@ function Logs(props) {
 
     async function fetchGet() {
 
-        const response = await fetch(endpoint + "logs", {
+        const response = await fetch(props.endpoint + "logs/", {
                 method: "GET",
                 headers: {
                     'Authorization': 'Bearer ' + token
