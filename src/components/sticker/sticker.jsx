@@ -30,7 +30,7 @@ function Sticker(props) {
                 isLogsVisible === true &&
                 <>
                     <LogsList
-                    logs={props.logs}
+                        logs={props.logs}
                     />
                 </>
             }
@@ -100,11 +100,9 @@ function Sticker(props) {
 
 function LogsList(props) {
 
-    return(
+    return (
         <>
-            <p>modal and logic here</p>
-
-
+            <p>input some logic here</p>
         </>
     )
 }
