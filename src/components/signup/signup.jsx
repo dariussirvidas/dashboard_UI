@@ -3,7 +3,7 @@ import Logo from "../../Content/logo.png";
 import './signup.scss';
 import {Link, Redirect} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-function Signup() {
+function Signup(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
@@ -88,7 +88,7 @@ function Signup() {
             });
     }
     async function fetchPost(dataForSending) {
-        const response = await fetch("https://watchhoundapi.azurewebsites.net/users/register",
+        const response = await fetch(props.endpoint + "users/register/",
             {
                 method: 'POST',
                 headers: {
