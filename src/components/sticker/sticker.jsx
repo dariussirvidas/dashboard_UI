@@ -102,9 +102,36 @@ function LogsList(props) {
 
     return (
         <>
-            <p>input some logic here</p>
+            {
+                props.logs.status === 404 ?
+                    (<>
+                        <p>no logs</p>
+                    </>)
+                    :
+                    (<>
+
+                        {
+                            props.logs.slice(0,9).map((item) => {
+                                return <SingleLog
+                                    log={item}
+                                />
+                            })
+                        }
+                    </>)
+            }
         </>
     )
 }
+
+function SingleLog(props) {
+
+    return (
+        <>
+            <p>{props.log.log_Date}</p>
+            <p>{props.log.error_Text}</p>
+        </>
+    )
+}
+
 
 export default Sticker;
