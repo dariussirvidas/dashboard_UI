@@ -222,15 +222,11 @@ function closeForm(event) {
                             <label htmlFor="checkboxTitle2" className="d-inline-block text-left aLabel">Active: </label>
                             <input className="d-inline-block aCheckbox float-left" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
                         </div>
-
-                        {/* <button>Test(sitas dar neveikia)</button> */}
                         <div className="d-flex flex-row inlineItems">
                             <button type="submit" value="send POST" disabled={!validJSONorXML}>Add</button>
                             <button type="button" onClick={handleClose}>Cancel</button>
-                            <button onClick={testService} /* onClick={() => {
-                        testService();
-                        openForm();
-                    }} */>Test</button>
+                            <button onClick={testService}
+                        >Test</button>
                         </div>
                         <div id="myForm">
                         <div className="result">
@@ -238,7 +234,6 @@ function closeForm(event) {
                         {getTestResult}
                         <br></br>
                         <button type="button" onClick={closeForm}>Close</button>
-                        
                         </div>
                         </div>
                     </form>
