@@ -2,7 +2,7 @@ import React, {Component, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import './addDomainModal.scss';
-
+import Popup from 'reactjs-popup';
 
 import {useSelector, useDispatch} from "react-redux";
 import { NotificationManager } from 'react-notifications';
@@ -109,7 +109,7 @@ function DomainModal(props) {
     };
     
     //test button functionality
-
+    
     const [getTestResult, setTestResult] = useState("");
 
     const testService = function test(event) {
@@ -150,6 +150,7 @@ function DomainModal(props) {
             if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
                 setTestResult("Check your fields and try again.")
                 return
+                
             }
             
             //jei prisikonektino i musu backend, sukuria, jo response body
@@ -163,6 +164,7 @@ function DomainModal(props) {
                 var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
                 }
                 setTestResult(responseMessage);
+                
             })  
         })
         
@@ -216,9 +218,10 @@ function DomainModal(props) {
                         <button variant="primary" onClick={handleClose}>Cancel</button>
                         <button onClick={testService}>Test</button>
                         <div>{getTestResult}</div>
-                    </form>
+                        </form>
                 </div>
             </Modal>
+            
         </>
     );
 
