@@ -114,6 +114,7 @@ function DomainModal(props) {
 
     const testService = function test(event) {
         setTestResult("Waiting...")
+        openForm()
         var formData = new FormData(document.querySelector('form'))
         var inputsFromForm = {};
         formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
@@ -129,7 +130,7 @@ function DomainModal(props) {
             "auth_Password": inputsFromForm.password,
             "parameters": inputsFromForm.parameters
         }
-
+        
         console.log(JSON.stringify(dataForSending))
         fetch(props.endpoint + "/Requests/testservice",
             {
@@ -142,13 +143,14 @@ function DomainModal(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         )
-
+            
             .then((response) => {
                 console.log(response)
                 console.log("JAU PO RESPONSE")
                 console.log(JSON.stringify(dataForSending))
                 if (response.status < 200 || response.status > 299) { //jei failino kreiptis i backenda
                     setTestResult("Check your fields and try again.")
+                    
                     return
                 }
 
@@ -170,7 +172,13 @@ function DomainModal(props) {
         event.preventDefault();
     }
 
+function openForm(event) {
+  document.getElementById("myForm").style.visibility = "visible";
+}
 
+function closeForm(event) {
+  document.getElementById("myForm").style.visibility = "hidden";
+}
 
     return (
         <>
@@ -218,10 +226,21 @@ function DomainModal(props) {
                         {/* <button>Test(sitas dar neveikia)</button> */}
                         <div className="d-flex flex-row inlineItems">
                             <button type="submit" value="send POST" disabled={!validJSONorXML}>Add</button>
-                            <button variant="primary" onClick={handleClose}>Cancel</button>
-                            <button onClick={testService}>Test</button>
+                            <button type="button" onClick={handleClose}>Cancel</button>
+                            <button onClick={testService} /* onClick={() => {
+                        testService();
+                        openForm();
+                    }} */>Test</button>
                         </div>
-                        <div>{getTestResult}</div>
+                        <div id="myForm">
+                        <div className="result">
+                        <h3>Test results:</h3>
+                        {getTestResult}
+                        <br></br>
+                        <button type="button" onClick={closeForm}>Close</button>
+                        
+                        </div>
+                        </div>
                     </form>
                 </div>
             </Modal>
