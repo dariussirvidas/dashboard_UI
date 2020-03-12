@@ -47,6 +47,7 @@ function EditDomain(props) {
         setRestSoapSelected(props.domain.service_Type)
         setBasicAuth(props.domain.basic_Auth)
         setShow(true);
+        setTestResult("");
         setResponse();
     }
 
@@ -92,7 +93,65 @@ function EditDomain(props) {
         console.log(props.domain.auth_Password)
         event.preventDefault();
     }
+    const [getTestResult, setTestResult] = useState("");
 
+    const testService = function test(event) {
+        setTestResult("Waiting...")
+        var formData = new FormData(document.querySelector('form'))
+        var inputsFromForm = {};
+        formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
+            inputsFromForm[key] = value
+        });
+
+        var dataForSending = {
+            "url": inputsFromForm.url,
+            "service_Type": parseInt(inputsFromForm.serviceType),
+            "method": parseInt(inputsFromForm.method),
+            "basic_Auth": (inputsFromForm.auth == "on" ? true : false),
+            "auth_User": inputsFromForm.user,
+            "auth_Password": inputsFromForm.password,
+            "parameters": inputsFromForm.parameters
+        }
+
+        console.log(JSON.stringify(dataForSending))
+        fetch(props.endpoint + "/Requests/testservice",
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+            }
+        )
+
+            .then((response) => {
+                console.log(response)
+                console.log("JAU PO RESPONSE")
+                console.log(JSON.stringify(dataForSending))
+                if (response.status < 200 || response.status > 299) { //jei failino kreiptis i backenda
+                    setTestResult("Check your fields and try again.")
+                    return
+                }
+
+                //jei prisikonektino i musu backend, sukuria, jo response body
+
+                return response.json()
+                    .then((responseObject) => {
+                        if (responseObject.status > 199 && responseObject.status < 300) { //ar sekmingas status ? 
+                            var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime} ms</p>
+                        }
+                        else {
+                            var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
+                        }
+                        setTestResult(responseMessage);
+                    })
+            })
+
+
+        event.preventDefault();
+    }
     const [response, setResponse] = useState(); //response from server
 
     return (
@@ -146,6 +205,8 @@ function EditDomain(props) {
                             />
                             {response}
                         </div>
+                        <button onClick={testService}>Test</button>
+                        <div>{getTestResult}</div>
                         {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>
