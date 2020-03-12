@@ -28,7 +28,7 @@ function App() {
     const userData = useSelector(state => state.userData);
 
 
-    const [endpoint, setEndpoint] = useState("https://watchhoundapi.azurewebsites.net/");
+    const [endpoint, setEndpoint] = useState(process.env.REACT_APP_BACKEND_ADDRESS);
     const [domainList, setDomainList] = useState();
     const [domainListResponseCode, setDomainListResponseCode] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
@@ -292,7 +292,9 @@ function App() {
                             />
                         </Route>
                         <Route path="/signup">
-                            <Signup/>
+                            <Signup
+                                endpoint={endpoint}
+                            />
                         </Route>
                     </>
                 }
