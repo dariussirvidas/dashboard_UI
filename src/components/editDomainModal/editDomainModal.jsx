@@ -98,6 +98,7 @@ function EditDomain(props) {
 
     const testService = function test(event) {
         setTestResult("Waiting...")
+        openForm()
         var formData = new FormData(document.querySelector('form'))
         var inputsFromForm = {};
         formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
@@ -153,6 +154,13 @@ function EditDomain(props) {
 
         event.preventDefault();
     }
+    function openForm(event) {
+        document.getElementById("myForm").style.visibility = "visible";
+      }
+      
+      function closeForm(event) {
+        document.getElementById("myForm").style.visibility = "hidden";
+      }
     const [response, setResponse] = useState(); //response from server
 
     useEffect(()=>{validateParameters();}, [getIsRestSoapSelected]); //validates parameters on serviceType change
@@ -207,9 +215,19 @@ function EditDomain(props) {
                                 endpoint={props.endpoint}
                             />
                             {response}
+                        <button onClick={testService} >Test</button>
                         </div>
-                        <button onClick={testService}>Test</button>
-                        <div>{getTestResult}</div>
+                        <div id="myForm">
+                        <div className="result">
+                        <h3>Test results:</h3>
+                        {getTestResult}
+                        <br></br>
+                        <button type="button" onClick={closeForm}>Close</button>
+                        
+                        </div>
+                        </div>
+                       {/*  <button onClick={testService}>Test</button>
+                        <div>{getTestResult}</div> */}
                         {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>

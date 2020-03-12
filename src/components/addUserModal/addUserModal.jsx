@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import './addUserModal.scss';
 
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import './addUserModal.scss';

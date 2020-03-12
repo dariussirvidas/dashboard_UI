@@ -180,3 +180,17 @@ textArea:disabled{
   //background: #e1e1e1;
   display: none;
 }
+.result{
+  background-color: white;
+  border: solid 1px;
+  position: absolute;
+  width: 90%;
+  height: 300px;
+  align-self: center;
+  bottom: 500px;
+  
+  
+}
+#myForm {
+  visibility: hidden;
+}
