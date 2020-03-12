@@ -173,8 +173,10 @@ label.checkboxTitle2 {
 } */
 
 .BasicAuthDisable:disabled{
-  background : #e1e1e1;
+  //background : #e1e1e1;
+  display: none;
 }
 textArea:disabled{
-  background: #e1e1e1;
+  //background: #e1e1e1;
+  display: none;
 }
