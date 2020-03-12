@@ -4,6 +4,7 @@ import Card from 'react-bootstrap/Card';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
 import {useSelector} from "react-redux";
+import StickerLogsModal from "../stikerLogsModal/stickerLogsModal";
 
 function Sticker(props) {
     function getClassNameFromStatus() {
@@ -22,23 +23,10 @@ function Sticker(props) {
 
 
     return (
-        <div onClick={() => {
-            setIsLogsVisible(!isLogsVisible)
-        }}>
-
-            {
-                isLogsVisible === true &&
-                <>
-                    <LogsList
-                        logs={props.logs}
-                    />
-                </>
-            }
-
-            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '16rem'}}>
+        <div>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '20rem'}}>
                 <Card.Header
                     className={
-
                         "text-truncate cl-h3 text-center Card " + getClassNameFromStatus()
                     }
                 >
@@ -89,48 +77,20 @@ function Sticker(props) {
                         <hr/>
                         <p className="text-truncate cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
                         <hr/>
-                        <p></p>
+                        {
+                            Boolean(props.logs) === true &&
+                            <StickerLogsModal
+                                logs={props.logs}
+                                item={props.item}
+                            />
+                        }
+
                     </Card.Text>
                 </Card.Body>
             </Card>
         </div>
     );
 
-}
-
-function LogsList(props) {
-
-    return (
-        <>
-            {
-                props.logs.status === 404 ?
-                    (<>
-                        <p>no logs</p>
-                    </>)
-                    :
-                    (<>
-
-                        {
-                            props.logs.slice(0,9).map((item) => {
-                                return <SingleLog
-                                    log={item}
-                                />
-                            })
-                        }
-                    </>)
-            }
-        </>
-    )
-}
-
-function SingleLog(props) {
-
-    return (
-        <>
-            <p>{props.log.log_Date}</p>
-            <p>{props.log.error_Text}</p>
-        </>
-    )
 }
 
 
