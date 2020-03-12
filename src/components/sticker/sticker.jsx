@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
 import ListGroup from "react-bootstrap/ListGroup";
 import ListGroupItem from "react-bootstrap/ListGroupItem";
+import {useSelector} from "react-redux";
+import StickerLogsModal from "../stikerLogsModal/stickerLogsModal";
 
 function Sticker(props) {
     function getClassNameFromStatus() {
@@ -10,17 +12,21 @@ function Sticker(props) {
             if (props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms)
                 return "tile-amber";
             else return "tile-success";
-        }
-        else
+        } else
             return "tile-fail";
     }
 
+
+    // log stuff
+
+    const [isLogsVisible, setIsLogsVisible] = useState(false);
+
+
     return (
         <div>
-            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '16rem'}}>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '20rem'}}>
                 <Card.Header
                     className={
-
                         "text-truncate cl-h3 text-center Card " + getClassNameFromStatus()
                     }
                 >
@@ -70,6 +76,15 @@ function Sticker(props) {
                         </p>
                         <hr/>
                         <p className="text-truncate cl-copy-14 text-left">Next Check in: {props.checkIn / 1000} s</p>
+                        <hr/>
+                        {
+                            Boolean(props.logs) === true &&
+                            <StickerLogsModal
+                                logs={props.logs}
+                                item={props.item}
+                            />
+                        }
+
                     </Card.Text>
                 </Card.Body>
             </Card>
@@ -77,5 +92,6 @@ function Sticker(props) {
     );
 
 }
+
 
 export default Sticker;

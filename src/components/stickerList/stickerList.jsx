@@ -28,6 +28,7 @@ function StickerList(props) {
                                                         item={item}
                                                         endpoint={props.endpoint}
                                                         changeDomainList={props.changeDomainList}
+                                                        logs={props.logs}
                                                     />
                                                 )
                                         })
@@ -151,6 +152,49 @@ function SingleService(props) {
                 console.error("error while fetching SINGLE domain:" + error);
             });
     }
+
+    // new logs stuff
+
+    const [logs, setLogs] = useState([]);
+    const [logsError, setLogsError] = useState();
+
+    function getData() {
+        fetchGet()
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200");
+                } else if (statusCode === 401) {
+                    console.log("status code 401, do something else");
+                    alert('Unauthenticated')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
+
+            })
+            .catch((error) => {
+                setLogsError(true);
+                console.error("Error while fetching log list: " + error);
+            });
+    }
+
+    async function fetchGet() {
+        const response = await fetch(props.endpoint + "logs/" + props.item.id, {
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        );
+        const LogList = await response.json();
+        await setLogs(LogList);
+        return response.status;
+    }
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+
     return (
 
         <>
@@ -162,6 +206,7 @@ function SingleService(props) {
                     domainLatency={requestLatency}
                     checkIn={timer}
                     fetshSingleDomain={fetchSingleDomain}
+                    logs={logs}
                 />
             }
         </>

@@ -31,7 +31,7 @@ p{
   margin: 0% !important;
 }
 .FixedSize{
-  height: 60px !important;
+  height: 80px !important;
 }
 .cardButton{
   justify-content: center;
@@ -57,4 +57,7 @@ p{
 }
 .space {
   margin-top: 50px !important;
+}
+#root > div:nth-child(2) > div > div > div > div:nth-child(2) > div > div.card-body > p > div:nth-child(11){
+ align-items: center;
 }

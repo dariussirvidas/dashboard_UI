@@ -179,6 +179,48 @@ function App() {
         return response.status;
     }
 
+    //LOGS
+
+    const [LogsList, setLogs] = useState([]);
+    const [logsError, setLogsError] = useState();
+
+    useEffect(() => {
+        getData();
+
+    }, []);
+
+
+    function getData() {
+        fetchGet()
+            .then((statusCode) => {
+                if (statusCode === 200) {
+                    console.log("status code 200");
+                } else if (statusCode === 401) {
+                    console.log("status code 401, do something else");
+                    alert('Unauthenticated')
+                } else {
+                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                }
+
+            })
+            .catch((error) => {
+                setLogsError(true);
+                console.error("Error while fetching log list: " + error);
+            });
+    }
+
+    async function fetchGet() {
+        const response = await fetch(endpoint + "logs", {
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+        );
+        const LogList = await response.json();
+        await setLogs(LogList);
+        return response.status;
+    }
 
 
     return (
@@ -217,7 +259,7 @@ function App() {
                                             appendUserList={appendUserList}
                                             changeDomainList={changeDomainList}
                                             changeUserList={changeUserList}
-                                                                                    />
+                                            logs={LogsList}/>
 
                                     </>)
                                     :

@@ -86,9 +86,26 @@ label.checkboxTitle2 {
   display: inline !important;
   padding: 0 !important;
   margin-right: 0% !important;
+  text-align: left !important;
   /*  width: 10% !important;
    margin-bottom: 15px !important; */
 
+}
+
+.inlineItems {
+  width: 100% !important;
+
+}
+
+.aCheckbox{
+  margin-top: 7px !important;
+  margin-left: 20px !important;
+  width: auto !important;
+}
+
+.aLabel {
+  width: auto !important;
+  margin-left: 30px !important;
 }
 
 .SelectCheckbox2 {
@@ -137,6 +154,7 @@ label.checkboxTitle2 {
   margin: 5px 5px 5px 0;
   color: #FFFFFF;
   font-size: 14px;
+  width: 8rem;
 
   &:hover {
     background-color: mix($clr-black, $clr-hero, 10%) !important;
@@ -155,8 +173,24 @@ label.checkboxTitle2 {
 } */
 
 .BasicAuthDisable:disabled{
-  background : #e1e1e1;
+  //background : #e1e1e1;
+  display: none;
 }
 textArea:disabled{
-  background: #e1e1e1;
+  //background: #e1e1e1;
+  display: none;
+}
+.result{
+  background-color: white;
+  border: solid 1px;
+  position: absolute;
+  width: 90%;
+  height: 300px;
+  align-self: center;
+  bottom: 500px;
+  
+  
+}
+#myForm {
+  visibility: hidden;
 }

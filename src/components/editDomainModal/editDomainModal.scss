@@ -25,9 +25,9 @@
   outline: 0;
   background: $clr-caerul !important;
   border: 0;
-  width: 30%;
+  width: 32%;
   padding: 10px;
-  margin: 5px;
+  margin: 1%;
   color: #FFFFFF;
   font-size: 14px;
   &:hover {
@@ -40,6 +40,21 @@
     color: mix($clr-black, $clr-white, 20%) !important;
   }
 
+}
+
+.inlineItems {
+  width: 100% !important;
+}
+
+.aLabelEdit {
+  width: auto !important;
+  margin-left: 30px !important;
+}
+
+.aCheckbox{
+  margin-top: 7px !important;
+  margin-left: 20px !important;
+  width: auto !important;
 }
 
 /* .forma button:hover,.forma button:active,.forma button:focus {
@@ -151,7 +166,4 @@
   div.fade.modal.show {
     padding: 0 !important;
   }
-}
-.BasicAuthDisable:disabled{
-  background : #e1e1e1;
 }
