@@ -1,4 +1,4 @@
-import React, {Component, useEffect, useState} from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import './editDomainModal.scss';
@@ -7,7 +7,7 @@ import DeleteDomain from "../deleteDomain/deleteDomain";
 import Icon from './../../Content/edit_icon.png';
 
 
-import {useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { NotificationManager } from 'react-notifications';
 
 
@@ -23,7 +23,7 @@ function EditDomainModal(props) {
                 domain={props.domain}
                 callbackFetch={props.callbackReFetchDomains}
                 changeDomainList={props.changeDomainList}
-                endpoint={props.endpoint}/>
+                endpoint={props.endpoint} />
         </div>
     );
 
@@ -47,7 +47,6 @@ function EditDomain(props) {
         setRestSoapSelected(props.domain.service_Type)
         setBasicAuth(props.domain.basic_Auth)
         setShow(true);
-        setTestResult("");
         setResponse();
     }
 
@@ -55,113 +54,50 @@ function EditDomain(props) {
     const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method) //jei 0 GET, jei 1 POST
     const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType) //jei 0 REST, jei 1 SOAP
     const [getBasicAuth, setBasicAuth] = useState(props.domain.basic_Auth);
-    
+
     // onChange functions for input fields:
 
-        function changeMethodOption(event) { //<select name="method"
-            setGetPostSelected(event.target.value)
-        }
-        function changeServiceTypeOption(event) { //<select name="serviceType"
-            setRestSoapSelected(event.target.value)
-        }
-        function changeAuth(event){
-            setBasicAuth(event.target.checked)
-        }
-    
+    function changeMethodOption(event) { //<select name="method"
+        setGetPostSelected(event.target.value)
+    }
+    function changeServiceTypeOption(event) { //<select name="serviceType"
+        setRestSoapSelected(event.target.value)
+    }
+    function changeAuth(event) {
+        setBasicAuth(event.target.checked)
+    }
+
 
     //functions to check if fields should be disabled
-        const isUsernamePasswordDisabled = function checkIfDisabled() {
-            if(getBasicAuth){ 
-                return false;
-            }
-            else{
-                return true;
-            }
+    const isUsernamePasswordDisabled = function checkIfDisabled() {
+        if (getBasicAuth) {
+            return false;
         }
-    
-        const isParametersDisabled = function checkIfDisabled() {
-            if(getIsGetPostSelected == 0){ //tipo jei GET 
-                return true;
-            }
-            else{
-                return false;
-            }
+        else {
+            return true;
         }
+    }
 
-        function testinam(event) {
-            console.log(props.domain.auth_User)
-            console.log(props.domain.auth_Password)
-            event.preventDefault();
+    const isParametersDisabled = function checkIfDisabled() {
+        if (getIsGetPostSelected == 0) { //tipo jei GET 
+            return true;
         }
+        else {
+            return false;
+        }
+    }
+
+    function testinam(event) {
+        console.log(props.domain.auth_User)
+        console.log(props.domain.auth_Password)
+        event.preventDefault();
+    }
 
     const [response, setResponse] = useState(); //response from server
 
-
- //test button functionality
-
- const [getTestResult, setTestResult] = useState("");
-
- const testService = function test(event) {
-     setTestResult("Waiting...")
-     var formData = new FormData(document.querySelector('form'))
-     var inputsFromForm = {};
-     formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
-         inputsFromForm[key] = value
-     }); 
-
-     var dataForSending = {
-         "url": inputsFromForm.url,
-         "service_Type": parseInt(inputsFromForm.serviceType),
-         "method": parseInt(inputsFromForm.method),
-         "basic_Auth": (inputsFromForm.auth == "on" ? true: false),
-         "auth_User": inputsFromForm.user,
-         "auth_Password": inputsFromForm.password,
-         "parameters": inputsFromForm.parameters
-       }
-     
-     console.log(JSON.stringify(dataForSending))
-     fetch(props.endpoint + "/Requests/testservice",
-         {
-             method: 'POST',
-             headers: {
-                 'Content-Type': 'application/json',
-                 // 'Content-Type': 'application/x-www-form-urlencoded',
-                 'Authorization': 'Bearer ' + token
-             },
-             body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
-         }
-     )
-     
-     .then ((response) => {
-         console.log(response)
-         console.log("JAU PO RESPONSE")
-         console.log(JSON.stringify(dataForSending)  )
-         if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
-             setTestResult("Check your fields and try again.")
-             return
-         }
-         
-         //jei prisikonektino i musu backend, sukuria, jo response body
-
-         return response.json() 
-         .then((responseObject) => {
-             if(responseObject.status > 199 && responseObject.status < 300){ //ar sekmingas status ? 
-                 var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime} ms</p>
-             }
-             else{
-             var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
-             }
-             setTestResult(responseMessage);
-         })  
-     })
-     
-     
-     event.preventDefault();
- }
-
     return (
         <>
-            <a class="btn btn-link btn-sm txt" variant="primary"  onClick={handleShow}>
+            <a class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
                 <i className="material-icons iconHover">&#xe254;</i>
             </a>
 
@@ -169,43 +105,47 @@ function EditDomain(props) {
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
-                               placeholder="Service name" required max="64"/>
+                            placeholder="Service name" required max="64" />
                         <select name="method" className="SelectFrom" onChange={changeMethodOption} required>
-                            <option selected={getIsGetPostSelected == 0? true:false} value={0}>GET</option>
-                            <option selected={getIsGetPostSelected == 1? true:false} value={1}>POST</option>
+                            <option selected={getIsGetPostSelected == 0 ? true : false} value={0}>GET</option>
+                            <option selected={getIsGetPostSelected == 1 ? true : false} value={1}>POST</option>
                         </select>
                         <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
-                            <option selected={getIsRestSoapSelected == 0? true:false} value={0}>Service - REST</option>
-                            <option selected={getIsRestSoapSelected == 1? true:false} value={1}>Service - SOAP</option>
+                            <option selected={getIsRestSoapSelected == 0 ? true : false} value={0}>Service - REST</option>
+                            <option selected={getIsRestSoapSelected == 1 ? true : false} value={1}>Service - SOAP</option>
                         </select>
-                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024"/>
+                        <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024" />
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
-                               placeholder="Email" required maxLength="256"/>
-                        <p>Basic Auth: </p> <input defaultChecked={props.domain.basic_Auth} type="checkbox"
-                                                   name="auth" id="authActive" onClick={changeAuth}></input>
-                        <input className="BasicAuthDisable" name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024"/>
-                        <input className="BasicAuthDisable" name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
-                               placeholder="Password" required max="1024"/>
-                        <textarea className="BasicAuthDisable" name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
-                                  placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
-                        <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
-                               placeholder="Interval" required min="3" max="2000000"/>
-                        <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
-                               min="50" required min="10" max="60000"/>
-                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
+                            placeholder="Email" required maxLength="256" />
 
-                        <p>Active : </p> <input name="active" defaultChecked={props.domain.active} type="checkbox"
-                                                value="active"></input>
-                        <button onClick={testService}>Test</button>
-                        <button type="submit" >Save</button>
-                        <button type="button"  onClick={handleClose}>Cancel</button>
-                        <DeleteDomain
-                            domain={props.domain}
-                            changeDomainList={props.changeDomainList}
-                            endpoint={props.endpoint}
-                        />
-                        <div>{getTestResult}</div>
-                        {response}
+                        <div className="float-left d-flex inlineItems">
+                            <label htmlFor="authActive" className="d-inline-block text-left aLabelEdit"> Basic authentication:</label>
+                            <input className="d-inline-block aCheckbox" defaultChecked={props.domain.basic_Auth} type="checkbox" name="auth" id="authActive" onClick={changeAuth}></input>
+                        </div>
+                        <input className="BasicAuthDisable" name="user" defaultValue={props.domain.auth_User} disabled={isUsernamePasswordDisabled()} type="text" placeholder="User" required max="1024" />
+                        <input className="BasicAuthDisable" name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
+                            placeholder="Password" required max="1024" />
+                        <textarea className="BasicAuthDisable" name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
+                            placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
+                        <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
+                            placeholder="Interval" required min="3" max="2000000" />
+                        <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
+                            min="50" required min="10" max="60000" />
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)" />
+                        <div className="float-left d-flex inlineItems">
+                            <label htmlFor="checkboxActiveEdit" className="d-inline-block text-left aLabelEdit">Active: </label>
+                            <input className="d-inline-block aCheckbox float-left" id="checkboxActiveEdit" name="active" defaultChecked={props.domain.active} type="checkbox" value="active"></input>
+                        </div>
+                        <div className="d-flex flex-row inlineItems">
+                            <button type="submit" >Save</button>
+                            <button type="button" onClick={handleClose}>Cancel</button>
+                            <DeleteDomain
+                                domain={props.domain}
+                                changeDomainList={props.changeDomainList}
+                                endpoint={props.endpoint}
+                            />
+                            {response}
+                        </div>
                         {/* <button onClick={testinam}>TESTUOJAM</button> mygtukas testuotis props/variables */}
                     </form>
                 </div>
@@ -242,7 +182,7 @@ function EditDomain(props) {
                 if (response.status > 199 && response.status < 300) {
                     // creates a new object. uses the prop domain as a base and overwrites any old data with data from
                     // the input fields
-                    const editedDomain = Object.assign({...props.domain}, dataForSending);
+                    const editedDomain = Object.assign({ ...props.domain }, dataForSending);
                     console.log(response)
                     changeDomainList(editedDomain)
                     handleClose();
