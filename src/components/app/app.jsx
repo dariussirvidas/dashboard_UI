@@ -292,7 +292,9 @@ function App() {
                             />
                         </Route>
                         <Route path="/signup">
-                            <Signup/>
+                            <Signup
+                                endpoint={endpoint}
+                            />
                         </Route>
                     </>
                 }
