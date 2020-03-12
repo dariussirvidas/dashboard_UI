@@ -1,5 +1,3 @@
-import React from "react";
-
 function validateParameters() {
     const body = document.querySelector("body");
     if (body.className == "modal-open") {
@@ -30,4 +28,17 @@ function IsValidXML(str) {
     return isValid;
 }
 
-export {validateParameters};
+function validateConfirmPassword() {
+    const body = document.querySelector("body");
+    if (body.className == "modal-open" || window.location.href.includes("signup")) {
+        const password = document.querySelector("input[name=\"password\"]");
+        const confirmPassword = document.querySelector("input[name=\"confirmPassword\"]");
+        if (password.value != confirmPassword.value) {
+            confirmPassword.setCustomValidity("Passwords don't match");
+        } else {
+            confirmPassword.setCustomValidity("");
+        }
+    }
+}
+
+export {validateParameters, validateConfirmPassword};

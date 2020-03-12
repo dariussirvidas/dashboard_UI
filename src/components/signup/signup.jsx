@@ -1,6 +1,7 @@
 import React, {Component, useState} from 'react';
 import Logo from "../../Content/logo.png";
 import './signup.scss';
+import {validateConfirmPassword} from "../../common";
 import {Link, Redirect} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 function Signup(props) {
@@ -11,13 +12,6 @@ function Signup(props) {
 
     //response from server
     const [response, setResponse] = useState(); //response from server
-
-    //functionality for password matching
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-    
-    const checkPasswordMatch = function check(){
-        setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
-    }
 
     if(response == "User created"){
         return <Redirect to="/login"/>
@@ -33,10 +27,10 @@ function Signup(props) {
                             <input type="text" placeholder="First Name" name="firstName" pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                             <input type="text" placeholder="Last Name" name="lastName" pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
                             <input type="email" placeholder="Email" name="userEmail" required maxLength="256"/>
-                            <input id="password" type="password" placeholder="Password" name="password"  pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
-                            <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onBlur={checkPasswordMatch} required/>
-                            {passwordsMatch ? "":"Passwords don't match"}
-                            <button type="submit" value="send POST" disabled={!passwordsMatch}>Create</button>
+                            <input id="password" type="password" placeholder="Password" name="password"  pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
+                                   title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" onChange={validateConfirmPassword} required/>
+                            <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={validateConfirmPassword} required/>
+                            <button type="submit" value="send POST">Create</button>
                             <div>{response}</div>
                             <p className="message">Already registered?<Link to="/login"> Sign in</Link></p>
                         </form>
