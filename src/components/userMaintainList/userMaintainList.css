@@ -295,8 +295,19 @@ tr:nth-child(even) {
   vertical-align: middle;
 }
 
-.domainButton {
-  margin-bottom: 15px;
+th, td {
+  text-align: center;
+  padding: 1.5%;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background-color: #e5e8eb;
+}
+
+.button {
+  padding-right: 120px;
+  float: right;
 }
 
 .txt {
@@ -304,7 +315,7 @@ tr:nth-child(even) {
 }
 
 .editDomainModal {
-  margin-top: 0px;
+  margin-top: 17px;
 }
 
 .tooltip-wrap {
@@ -325,41 +336,11 @@ tr:nth-child(even) {
   display: block;
 }
 
+.userButton {
+  margin-right: 328px;
+}
+
 .space {
   margin-top: 50px !important;
 }
-
-@media only screen and (max-width: 600px) {
-  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    margin-right: 0;
-    margin-left: 0;
-  }
-  .container {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-  /*Hides navbar on mobile res*/
-  h5 {
-    display: none !important;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .container {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-  /*Hides navbar on mobile res*/
-  h5 {
-    display: none !important;
-  }
-}
-/*# sourceMappingURL=domainList.css.map */
+/*# sourceMappingURL=userMaintainList.css.map */

@@ -1,10 +1,10 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import './addDomainModal.scss';
-import Popup from 'reactjs-popup';
 
-import {useSelector, useDispatch} from "react-redux";
+
+import { useSelector, useDispatch } from "react-redux";
 import { NotificationManager } from 'react-notifications';
 
 function AddDomainModal(props) {
@@ -20,18 +20,18 @@ function AddDomainModal(props) {
             <DomainModal
 
                 appendDomainList={props.appendDomainList}
-                endpoint={props.endpoint}/>
+                endpoint={props.endpoint} />
         </div>
     );
 }
 
 function DomainModal(props) {
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     const [validJSONorXML, setValidJSONorXML] = useState(true);
 
-    const checkValidJSONorXML = function check(){
+    const checkValidJSONorXML = function check() {
         let parameters = document.querySelector("textArea[name=\"parameters\"]").value;
         if (getSelectedServiceType == 0) {
             setValidJSONorXML(IsValidJSON(parameters));
@@ -56,8 +56,8 @@ function DomainModal(props) {
         let isValid = xml.querySelector("parsererror") == null ? true : false;
         return isValid;
     }
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
     const isLogged = useSelector(state => state.isLogged);
@@ -86,30 +86,30 @@ function DomainModal(props) {
     function changeServiceTypeOption(event) { //<select name="serviceType"
         setSelectedServiceType(event.target.value)
     }
-    function changeAuth(event){
+    function changeAuth(event) {
         setBasicAuth(event.target.checked)
     }
 
     const isUsernamePasswordDisabled = function checkIfDisabled() {
-        if(getBasicAuth == true){ 
+        if (getBasicAuth == true) {
             return false;
         }
-        else{
+        else {
             return true;
         }
     };
 
     const isParametersDisabled = function checkIfDisabled() {
-        if(getSelectedMethod == 0){ //tipo jei GET 
+        if (getSelectedMethod == 0) { //tipo jei GET 
             return true;
         }
-        else{
+        else {
             return false;
         }
     };
-    
+
     //test button functionality
-    
+
     const [getTestResult, setTestResult] = useState("");
 
     const testService = function test(event) {
@@ -118,18 +118,18 @@ function DomainModal(props) {
         var inputsFromForm = {};
         formData.forEach((value, key) => { //visi fieldai is formos sudedami i objecta.
             inputsFromForm[key] = value
-        }); 
+        });
 
         var dataForSending = {
             "url": inputsFromForm.url,
             "service_Type": parseInt(inputsFromForm.serviceType),
             "method": parseInt(inputsFromForm.method),
-            "basic_Auth": (inputsFromForm.auth == "on" ? true: false),
+            "basic_Auth": (inputsFromForm.auth == "on" ? true : false),
             "auth_User": inputsFromForm.user,
             "auth_Password": inputsFromForm.password,
             "parameters": inputsFromForm.parameters
-          }
-        
+        }
+
         console.log(JSON.stringify(dataForSending))
         fetch(props.endpoint + "/Requests/testservice",
             {
@@ -142,33 +142,31 @@ function DomainModal(props) {
                 body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
             }
         )
-        
-        .then ((response) => {
-            console.log(response)
-            console.log("JAU PO RESPONSE")
-            console.log(JSON.stringify(dataForSending)  )
-            if(response.status < 200 || response.status > 299){ //jei failino kreiptis i backenda
-                setTestResult("Check your fields and try again.")
-                return
-                
-            }
-            
-            //jei prisikonektino i musu backend, sukuria, jo response body
 
-            return response.json() 
-            .then((responseObject) => {
-                if(responseObject.status > 199 && responseObject.status < 300){ //ar sekmingas status ? 
-                    var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime} ms</p>
+            .then((response) => {
+                console.log(response)
+                console.log("JAU PO RESPONSE")
+                console.log(JSON.stringify(dataForSending))
+                if (response.status < 200 || response.status > 299) { //jei failino kreiptis i backenda
+                    setTestResult("Check your fields and try again.")
+                    return
                 }
-                else{
-                var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
-                }
-                setTestResult(responseMessage);
-                
-            })  
-        })
-        
-        
+
+                //jei prisikonektino i musu backend, sukuria, jo response body
+
+                return response.json()
+                    .then((responseObject) => {
+                        if (responseObject.status > 199 && responseObject.status < 300) { //ar sekmingas status ? 
+                            var responseMessage = <p>Status: {responseObject.status} Response time: {responseObject.requestTime} ms</p>
+                        }
+                        else {
+                            var responseMessage = <p>Status: {responseObject.status}</p> //cia daugiau info turetu grazint is backendo...
+                        }
+                        setTestResult(responseMessage);
+                    })
+            })
+
+
         event.preventDefault();
     }
 
@@ -176,17 +174,17 @@ function DomainModal(props) {
 
     return (
         <>
-        
-            <button variant="primary" className ="Buttonas" onClick={handleShow}>
+
+            <button variant="primary" className="Buttonas" onClick={handleShow}>
                 New Domain
             </button>
-            
+
             <Modal className="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
-                        <div className="form-group"/>                   
-                        <input type="text" placeholder="Service name" name="serviceName" required max="64"/>
-                        <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required> 
+                        <div className="form-group" />
+                        <input type="text" placeholder="Service name" name="serviceName" required max="64" />
+                        <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required>
                             <option value={0}>GET</option>
                             <option value={1}>POST</option>
                         </select>
@@ -194,34 +192,39 @@ function DomainModal(props) {
                             <option value={0}>Service - REST</option>
                             <option value={1}>Service - SOAP</option>
                         </select>
-                        <input type="url" placeholder="URL" name="url" required max="1024"/>
-                        <input type="email" placeholder="Email" name="email" required max="256"/>
-                        <hr/>
-                        <label htmlFor="checkboxTitle1 ">Basic authentication: </label>
-                        <input className="SelectCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
-                        <input className="BasicAuthDisable" type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024"/>
-                        <input className="BasicAuthDisable" type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024"/>
+                        <input type="url" placeholder="URL" name="url" required max="1024" />
+                        <input type="email" placeholder="Email" name="email" required max="256" />
+
+                        <div className="float-left d-flex inlineItems">
+                            <label htmlFor="checkboxTitle1" className="d-inline-block text-left aLabel"> Basic authentication:</label>
+                            <input className="d-inline-block aCheckbox" id="checkboxTitle1" type="checkbox" name="auth" onClick={changeAuth}></input>
+                        </div>
+
+                        <input className="BasicAuthDisable" type="text" placeholder="User" name="user" disabled={isUsernamePasswordDisabled()} required max="1024" />
+                        <input className="BasicAuthDisable" type="password" placeholder="Password" name="password" disabled={isUsernamePasswordDisabled()} required max="1024" />
                         <textarea className="textArea" form="formForPost" rows="4" name="parameters" placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"
-                                  onBlur={checkValidJSONorXML}></textarea>
-                        {validJSONorXML ? "":"Invalid JSON/XML"}
-                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required/>
-                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)"/>
-                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="10" max="60000" required/>
-                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)"/>
-                        <hr/>
-                        <label htmlFor="checkboxTitle2">Active: </label>
-                        <br/>
-                        <input className="SelectCheckbox3" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
-                        <br/>
+                            onBlur={checkValidJSONorXML}></textarea>
+                        {validJSONorXML ? "" : "Invalid JSON/XML"}
+                        <input className="SelectInterval" type="number" placeholder="Interval" name="interval" min="3" max="2000000" required />
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="  (s)" />
+                        <input className="SelectInterval" type="number" placeholder="Amber threshold" name="threshold" min="10" max="60000" required />
+                        <input className="SelectIntervalSeconds" disabled="disabled" type="text" placeholder="(ms)" />
+
+                        <div className="float-left d-flex inlineItems">
+                            <label htmlFor="checkboxTitle2" className="d-inline-block text-left aLabel">Active: </label>
+                            <input className="d-inline-block aCheckbox float-left" id="checkboxTitle2" type="checkbox" name="active" value="active"></input>
+                        </div>
+
                         {/* <button>Test(sitas dar neveikia)</button> */}
-                        <button type="submit" value="send POST" disabled={!validJSONorXML}>Add</button>
-                        <button variant="primary" onClick={handleClose}>Cancel</button>
-                        <button onClick={testService}>Test</button>
+                        <div className="d-flex flex-row inlineItems">
+                            <button type="submit" value="send POST" disabled={!validJSONorXML}>Add</button>
+                            <button variant="primary" onClick={handleClose}>Cancel</button>
+                            <button onClick={testService}>Test</button>
+                        </div>
                         <div>{getTestResult}</div>
-                        </form>
+                    </form>
                 </div>
             </Modal>
-            
         </>
     );
 
@@ -245,7 +248,7 @@ function DomainModal(props) {
         } catch (error) {
             console.log(error)
         }
-        
+
         console.log("full object for POSTing:", dataForSending);
         submitData(props.endpoint, props.appendDomainList, dataForSending);
         handleClose();
