@@ -3,6 +3,8 @@ import Modal from "react-bootstrap/Modal";
 
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
+import {validateConfirmPassword} from "../../common";
+
 import {useSelector, useDispatch} from "react-redux";
 import {NotificationManager} from 'react-notifications';
 
@@ -32,20 +34,11 @@ function EditUser(props) {
 
     const handleClose = () => {
         setShow(false);
-        setPasswordsMatch(true) //after we close and re-enter Modal to have password state reset to default.
     };
     const handleShow = () => {
         setShow(true);
         setResponse();
     }
-
-    //check if passwords match
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-
-    const checkPasswordMatch = function check() {
-        setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
-    }
-
 
     return (
         <>
@@ -57,11 +50,11 @@ function EditUser(props) {
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
                         <input type="text" placeholder="Username" defaultValue={props.user.username} name="userName"
-                               pattern="^[a-zA-Z0-9]{6,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
+                               pattern="^[a-zA-Z0-9]{6,64}$" title="Must be between 6 and 64 letters or numbers" required/>
                         <input type="text" placeholder="First Name" defaultValue={props.user.firstName} name="firstName"
-                               pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
+                               pattern="^[a-zA-Z]{1,64}$" title="Must be between 1 and 64 letters" required/>
                         <input type="text" placeholder="Last Name" defaultValue={props.user.lastName} name="lastName"
-                               pattern="^[a-zA-Z]{1,64}$" title="Your name needs to be between 1 and 64 characters long." required/>
+                               pattern="^[a-zA-Z]{1,64}$" title="Must be between 1 and 64 letters" required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
                                required maxLength="256"/>
                         {
@@ -79,12 +72,10 @@ function EditUser(props) {
                         {/* Backendas neatsiuncia passwordo */}
                         <input id="password" type="password" placeholder="Password" name="password"
                                pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
-                               title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number"
-                               required/>
+                               title="Mininum 10 chars and at least one uppercase, lowercase, special character and a number"
+                               onChange={validateConfirmPassword} required/>
                         <input id="confirmPassword" type="password" placeholder="Confirm Password"
-                               name="confirmPassword" onBlur={checkPasswordMatch} required/>
-                        {passwordsMatch ? "" : "Passwords don't match"}
-                        <br/>
+                               name="confirmPassword" onChange={validateConfirmPassword} required/>
                         <button type="submit" value="send POST" className="interactive">Update</button>
                         <button onClick={handleClose} type="button" className="interactive">Cancel</button>
                         <DeleteUser

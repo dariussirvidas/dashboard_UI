@@ -1,1 +1,1 @@
-export {validateParameters} from "./validation";
+export {validateParameters, validateConfirmPassword} from "./validation";
