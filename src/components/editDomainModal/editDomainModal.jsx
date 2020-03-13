@@ -1,8 +1,9 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {Component, useEffect, useLayoutEffect, useState} from 'react';
 import Modal from 'react-bootstrap/Modal'
 import Button from "react-bootstrap/Button";
 import './editDomainModal.scss';
 import DeleteDomain from "../deleteDomain/deleteDomain";
+import {validateParameters} from "../../common";
 
 import Icon from './../../Content/edit_icon.png';
 
@@ -35,7 +36,6 @@ function EditDomain(props) {
     const token = useSelector(state => state.token);
     const role = useSelector(state => state.role);
 
-
     //cia modalo state
 
     // show or hide this modal state
@@ -52,8 +52,8 @@ function EditDomain(props) {
     }
 
     // GET/POST and REST/SOAP states
-    const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method) //jei 0 GET, jei 1 POST
-    const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType) //jei 0 REST, jei 1 SOAP
+    const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method); //jei 0 GET, jei 1 POST
+    const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType);//jei 0 REST, jei 1 SOAP
     const [getBasicAuth, setBasicAuth] = useState(props.domain.basic_Auth);
 
     // onChange functions for input fields:
@@ -62,8 +62,9 @@ function EditDomain(props) {
         setGetPostSelected(event.target.value)
     }
     function changeServiceTypeOption(event) { //<select name="serviceType"
-        setRestSoapSelected(event.target.value)
+        setRestSoapSelected(event.target.value);
     }
+
     function changeAuth(event) {
         setBasicAuth(event.target.checked)
     }
@@ -162,6 +163,8 @@ function EditDomain(props) {
       }
     const [response, setResponse] = useState(); //response from server
 
+    useEffect(()=>{validateParameters();}, [getIsRestSoapSelected]); //validates parameters on serviceType change
+
     return (
         <>
             <a class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
@@ -193,7 +196,7 @@ function EditDomain(props) {
                         <input className="BasicAuthDisable" name="password" defaultValue={props.domain.auth_Password} disabled={isUsernamePasswordDisabled()} type="password"
                             placeholder="Password" required max="1024" />
                         <textarea className="BasicAuthDisable" name="parameters" defaultValue={props.domain.parameters} className="textArea" rows="4"
-                            placeholder="Parameters" disabled={isParametersDisabled()} required max="4096"></textarea>
+                            placeholder="Parameters" disabled={isParametersDisabled()} required max="4096" onChange={validateParameters}></textarea>
                         <input name="interval" defaultValue={Math.trunc(props.domain.interval_Ms / 1000)} type="number"
                             placeholder="Interval" required min="3" max="2000000" />
                         <input className="SelectInterval" defaultValue={props.domain.latency_Threshold_Ms} type="number" placeholder="Amber threshold" name="threshold"
@@ -233,7 +236,8 @@ function EditDomain(props) {
     );
 
     function handleSubmit(event) {
-        setResponse("waiting...")
+        setResponse("waiting...");
+
         let dataForSending = {
             service_Name: event.target.serviceName.value,
             Url: event.target.url.value,
