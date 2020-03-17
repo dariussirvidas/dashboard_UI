@@ -64,8 +64,9 @@ function UserMaintainList(props) {
                     </div>
                     <div className="container table-responsive space1">
                         <div className="TableDiv">
-                            <table id="usersList" className="Table" align="center">
+                            <table id="usersList" className="Table css-serial" align="center">
                                 <tr>
+                                    <th width="2%">#</th>
                                     <th className="text-left" width="13%">Username</th>
                                     <th className="text-left" width="12%">Name</th>
                                     <th className="text-left" width="12%">Surname</th>
@@ -119,6 +120,7 @@ function SingleUser(props) {
                     :
                     (
                         <tr align="center">
+                            <td className="css-serialrow"></td>
                             <td className="text-truncate">
                                 <div className="tooltip-wrap text-left">
                                     <p className="text-truncate" data-toggle="tooltip" data-placement="top"

@@ -1,12 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './domainList.scss';
 import Checkbox from "../checkbox/checkbox";
-import { ErrorMessage, LoadingSpinner } from "../elements/elements";
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
 import DeleteDomain from "../deleteDomain/deleteDomain";
 
-import { useSelector, useDispatch } from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
+import StickerLogsModal from "../stikerLogsModal/stickerLogsModal";
 
 
 function DomainList(props) {
@@ -34,8 +35,7 @@ function DomainList(props) {
 
                 try {
                     txtValue = td.querySelector('.serviceName').textContent;  //td.textContent || td.innerText;
-                }
-                catch (error) {
+                } catch (error) {
                     txtValue = '';
                 }
 
@@ -56,54 +56,55 @@ function DomainList(props) {
                 <div className="d-flex domainButton">
                     <AddDomainModal
                         appendDomainList={props.appendDomainList}
-                        endpoint={props.endpoint} />
+                        endpoint={props.endpoint}/>
                 </div>
-                <input className="searchBox form-control" type="text" id="domainsListSearch" onKeyUp={doFilter} placeholder="Search for Services.."></input>
+                <input className="searchBox form-control" type="text" id="domainsListSearch" onKeyUp={doFilter}
+                       placeholder="Search for Services.."></input>
             </div>
             <div className="container table-responsive spaceTable">
                 <div className="TableDiv">
-                    <table id="domainsList" className="Table table-hover" align="center">
+                    <table id="domainsList" className="Table table-hover css-serial" align="center">
                         <thead>
-                            <tr>
-                                <th className="text-center" width="5%">Active</th>
-                                <th className="text-left" width="9%">Service Name</th>
-                                <th className="text-center" width="7%">Service Type</th>
-                                <th className="text-left" data-field="url" data-filter-control="input" width="15%">URL</th>
-                                <th className="text-left" width="15%">Emails</th>
-                                <th className="text-center" width="8%">Check interval</th>
-                                <th className="text-center" width="6%">Threshold</th>
-                                <th className="text-center" width="7%">Maintenance</th>
-                            </tr>
+                        <tr>
+                            <th width="2%">#</th>
+                            <th className="text-center" width="5%">Active</th>
+                            <th className="text-left" width="9%">Service Name</th>
+                            <th className="text-center" width="7%">Service Type</th>
+                            <th className="text-left" data-field="url" data-filter-control="input" width="15%">URL</th>
+                            <th className="text-left" width="15%">Emails</th>
+                            <th className="text-center" width="8%">Check interval</th>
+                            <th className="text-center" width="6%">Threshold</th>
+                            <th className="text-center" width="7%">Maintenance</th>
+                        </tr>
                         </thead>
                         <tbody>
-                            {
-                                // checks for errors, if there are any, do not render domains
-                                props.domainList !== "error" ?
-                                    (
-                                        props.domainList.status !== 404 ?
-                                            (
-                                                props.domainList.map((item) => {
-                                                    return <SingleDomain
-                                                        d={item}
-
-                                                        endpoint={props.endpoint}
-                                                        changeDomainList={props.changeDomainList}
-                                                    />
-                                                })
-                                            )
-                                            :
-                                            (
-                                                <>
-                                                </>
-                                            )
-                                    )
-                                    :
-                                    (
-                                        <ErrorMessage
-                                            message="Error while fetching list"
-                                        />
-                                    )
-                            }
+                        {
+                            // checks for errors, if there are any, do not render domains
+                            props.domainList !== "error" ?
+                                (
+                                    props.domainList.status !== 404 ?
+                                        (
+                                            props.domainList.map((item) => {
+                                                return <SingleDomain
+                                                    d={item}
+                                                    endpoint={props.endpoint}
+                                                    changeDomainList={props.changeDomainList}
+                                                />
+                                            })
+                                        )
+                                        :
+                                        (
+                                            <>
+                                            </>
+                                        )
+                                )
+                                :
+                                (
+                                    <ErrorMessage
+                                        message="Error while fetching list"
+                                    />
+                                )
+                        }
                         </tbody>
                     </table>
                 </div>
@@ -187,8 +188,8 @@ function SingleDomain(props) {
             {
                 // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
-
                 <tr align="center">
+                    <td className="css-serialrow"></td>
                     <td className="text-center">
                         <Checkbox
                             endpoint={props.endpoint}
@@ -205,7 +206,7 @@ function SingleDomain(props) {
                     <td className="text-truncate serviceNameTd">
 
                         <p className="text-truncate serviceName" data-toggle="tooltip" data-placement="top"
-                            title={props.d.service_Name}>
+                           title={props.d.service_Name}>
                             {props.d.service_Name}
                         </p>
 
@@ -216,7 +217,7 @@ function SingleDomain(props) {
                         <div className="text-truncate">
                             <div className="tooltip-wrap">
                                 <p className="text-truncate" data-toggle="tooltip" data-placement="top"
-                                    title={props.d.url}>
+                                   title={props.d.url}>
                                     {props.d.url}
                                 </p>
                             </div>
@@ -226,7 +227,7 @@ function SingleDomain(props) {
                     <td className="text-left" title="Email">
                         <div className="tooltip-wrap">
                             <p className="text-truncate" data-toggle="tooltip" data-placement="top"
-                                title={props.d.notification_Email}>{props.d.notification_Email}
+                               title={props.d.notification_Email}>{props.d.notification_Email}
                             </p>
                         </div>
                     </td>

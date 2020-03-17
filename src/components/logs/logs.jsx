@@ -56,8 +56,9 @@ function Logs(props) {
         <div className="container-fluid">
             <div className="container table-responsive space">
                 <div className="TableDiv">
-                    <table className="Table table-hover" align="center">
+                    <table className="Table table-hover css-serial" align="center">
                         <tr>
+                            <th width="2%">#</th>
                             <th className="text-left">Service Name</th>
                             <th className="text-center">Date</th>
                             <th className="text-center">Time</th>
@@ -91,6 +92,7 @@ function SingleLog(props) {
     return (
         <>
             <tr align="center">
+                <td className="css-serialrow"></td>
                 <td className="text-truncate text-center">
                     <div className="tooltip-wrap text-left">
                         <p className="text-truncate text-left" data-toggle="tooltip" data-placement="top"

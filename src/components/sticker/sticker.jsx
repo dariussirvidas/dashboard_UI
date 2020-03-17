@@ -21,10 +21,9 @@ function Sticker(props) {
 
     const [isLogsVisible, setIsLogsVisible] = useState(false);
 
-
     return (
         <div>
-            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '20rem'}}>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '19rem'}}>
                 <Card.Header
                     className={
                         "text-truncate cl-h3 text-center Card " + getClassNameFromStatus()

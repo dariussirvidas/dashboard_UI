@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useSelector} from "react-redux";
 import Modal from "react-bootstrap/Modal";
+import './stickerLogsModal.scss';
 
 function StickerLogsModal(props) {
     return (
@@ -24,9 +25,7 @@ function StickerModal(props) {
 
     return (
         <>
-            <button className="Buttonas" onClick={handleShow}>
-                Logs
-            </button>
+            <a href="#" className="hlink" onClick={handleShow}>Logs</a>
             <Modal show={show} onHide={handleClose}>
                 <div className="forma">
                         {
