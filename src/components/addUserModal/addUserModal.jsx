@@ -83,8 +83,6 @@ function UserModal(props) {
             console.log(error)
         }
 
-        console.log("full object for Posting:", dataForSending);
-        console.log("full object for sending JSON:", JSON.stringify(dataForSending));
         submitData(dataForSending);
         event.preventDefault();
     }
@@ -92,9 +90,8 @@ function UserModal(props) {
     function submitData(dataForSending) {
         fetchPost(dataForSending)
             .then((response) => {
-                console.log("POSTING USER status code = " + response.status);
+
                 if (response.status > 199 && response.status < 300){
-                    console.log(response.statusText)
                     console.log("success!")
                     setResponse("User created")
                     let responseBody = response.json()
@@ -111,7 +108,7 @@ function UserModal(props) {
                     let duomenys = response.json()
                     .then((duomenys) => {
                         setResponse(duomenys.message)
-                        console.log(duomenys.message)
+
                     })
                 }
             })

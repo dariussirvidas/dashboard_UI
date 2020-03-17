@@ -29,7 +29,6 @@ function UserMaintainList(props) {
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByClassName("userNameTd")[0];
             if (td) {
-                console.log(td)
 
                 try {
                     txtValue = td.querySelector('.userName').textContent;  //td.textContent || td.innerText;

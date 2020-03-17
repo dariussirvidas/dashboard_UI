@@ -45,19 +45,16 @@ function App() {
 
     // (re)fetches domainList
     function reFetchDomains() {
-        console.log("refetching!");
         fetchDomains(endpoint);
     }
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
-        console.log("append this:", newDomain);
         setDomainList([...domainList, newDomain]);
     }
 
     // changes the local domainList active state for one domain
     function changeDomainList(responseDomain) {
-        console.log("changing domainList");
         let domainListCopy = domainList.slice();
         let domainToBeChangedIndex = domainListCopy.findIndex(domain => domain.id === responseDomain.id);
         domainListCopy[domainToBeChangedIndex] = responseDomain;

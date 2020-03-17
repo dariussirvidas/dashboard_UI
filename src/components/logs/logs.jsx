@@ -23,7 +23,7 @@ function Logs(props) {
                 if (statusCode === 200) {
                     console.log("status code 200");
                 } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
+                    console.log("status code 401");
                     alert('Unauthenticated')
                 } else {
                     console.log("status code " + statusCode + ", this is an unhandled exception I guess")
@@ -50,7 +50,6 @@ function Logs(props) {
         return response.status;
     }
 
-    console.log(LogsList)
 
     return (
         <div className="container-fluid">

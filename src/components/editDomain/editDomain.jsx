@@ -110,7 +110,6 @@ function EditDomain(props) {
             check_interval: parseInt(event.target.Check_interval.value),
             active: event.target.active.checked
         };
-        console.log("full object for sending:", dataForSending);
         submitData(props.endpoint, props.appendDomainList, dataForSending);
         event.preventDefault();
     }

@@ -103,7 +103,7 @@ function App() {
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
-        console.log("append this:", newDomain);
+
         if (domainList.status === 404) {
 
             setDomainList([newDomain])
@@ -113,7 +113,7 @@ function App() {
 
     // appends the local userList array with one new domain
     function appendUserList(newUser) {
-        console.log("append this:", newUser);
+
         setUserList([...userList, newUser]);
     }
 
@@ -127,7 +127,7 @@ function App() {
 
     // changes the local userList active state for one domain
     function changeUserList(responseUser) {
-        console.log("changing userList");
+
         let userListCopy = userList.slice();
         let userToBeChangedIndex = userListCopy.findIndex(user => user.id === responseUser.id);
         userListCopy[userToBeChangedIndex] = responseUser;
@@ -175,7 +175,7 @@ function App() {
         );
         const userList = await response.json();
         await setUserList(userList);
-        console.log(userList);
+
         return response.status;
     }
 

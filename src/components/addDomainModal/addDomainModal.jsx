@@ -98,7 +98,7 @@ function DomainModal(props) {
             "parameters": inputsFromForm.parameters
         }
         
-        console.log(JSON.stringify(dataForSending))
+
         fetch(props.endpoint + "/Requests/testservice",
             {
                 method: 'POST',
@@ -112,9 +112,6 @@ function DomainModal(props) {
         )
             
             .then((response) => {
-                console.log(response)
-                console.log("JAU PO RESPONSE")
-                console.log(JSON.stringify(dataForSending))
                 if (response.status < 200 || response.status > 299) { //jei failino kreiptis i backenda
                     setTestResult("Check your fields and try again.")
                     
@@ -231,7 +228,7 @@ function DomainModal(props) {
             console.log(error)
         }
 
-        console.log("full object for POSTing:", dataForSending);
+
         submitData(props.endpoint, props.appendDomainList, dataForSending);
         handleClose();
         event.preventDefault();

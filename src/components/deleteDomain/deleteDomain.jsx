@@ -31,14 +31,12 @@ function DeleteDomain(props) {
         fetchPutDelete()
             .then((statusCode) => {
                 if (statusCode === 200) {
-                    console.log("status code 200, run changeDomainList function!");
                     let dataForSending = {...props.domain};
                     dataForSending.deleted = true;
                     props.changeDomainList(dataForSending)
                     NotificationManager.success('Domain deleted!', 'Successful!', 3000);
                 } else if (statusCode === 400) {
-                    console.log("status code 400, do something else");
-                    // alert('reeeeeeee')
+                    console.log("status code 400");
                 } else {
                     console.log("status code " + statusCode + ", this is an unhandled exception I guess")
                 }

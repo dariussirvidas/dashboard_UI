@@ -31,7 +31,6 @@ function DomainList(props) {
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByClassName("serviceNameTd")[0];
             if (td) {
-                console.log(td)
 
                 try {
                     txtValue = td.querySelector('.serviceName').textContent;  //td.textContent || td.innerText;
@@ -163,7 +162,6 @@ function SingleDomain(props) {
         dataForSending.interval_Ms = parseInt(event.target.IntervalMs.value);
         dataForSending.service_Type = event.target.domain_type.value;
         dataForSending.parameters = event.target.Parameters.value;
-        console.log("full object for sending:", dataForSending);
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }

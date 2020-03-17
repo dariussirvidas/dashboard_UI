@@ -57,16 +57,13 @@ function Login(props) {
             username: event.target.username.value,
             password: event.target.password.value
         };
-        console.log("userInfomation: ", userInformation);
         fetchToken(userInformation);
         event.preventDefault();
     }
 
     function fetchToken(userInformation) {
-        console.log("fetchToken!!!");
         fetchFromApi(userInformation)
             .then(response => {
-                console.log(response);
 
                 // sets isLoggedIn to true
 
@@ -79,8 +76,6 @@ function Login(props) {
                 dispatch(logIn());
                 NotificationManager.success('Logged In!', 'Successful!', 3000);
                 setRedirectPath('/')
-
-                console.log(token)
 
 
             })

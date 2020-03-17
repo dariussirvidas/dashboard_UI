@@ -99,9 +99,6 @@ function EditUser(props) {
             confirmPassword: event.target.confirmPassword.value,
             role: event.target.role.value
         };
-        console.log("full object for sending:", dataForSending);
-        console.log("JSON string:", JSON.stringify(dataForSending));
-        console.log("domain obj: ", props.user);
         submitData(props.endpoint, props.changeUserList, dataForSending);
         event.preventDefault();
     }
@@ -125,7 +122,6 @@ function EditUser(props) {
     function submitData(endpoint, changeUserList, dataForSending) {
         fetchPut(endpoint + "users/" + props.user.id, dataForSending)
             .then((response) => {
-                console.log("status code " + response.status + "...");
                 if (response.status > 199 && response.status < 300) {
                     setResponse("User updated")
 
@@ -134,8 +130,6 @@ function EditUser(props) {
                     handleClose();
                     NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
                 }
-                console.log('response status!!! " ' + response.status);
-                console.log('response in general:', response);
                 if (response.status == 403) { //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
                     setResponse("You can't change your role")
                 }

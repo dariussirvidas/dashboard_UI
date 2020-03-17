@@ -25,7 +25,6 @@ function DeleteUser(props) {
             // body: JSON.stringify(props.user.id)
             }
         );
-        console.log('statusCode:' + response.status);
         let statusCode = response.status;
         return statusCode;
     }
@@ -33,7 +32,6 @@ function DeleteUser(props) {
         fetchPutDelete()
             .then((statusCode) => {
                 if (statusCode === 200) {
-                    console.log("status code 200, run changeUserList function!");
                     let dataForSending = {...props.user};
                     dataForSending.deleted = true;
                     NotificationManager.success('User deleted!', 'Successful!', 3000);

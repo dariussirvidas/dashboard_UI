@@ -49,16 +49,12 @@ function Signup(props) {
                 userEmail: event.target.userEmail.value
         }
         submitData(dataForSending);
-        console.log("full object for POSTing:", dataForSending);
         event.preventDefault();
     }
     function submitData(dataForSending) {
         fetchPost(dataForSending)
             .then((response) => {
-                console.log("POSTING USER status code = " + response.status);
                 if (response.status > 199 && response.status < 300){
-                    console.log(response.statusText)
-                    console.log("success!")
                     setResponse("User created")
                     // let responseBody = response.json()
                     // .then((responseBody) => {
@@ -72,7 +68,6 @@ function Signup(props) {
                     let duomenys = response.json()
                     .then((duomenys) => {
                         setResponse(duomenys.message)
-                        console.log(duomenys.message)
                     })
                 }
             })

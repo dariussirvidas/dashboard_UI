@@ -115,7 +115,6 @@ function EditDomain(props) {
             "parameters": inputsFromForm.parameters
         }
 
-        console.log(JSON.stringify(dataForSending))
         fetch(props.endpoint + "/Requests/testservice",
             {
                 method: 'POST',
@@ -129,9 +128,6 @@ function EditDomain(props) {
         )
 
             .then((response) => {
-                console.log(response)
-                console.log("JAU PO RESPONSE")
-                console.log(JSON.stringify(dataForSending))
                 if (response.status < 200 || response.status > 299) { //jei failino kreiptis i backenda
                     setTestResult("Check your fields and try again.")
                     return
@@ -252,9 +248,6 @@ function EditDomain(props) {
             Latency_Threshold_Ms: parseInt(event.target.threshold.value),
             active: event.target.active.checked
         };
-        console.log("full object for sending:", dataForSending);
-        console.log("JSON string:", JSON.stringify(dataForSending));
-        console.log("domain obj: ", props.domain);
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
@@ -266,7 +259,6 @@ function EditDomain(props) {
                     // creates a new object. uses the prop domain as a base and overwrites any old data with data from
                     // the input fields
                     const editedDomain = Object.assign({ ...props.domain }, dataForSending);
-                    console.log(response)
                     changeDomainList(editedDomain)
                     handleClose();
                     setResponse("Domain successfuly updated")
