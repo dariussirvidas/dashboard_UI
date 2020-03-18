@@ -6,6 +6,9 @@ import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
 import {logInToken, logInTokenRefresh, logOut} from "../../actions";
+import {refreshTokensCall} from "../../common";
+import {select} from 'redux-saga/effects';
+import {store} from "../../index";
 
 
 function StickerList(props) {
@@ -102,7 +105,11 @@ function SingleService(props) {
             if (refreshResult) {
                 response = await fetchResponse(endpoint);
             }*/
-            await refreshTokens();
+            //await refreshTokens();
+            await new Promise((resolve, reject) =>
+            {
+                dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {resolve, reject}});
+            });
             response = await fetchResponse(endpoint);
             if (response.status == 401) {
                 console.log("logging out");
@@ -127,12 +134,14 @@ function SingleService(props) {
     }
     
     async function fetchResponse(endpoint) {
-        console.log("fetchResponse token: " + token);
+        const state = store.getState();//yield select();
+        //const newTokens = yield call(refreshTokensCall, state.token, state.tokenRefresh);
+        console.log("fetchResponse token: " + state.token + " tokenRefresh: " + state.tokenRefresh);
         try {
             let response = await fetch(endpoint, {
                 method: "GET",
                 headers: {
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + state.token
                 }
             });
             return response;
@@ -168,7 +177,7 @@ function SingleService(props) {
                 setRequestLatency(data);
 
                 // if the ping response is not success, refetch that single domain to get last failure date
-                if (data.status !== "Success")
+                if (data.status >= 300)
                     fetchSingleDomain(props.endpoint)
             })
             .catch(error => {
