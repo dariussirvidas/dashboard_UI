@@ -10,7 +10,7 @@ import {
 import {useSelector, useDispatch} from "react-redux";
 
 
-import {increment, logIn, logInToken, authRole} from "../../actions/index";
+import {increment, logIn, logInToken, authRole, logInTokenRefresh} from "../../actions/index";
 import { NotificationManager } from 'react-notifications';
 
 function Login(props) {
@@ -23,6 +23,7 @@ function Login(props) {
 
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
+    const tokenRefresh = useSelector(state => state.tokenRefresh);
     const userData = useSelector(state => state.userData);
 
 
@@ -76,11 +77,13 @@ function Login(props) {
                         username: response.username
                     }));
                 dispatch(logInToken(response.token));
+                dispatch(logInTokenRefresh(response.refreshToke)); // <======== typo in backend
                 dispatch(logIn());
                 NotificationManager.success('Logged In!', 'Successful!', 3000);
-                setRedirectPath('/')
+                setRedirectPath('/');
 
-                console.log(token)
+
+
 
 
             })

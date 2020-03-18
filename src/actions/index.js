@@ -24,6 +24,12 @@ export const logInToken = (token) => {
     };
 };
 
+export const logInTokenRefresh = (token) => {
+    return {
+        type: "REFRESH",
+        payload: token
+    };
+};
 
 export const logOut = () => {
     return {

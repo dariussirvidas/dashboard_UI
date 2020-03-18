@@ -5,11 +5,13 @@ import CardDeck from "react-bootstrap/CardDeck";
 import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
+import {logInToken, logInTokenRefresh, logOut} from "../../actions";
 
 
 function StickerList(props) {
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
+    const tokenRefresh = useSelector(state => state.tokenRefresh);
     const userData = useSelector(state => state.userData);
 
     return (
@@ -58,8 +60,10 @@ function SingleService(props) {
     const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
     const [latencyError, setLatencyError] = useState("false"); //erroras isbackendo invividualiam requestui
     const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
+    const dispatch = useDispatch();
+    let token = useSelector(state => state.token);
+    let tokenRefresh = useSelector(state => state.tokenRefresh);
 
     useEffect(() => {
 
@@ -91,20 +95,52 @@ function SingleService(props) {
     }, [timer]);
 
     async function fetchFromApi(endpoint) {
-
-        const response = await fetch(endpoint, {
-            method: "GET",
-            headers: {
-                'Authorization': 'Bearer ' + token
+        console.log("==== " + endpoint + " ====");
+        let response = await fetchResponse(endpoint);
+        if (response.status == 401) {
+            /*let refreshResult = await refreshTokens();
+            if (refreshResult) {
+                response = await fetchResponse(endpoint);
+            }*/
+            await refreshTokens();
+            response = await fetchResponse(endpoint);
+            if (response.status == 401) {
+                console.log("logging out");
+                dispatch(logOut());
+                return null;
             }
-        });
+        }
+        try {
+            let data = await response.json();
+            //console.log("response: " + response + " data: " + JSON.stringify(data));
+            // console.log("data: ", data);
+            // console.log("response: ", response.status);
+            setDomainPingResponseCode(response.status);
+            // console.log("response again: ", response.status);
+            return data;
+        }
+        catch (error) {
+            console.error("fetchFromApi error: " + error);
+            return null;
+        }
 
-        const data = await response.json();
-        // console.log("data: ", data); 
-        // console.log("response: ", response.status);
-        setDomainPingResponseCode(response.status);
-        // console.log("response again: ", response.status);
-        return data;
+    }
+    
+    async function fetchResponse(endpoint) {
+        console.log("fetchResponse token: " + token);
+        try {
+            let response = await fetch(endpoint, {
+                method: "GET",
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            });
+            return response;
+        }
+        catch (error) {
+            console.error("FetchResponse error: " + error);
+            return {status: 401};
+        }
     }
 
 
@@ -119,7 +155,7 @@ function SingleService(props) {
                     fetchSingleDomain(props.endpoint)
             })
             .catch(error => {
-                console.error("error while fetching domains: " + error);
+                console.error("error while fetching domains (#1): " + error);
                 setDomainPingError(true);
                 setRequestResponseData("error");
             });
@@ -136,7 +172,7 @@ function SingleService(props) {
                     fetchSingleDomain(props.endpoint)
             })
             .catch(error => {
-                console.error("error while fetching domains: " + error);
+                console.error("error while fetching domains (#2): " + error);
                 setLatencyError(true);
                 setRequestLatency("error");
             });
@@ -185,6 +221,9 @@ function SingleService(props) {
                 }
             }
         );
+        if (response.status == 401) {
+            dispatch(logOut());
+        }
         const LogList = await response.json();
         await setLogs(LogList);
         return response.status;
@@ -194,6 +233,30 @@ function SingleService(props) {
         getData();
     }, []);
 
+    async function refreshTokens() {
+        let tokens = {token: token, refreshToken: tokenRefresh};
+        console.log("tokens: " + JSON.stringify(tokens));
+        let response = await fetch(props.endpoint + "users/refresh/", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(tokens) // body data type must match "Content-Type" header
+        });
+        console.log("refresh status: " + response.status);
+        if (response.status == 200) {
+            let responseObject = await response.json();
+            console.log("refresh response data: " + JSON.stringify(responseObject));
+            dispatch(logInToken(responseObject.token));
+            dispatch(logInTokenRefresh(responseObject.refreshToken));
+            //setToken(responseObject.token);
+            //setTokenRefresh(responseObject.refreshToken);
+            token = responseObject.token;
+            tokenRefresh = responseObject.refreshToken;
+            return true;
+        }
+        else return false;
+    }
 
     return (
 
@@ -212,5 +275,7 @@ function SingleService(props) {
         </>
     )
 }
+
+
 
 export default StickerList;
