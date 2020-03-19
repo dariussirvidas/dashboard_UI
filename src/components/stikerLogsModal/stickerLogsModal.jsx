@@ -57,7 +57,7 @@ function StickerModal(props) {
 
 
 function SingleLog(props) {
-
+console.log(JSON.stringify(props.logs));
     return (
         <div>
             <p>{props.log.log_Date}, {props.log.error_Text}</p>

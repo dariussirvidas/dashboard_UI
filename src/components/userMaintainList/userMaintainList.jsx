@@ -59,7 +59,7 @@ function UserMaintainList(props) {
                                 appendUserList={props.appendUserList}
                                 endpoint={props.endpoint} />
                         </div>
-                        <input className="searchBox form-control" type="text" id="usersListSearch" onKeyUp={doFilter} placeholder="Search for Services.."></input>
+                        <input className="searchBox form-control" type="text" id="usersListSearch" onKeyUp={doFilter} placeholder="Search for Users..."></input>
                     </div>
                     <div className="container table-responsive space1">
                         <div className="TableDiv">
@@ -103,7 +103,6 @@ function UserMaintainList(props) {
                 <Redirect to="/">
                 </Redirect>
             )
-
     );
 }
 
