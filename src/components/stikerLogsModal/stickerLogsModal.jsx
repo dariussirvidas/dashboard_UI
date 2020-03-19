@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import {useSelector} from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import './stickerLogsModal.scss';
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
 
 function StickerLogsModal(props) {
     return (
@@ -26,7 +28,7 @@ function StickerModal(props) {
     return (
         <>
             <a href="#" className="hlink" onClick={handleShow}>Logs</a>
-            <Modal show={show} onHide={handleClose}>
+            <Modal size="md" show={show} onHide={handleClose}>
                 <div className="forma">
                         {
                             props.logs.status === 404 ?
@@ -57,11 +59,12 @@ function StickerModal(props) {
 
 
 function SingleLog(props) {
-console.log(JSON.stringify(props.logs));
     return (
-        <div>
-            <p>{props.log.log_Date}, {props.log.error_Text}</p>
-        </div>
+        <Row className="show-grid">
+            <Col xs={3} md={3}>{props.log.log_Date.slice(0, 10)} </Col>
+            <Col xs={3} md={3} className="float-left d-flex">{props.log.log_Date.slice(11, 16)} </Col>
+            <Col xs={5} md={5} className="float-left d-flex"> Error Code: {props.log.error_Text} </Col>
+        </Row>
     )
 }
 
