@@ -38,3 +38,16 @@ export const logOut = () => {
     };
 };
 
+export const blockRefresh = () => {
+    return {
+        type: "REFRESH_BLOCK"
+    };
+};
+
+export const unblockRefresh = () => {
+    return {
+        type: "REFRESH_UNBLOCK"
+    };
+};
+
+

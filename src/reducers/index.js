@@ -4,6 +4,7 @@ import userDataReducer from "./userData"
 import tokenReducer from "./token";
 import tokenRefreshReducer from "./tokenRefresh";
 import {combineReducers} from "redux";
+import refreshBlockReducer from "./refreshBlock";
 
 const rootReducer = combineReducers(
     {
@@ -11,7 +12,8 @@ const rootReducer = combineReducers(
         isLogged: loggedReducer,
         token: tokenReducer,
         userData: userDataReducer,
-        tokenRefresh: tokenRefreshReducer
+        tokenRefresh: tokenRefreshReducer,
+        refreshBlock: refreshBlockReducer
     }
 );
 

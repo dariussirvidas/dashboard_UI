@@ -5,7 +5,7 @@ import CardDeck from "react-bootstrap/CardDeck";
 import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
-import {logInToken, logInTokenRefresh, logOut} from "../../actions";
+import {logInToken, logInTokenRefresh, logOut, unblockRefresh} from "../../actions";
 import {refreshTokensCall} from "../../common";
 import {select} from 'redux-saga/effects';
 import {store} from "../../index";
@@ -97,33 +97,38 @@ function SingleService(props) {
 
     }, [timer]);
 
-    async function fetchFromApi(endpoint) {
-        console.log("==== " + endpoint + " ====");
+    function refreshTokens() {
+        return new Promise((res) =>
+        {
+            dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {res}});
+        });
+    }
+
+    async function fetchFromApi(endpointA) {
+        const endpoint = endpointA;
+        console.log("==== fetching: " + endpoint + " ====");
         let response = await fetchResponse(endpoint);
         if (response.status == 401) {
-            /*let refreshResult = await refreshTokens();
-            if (refreshResult) {
-                response = await fetchResponse(endpoint);
-            }*/
-            //await refreshTokens();
-            await new Promise((resolve, reject) =>
+            const resolvedPromise = await refreshTokens();/*new Promise(/*(resolve, reject)(res) =>
             {
-                dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {resolve, reject}});
-            });
+                dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {res}/*{resolve, reject}});
+            });*/
+            console.error("resolved promise: " + resolvedPromise);
+            console.log("**** repeating: " + endpoint + " ****");
             response = await fetchResponse(endpoint);
             if (response.status == 401) {
                 console.log("logging out");
                 dispatch(logOut());
                 return null;
             }
+            /*else {
+                dispatch(unblockRefresh());
+                console.error("unblocking refresh");
+            }*/
         }
         try {
             let data = await response.json();
-            //console.log("response: " + response + " data: " + JSON.stringify(data));
-            // console.log("data: ", data);
-            // console.log("response: ", response.status);
             setDomainPingResponseCode(response.status);
-            // console.log("response again: ", response.status);
             return data;
         }
         catch (error) {
@@ -136,7 +141,7 @@ function SingleService(props) {
     async function fetchResponse(endpoint) {
         const state = store.getState();//yield select();
         //const newTokens = yield call(refreshTokensCall, state.token, state.tokenRefresh);
-        console.log("fetchResponse token: " + state.token + " tokenRefresh: " + state.tokenRefresh);
+        //console.log("fetchResponse token: " + state.token + " tokenRefresh: " + state.tokenRefresh);
         try {
             let response = await fetch(endpoint, {
                 method: "GET",
@@ -160,7 +165,7 @@ function SingleService(props) {
                 setRequestResponseData(data);
 
                 // if the ping response is not success, refetch that single domain to get last failure date
-                if (data.status !== "Success")
+                if (data.status >= 300)
                     fetchSingleDomain(props.endpoint)
             })
             .catch(error => {
@@ -241,31 +246,6 @@ function SingleService(props) {
     useEffect(() => {
         getData();
     }, []);
-
-    async function refreshTokens() {
-        let tokens = {token: token, refreshToken: tokenRefresh};
-        console.log("tokens: " + JSON.stringify(tokens));
-        let response = await fetch(props.endpoint + "users/refresh/", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(tokens) // body data type must match "Content-Type" header
-        });
-        console.log("refresh status: " + response.status);
-        if (response.status == 200) {
-            let responseObject = await response.json();
-            console.log("refresh response data: " + JSON.stringify(responseObject));
-            dispatch(logInToken(responseObject.token));
-            dispatch(logInTokenRefresh(responseObject.refreshToken));
-            //setToken(responseObject.token);
-            //setTokenRefresh(responseObject.refreshToken);
-            token = responseObject.token;
-            tokenRefresh = responseObject.refreshToken;
-            return true;
-        }
-        else return false;
-    }
 
     return (
 
