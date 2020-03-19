@@ -1,2 +1,2 @@
 export {validateParameters, validateConfirmPassword} from "./validation";
-export {refreshTokensCall} from "./apiCalls";
+export {refreshTokensCall, fetchGet, fetchDelete, fetchPost, fetchPut} from "./apiCalls";

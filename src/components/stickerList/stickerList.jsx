@@ -5,16 +5,11 @@ import CardDeck from "react-bootstrap/CardDeck";
 import './stickerList.scss';
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import {useSelector, useDispatch} from "react-redux";
-import {logInToken, logInTokenRefresh, logOut, unblockRefresh} from "../../actions";
-import {refreshTokensCall} from "../../common";
-import {select} from 'redux-saga/effects';
-import {store} from "../../index";
-
+import {requestFetchGet, requestFetchDelete, requestFetchPost, requestFetchPut, requestFetchPostNoAuth} from "../../actions";
 
 function StickerList(props) {
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const tokenRefresh = useSelector(state => state.tokenRefresh);
     const userData = useSelector(state => state.userData);
 
     return (
@@ -66,7 +61,6 @@ function SingleService(props) {
     const userData = useSelector(state => state.userData);
     const dispatch = useDispatch();
     let token = useSelector(state => state.token);
-    let tokenRefresh = useSelector(state => state.tokenRefresh);
 
     useEffect(() => {
 
@@ -97,35 +91,8 @@ function SingleService(props) {
 
     }, [timer]);
 
-    function refreshTokens() {
-        return new Promise((res) =>
-        {
-            dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {res}});
-        });
-    }
-
-    async function fetchFromApi(endpointA) {
-        const endpoint = endpointA;
-        console.log("==== fetching: " + endpoint + " ====");
-        let response = await fetchResponse(endpoint);
-        if (response.status == 401) {
-            const resolvedPromise = await refreshTokens();/*new Promise(/*(resolve, reject)(res) =>
-            {
-                dispatch({type: "TOKEN_REFRESH_REQUESTED", payload: {res}/*{resolve, reject}});
-            });*/
-            console.error("resolved promise: " + resolvedPromise);
-            console.log("**** repeating: " + endpoint + " ****");
-            response = await fetchResponse(endpoint);
-            if (response.status == 401) {
-                console.log("logging out");
-                dispatch(logOut());
-                return null;
-            }
-            /*else {
-                dispatch(unblockRefresh());
-                console.error("unblocking refresh");
-            }*/
-        }
+    async function fetchFromApi(endpoint) {
+        let response = await fetchGetTest(endpoint);
         try {
             let data = await response.json();
             setDomainPingResponseCode(response.status);
@@ -135,28 +102,7 @@ function SingleService(props) {
             console.error("fetchFromApi error: " + error);
             return null;
         }
-
     }
-    
-    async function fetchResponse(endpoint) {
-        const state = store.getState();//yield select();
-        //const newTokens = yield call(refreshTokensCall, state.token, state.tokenRefresh);
-        //console.log("fetchResponse token: " + state.token + " tokenRefresh: " + state.tokenRefresh);
-        try {
-            let response = await fetch(endpoint, {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + state.token
-                }
-            });
-            return response;
-        }
-        catch (error) {
-            console.error("FetchResponse error: " + error);
-            return {status: 401};
-        }
-    }
-
 
     function pingDomain() {
 
@@ -235,9 +181,6 @@ function SingleService(props) {
                 }
             }
         );
-        if (response.status == 401) {
-            dispatch(logOut());
-        }
         const LogList = await response.json();
         await setLogs(LogList);
         return response.status;
@@ -246,6 +189,39 @@ function SingleService(props) {
     useEffect(() => {
         getData();
     }, []);
+
+    //===================== request dispatch functions ======================================
+    function fetchGetTest(endpoint) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchGet(endpoint, res));
+        });
+    }
+    function fetchDelete(endpoint) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchDelete(endpoint, res));
+        });
+    }
+    function fetchPost(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPost(endpoint, body, res));
+        });
+    }
+    function fetchPut(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPut(endpoint, body, res));
+        });
+    }
+    function fetchPostNoAuth(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPostNoAuth(endpoint, body, res));
+        });
+    }
+    //=======================================================================================
 
     return (
 

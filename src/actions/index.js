@@ -50,4 +50,45 @@ export const unblockRefresh = () => {
     };
 };
 
+export const requestRefresh = (/*res*/) => {
+    return {
+        type: "TOKEN_REFRESH_REQUESTED"/*,
+        payload: {res}*/
+    };
+};
+
+export const requestFetchGet = (endpoint, res) => {
+    return {
+        type: "FETCH_GET_REQUESTED",
+        payload: {endpoint, res}
+    };
+};
+
+export const requestFetchDelete = (endpoint, res) => {
+    return {
+        type: "FETCH_DELETE_REQUESTED",
+        payload: {endpoint, res}
+    };
+};
+
+export const requestFetchPost = (endpoint, body, res) => {
+    return {
+        type: "FETCH_POST_REQUESTED",
+        payload: {endpoint, body, res}
+    };
+};
+
+export const requestFetchPostNoAuth = (endpoint, body, res) => {
+    return {
+        type: "FETCH_POST_NO_AUTH_REQUESTED",
+        payload: {endpoint, body, res}
+    };
+};
+
+export const requestFetchPut = (endpoint, body, res) => {
+    return {
+        type: "FETCH_PUT_REQUESTED",
+        payload: {endpoint, body, res}
+    };
+};
 

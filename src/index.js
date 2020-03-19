@@ -9,7 +9,7 @@ import {createStore, applyMiddleware/*, compose*/} from "redux";
 import createSagaMiddleware from "redux-saga";
 import rootReducer from "./reducers/index";
 import {Provider} from 'react-redux';
-import {watchSaga} from "./sagas/sagas";
+import rootSaga from "./sagas";
 
 
 //ads
@@ -26,7 +26,7 @@ store.subscribe(() => {
     localStorage.setItem('reduxState', JSON.stringify(store.getState()))
 });
 
-sagaMiddleware.run(watchSaga);
+sagaMiddleware.run(rootSaga);
 
 
 ReactDOM.render(

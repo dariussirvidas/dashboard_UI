@@ -20,32 +20,70 @@ async function refreshTokensCall(token, refreshToken) {
 
 async function fetchGet(endpoint, token) {
     try {
-        let response = await fetch(endpoint, {
-            method: "GET",
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
-        return response;
+        return await fetchAll(endpoint, "GET", null, token);
     }
     catch (error) {
-        console.error("FetchResponse error: " + error);
-        return {status: 401};
+        console.error("FetchGet error: " + error);
+    }
+}
+
+async function fetchDelete(endpoint, token) {
+    try {
+        return await fetchAll(endpoint, "DELETE", null, token);
+    }
+    catch (error) {
+        console.error("FetchDelete error: " + error);
+    }
+}
+
+async function fetchPost(endpoint, body, token) {
+    try {
+        return await fetchAll(endpoint, "POST", body, token);
+    }
+    catch (error) {
+        console.error("FetchGet error: " + error);
+    }
+}
+
+async function fetchPut(endpoint, body, token) {
+    try {
+        return await fetchAll(endpoint, "PUT", body, token);
+    }
+    catch (error) {
+        console.error("FetchGet error: " + error);
     }
 }
 
 async function fetchAll(endpoint, method, body, token) {
-    const headers = token ? {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token
-    } : {
-        'Content-Type': 'application/json'
-    };
-    return await fetch(endpoint, {
-        method: method,
-        headers: headers,
-        body: JSON.stringify(body) // body data type must match "Content-Type" header
-    });
+    let init;
+    if (method === "GET" || method === "DELETE") {
+        init = {
+            method: method,
+            headers: {
+                'Authorization': 'Bearer ' + token
+            }
+        };
+    } else {
+        if (token) {
+            init = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token
+                },
+                body: JSON.stringify(body) // body data type must match "Content-Type"
+            };
+        } else {
+            init = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body) // body data type must match "Content-Type"
+            };
+        }
+    }
+    return await fetch(endpoint, init);
 }
 
-export {refreshTokensCall};
+export {refreshTokensCall, fetchGet, fetchDelete, fetchPost, fetchPut};
