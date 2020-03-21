@@ -155,7 +155,7 @@ function DomainModal(props) {
 
             <Modal className="modal-large" show={show} onHide={handleClose}>
                 <div className="forma">
-                    <form className="login-form" onSubmit={handleSubmit} id="formForPost" novalidate>
+                    <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group" />
                         <input type="text" placeholder="Service name" name="serviceName" required max="64" />
                         <select className="SelectFrom" name="method" value={getSelectedMethod} onChange={changeMethodOption} required>

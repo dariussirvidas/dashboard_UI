@@ -25,7 +25,7 @@ function Menu(props) {
                             <Link className="navbar-brand" to="/">
                                 <img src={Logo} width="112" height="20" alt=""/>
                             </Link>
-                            <h5 className="Menu_text">Monitoring Dashboard</h5>
+                            <h5 className="Menu_text">MONITORING DASHBOARD</h5>
                             <h5><img src={User_icon} alt="user icon" width="20"
                                      height="20"/>{userData.username}
                             </h5>
