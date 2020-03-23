@@ -50,10 +50,9 @@ export const unblockRefresh = () => {
     };
 };
 
-export const requestRefresh = (/*res*/) => {
+export const requestRefresh = () => {
     return {
-        type: "TOKEN_REFRESH_REQUESTED"/*,
-        payload: {res}*/
+        type: "TOKEN_REFRESH_REQUESTED"
     };
 };
 

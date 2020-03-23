@@ -1,111 +1,148 @@
 import React, {useEffect, useState} from 'react';
 import 'react-redux';
 import './app.scss';
-import {connect} from 'react-redux';
-import {
-    BrowserRouter as Router,
-    Redirect, Route, Switch
-} from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
+import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
 
 import Main from '../main/main';
 import Menu from "../menu/menu";
-import Footer from "../footer/footer";
-import {LoadingSpinner, ErrorMessage} from "../elements/elements";
+import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
 
-import userMaintainList from "../userMaintainList/userMaintainList";
 import 'react-notifications/lib/notifications.css';
 import {NotificationContainer} from 'react-notifications';
-import {useSelector, useDispatch} from "react-redux";
-
+import {
+    requestFetchDelete,
+    requestFetchGet,
+    requestFetchPost,
+    requestFetchPostNoAuth,
+    requestFetchPut
+} from "../../actions";
 
 function App() {
 
-
     const isLogged = useSelector(state => state.isLogged);
     const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
-
-    const [endpoint, setEndpoint] = useState(process.env.REACT_APP_BACKEND_ADDRESS);
-    const [domainList, setDomainList] = useState();
+    const endpoint = process.env.REACT_APP_BACKEND_ADDRESS;
+    const [domainList, setDomainList] = useState([]);
     const [domainListResponseCode, setDomainListResponseCode] = useState();
     const [hasDomainListError, setHasDomainListError] = useState(false);
-    const [hasUserListError, setHasUserListError] = useState(false);
+    const [userList, setUserList] = useState();
+    const [logsList, setLogs] = useState();
 
+
+    //=======================================================================================
+    const dispatch = useDispatch();
+    //===================== request dispatch functions ======================================
+
+    function fetchGet(endpoint) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchGet(endpoint, res));
+        });
+    }
+    function fetchDelete(endpoint) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchDelete(endpoint, res));
+        });
+    }
+    function fetchPost(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPost(endpoint, body, res));
+        });
+    }
+    function fetchPut(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPut(endpoint, body, res));
+        });
+    }
+    function fetchPostNoAuth(endpoint, body) {
+        return new Promise((res) =>
+        {
+            dispatch(requestFetchPostNoAuth(endpoint, body, res));
+        });
+    }
+    //====== combining functions in an object for easier passing in props ===================
+    const fetches = {fetchGet, fetchDelete, fetchPost, fetchPut, fetchPostNoAuth};
+    //=======================================================================================
 
     // initial fetch ("deps:" stops infinite loop)
     useEffect(() => {
         fetchDomains(endpoint);
         fetchUsers(endpoint);
+        fetchLogs(endpoint);
     }, [token]);
 
-
     async function fetchFromApi(endpoint) {
-        const response = await fetch(endpoint, {
-            method: "GET",
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
+        const response = await fetchGet(endpoint);
         setDomainListResponseCode(response.status);
-        const data = await response.json();
-        return data;
+        if (response.status === 200) {
+            return await response.json();
+        }
+        else return null;
     }
 
     function fetchDomains(endpoint) {
-        fetchFromApi(endpoint + "domain")
+        fetchFromApi(endpoint + "domain/")
             .then(data => {
-                setDomainList(data)
+                if (data != null) setDomainList(data);
             })
             .catch(error => {
                 console.error("error while fetching domains:" + error);
                 setHasDomainListError(true);
-
             });
     }
 
     async function fetchFromApiUsers(endpoint) {
-        const response = await fetch(endpoint, {
-            method: "GET",
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
-
-        const data = await response.json();
-
-        return data;
+        const response = await fetchGet(endpoint);
+        if (response.status === 200) {
+            return await response.json();
+        }
+        else return null;
     }
-
-
-
-
 
     function fetchUsers(endpoint) {
         fetchFromApiUsers(endpoint + "users/")
             .then(data => {
-                setUserList(data)
+                if (data != null) setUserList(data);
             })
             .catch(error => {
                 console.error("error while fetching Users:" + error);
-                setHasUserListError(true);
-                // setUserList("error");
+            });
+    }
+
+    async function fetchFromApiLogs(endpoint) {
+        const response = await fetchGet(endpoint);
+        if (response.status === 200) {
+            return await response.json();
+        }
+        else return null;
+    }
+
+    function fetchLogs(endpoint) {
+        fetchFromApiLogs(endpoint + "logs/")
+            .then(data => {
+                if (data != null) setLogs(data);
+            })
+            .catch(error => {
+                console.error("error while fetching Logs:" + error);
             });
     }
 
     function purgeLocalState() {
         setDomainList([]);
         setUserList([]);
+        setLogs([]);
+        setDomainListResponseCode(401);
     }
-
 
     // appends the local domainList array with one new domain
     function appendDomainList(newDomain) {
-        console.log("append this:", newDomain);
         if (domainList.status === 404) {
-
             setDomainList([newDomain])
         } else
             setDomainList([...domainList, newDomain]);
@@ -113,7 +150,6 @@ function App() {
 
     // appends the local userList array with one new domain
     function appendUserList(newUser) {
-        console.log("append this:", newUser);
         setUserList([...userList, newUser]);
     }
 
@@ -127,107 +163,17 @@ function App() {
 
     // changes the local userList active state for one domain
     function changeUserList(responseUser) {
-        console.log("changing userList");
         let userListCopy = userList.slice();
         let userToBeChangedIndex = userListCopy.findIndex(user => user.id === responseUser.id);
         userListCopy[userToBeChangedIndex] = responseUser;
         setUserList(userListCopy);
     }
 
-
-    //UserMaintaiList GET info
-
-    const [userList, setUserList] = useState();
-
-    useEffect(() => {
-        getData();
-    }, []);
-
-    const [userListError, setUserListError] = useState();
-
-    function getData() {
-        fetchGet()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                setUserListError(true);
-                console.error("Error while fetching user list: " + error);
-            });
-    }
-
-    async function fetchGet() {
-
-        const response = await fetch(endpoint + "users", {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-        );
-        const userList = await response.json();
-        await setUserList(userList);
-        console.log(userList);
-        return response.status;
-    }
-
-    //LOGS
-
-    const [LogsList, setLogs] = useState([]);
-    const [logsError, setLogsError] = useState();
-
-    useEffect(() => {
-        getData();
-
-    }, []);
-
-
-    function getData() {
-        fetchGet()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                setLogsError(true);
-                console.error("Error while fetching log list: " + error);
-            });
-    }
-
-    async function fetchGet() {
-        const response = await fetch(endpoint + "logs", {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-        );
-        const LogList = await response.json();
-        await setLogs(LogList);
-        return response.status;
-    }
-
-
     return (
         <>
             <Router>
                 <Menu
-                    purgeLocalState={purgeLocalState}
+                    purgeLocalState={purgeLocalState} fetches={fetches}
                 />
                 {
                     domainListResponseCode === undefined ?
@@ -248,7 +194,7 @@ function App() {
                         :
                         (<>
                             {
-                                Boolean(domainList) === true && isLogged === true ?
+                                /*Boolean(domainList) === true && */isLogged === true ?
                                     (<>
                                         <Main
                                             endpoint={endpoint}
@@ -259,7 +205,9 @@ function App() {
                                             appendUserList={appendUserList}
                                             changeDomainList={changeDomainList}
                                             changeUserList={changeUserList}
-                                            logs={LogsList}/>
+                                            logs={logsList}
+                                            fetches={fetches}
+                                        />
 
                                     </>)
                                     :
@@ -289,11 +237,13 @@ function App() {
                         <Route path="/login">
                             <Login
                                 endpoint={endpoint}
+                                fetches={fetches}
                             />
                         </Route>
                         <Route path="/signup">
                             <Signup
                                 endpoint={endpoint}
+                                fetches={fetches}
                             />
                         </Route>
                     </>

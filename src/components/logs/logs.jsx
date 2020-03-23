@@ -1,56 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {useSelector, useDispatch} from "react-redux";
-import Style from './logs.scss';
-
+import React from 'react';
 
 function Logs(props) {
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
-    const [LogsList, setLogs] = useState([]);
-    const [logsError, setLogsError] = useState();
-
-    useEffect(() => {
-        getData();
-        fetchGet()
-    }, []);
-
-
-    function getData() {
-        fetchGet()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
-                }
-
-            })
-            .catch((error) => {
-                setLogsError(true);
-                console.error("Error while fetching log list: " + error);
-            });
-    }
-
-    async function fetchGet() {
-
-        const response = await fetch(props.endpoint + "logs/", {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-        );
-        const LogList = await response.json();
-        await setLogs(LogList);
-        return response.status;
-    }
-
-    console.log(LogsList)
 
     return (
         <div className="container-fluid">
@@ -64,8 +14,7 @@ function Logs(props) {
                             <th className="text-center">Error</th>
                         </tr>
                         {
-
-                            props.logs.status === 404 ?
+                            Boolean(props.logs) === false ?
                                 (
                                     <>
                                         <h1>NO LOGS TO SHOW</h1>

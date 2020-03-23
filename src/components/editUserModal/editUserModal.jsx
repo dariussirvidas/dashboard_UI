@@ -1,25 +1,20 @@
-import React, {Component, useState} from 'react';
+import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-
 import DeleteUser from "../deleteUser/deleteUser";
 import './editUserModal.scss';
 import {validateConfirmPassword} from "../../common";
-
-import {useSelector, useDispatch} from "react-redux";
 import {NotificationManager} from 'react-notifications';
 
 function EditUserModal(props) {
-
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
 
     return (
         <div>
             <EditUser
                 user={props.user}
                 changeUserList={props.changeUserList}
-                endpoint={props.endpoint}/>
+                endpoint={props.endpoint}
+                fetches={props.fetches}
+            />
         </div>
     );
 }
@@ -27,10 +22,7 @@ function EditUserModal(props) {
 function EditUser(props) {
 
     const [show, setShow] = useState(false);
-    const [response, setResponse] = useState(); //response from server
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
+    const [putResponse, setResponse] = useState(); //response from server
 
     const handleClose = () => {
         setShow(false);
@@ -38,7 +30,7 @@ function EditUser(props) {
     const handleShow = () => {
         setShow(true);
         setResponse();
-    }
+    };
 
     return (
         <>
@@ -58,7 +50,7 @@ function EditUser(props) {
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
                                required maxLength="256"/>
                         {
-                            props.user.role == "Admin" ?
+                            props.user.role === "Admin" ?
                                 <select name="role" className="SelectFrom" required>
                                     <option value="User">User</option>
                                     <option value="Admin" selected={true}>Admin</option>
@@ -69,7 +61,6 @@ function EditUser(props) {
                                     <option value="Admin">Admin</option>
                                 </select>
                         }
-                        {/* Backendas neatsiuncia passwordo */}
                         <input id="password" type="password" placeholder="Password" name="password"
                                pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
                                title="Mininum 10 chars and at least one uppercase, lowercase, special character and a number"
@@ -81,8 +72,10 @@ function EditUser(props) {
                         <DeleteUser
                             user={props.user}
                             changeUserList={props.changeUserList}
-                            endpoint={props.endpoint}/>
-                        <div>{response}</div>
+                            endpoint={props.endpoint}
+                            fetches={props.fetches}
+                        />
+                        <div>{putResponse}</div>
                     </form>
                 </div>
             </Modal>
@@ -99,58 +92,29 @@ function EditUser(props) {
             confirmPassword: event.target.confirmPassword.value,
             role: event.target.role.value
         };
-        console.log("full object for sending:", dataForSending);
-        console.log("JSON string:", JSON.stringify(dataForSending));
-        console.log("domain obj: ", props.user);
         submitData(props.endpoint, props.changeUserList, dataForSending);
         event.preventDefault();
     }
 
-    async function fetchPut(endpoint, dataForSending) {
-        const response = await fetch(endpoint,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
-            }
-        );
-        const data = response;
-        return data;
-    }
-
     function submitData(endpoint, changeUserList, dataForSending) {
-        fetchPut(endpoint + "users/" + props.user.id, dataForSending)
-            .then((response) => {
-                console.log("status code " + response.status + "...");
-                if (response.status > 199 && response.status < 300) {
-                    setResponse("User updated")
-
-                    const editedUser = Object.assign({...props.user}, dataForSending);
-                    changeUserList(editedUser)
-                    handleClose();
-                    NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
-                }
-                console.log('response status!!! " ' + response.status);
-                console.log('response in general:', response);
-                if (response.status == 403) { //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
-                    setResponse("You can't change your role")
-                }
-                if(response.status == 400){
-                    return response.json()
-                }
-
-                else {
-                    console.log("Something went wrong: ", response)
-                }
-            }).then((responseJson)=>{typeof responseJson != "undefined"? setResponse(responseJson.message) : void(0)})
-            .catch((error) => {
-                console.error("FETCH ERROR: ", error);
-                NotificationManager.error('Something went wrong!', 'Error!', 3000);
-            });
+        props.fetches.fetchPut(endpoint + "users/" + props.user.id, dataForSending).then((response) => {
+            if (response.status > 199 && response.status < 300) {
+                setResponse("User updated");
+                const editedUser = Object.assign({...props.user}, dataForSending);
+                changeUserList(editedUser);
+                handleClose();
+                NotificationManager.success('User changes saved!', 'Edit Successful!', 3000);
+            } else if (response.status === 403) { //cia lempiskai dbr, bet mum 403 grazina tik kai role keiciam.
+                setResponse("You can't change your role")
+            } else if (response.status === 400) {
+                return response.json();
+            }
+        }).then((responseJson) => {
+            typeof responseJson != "undefined" ? setResponse(responseJson.message) : void (0)
+        }).catch((error) => {
+            console.error("FETCH ERROR: ", error);
+            NotificationManager.error('Something went wrong!', 'Error!', 3000);
+        });
     }
 }
 

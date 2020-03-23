@@ -24,7 +24,7 @@ function* fetchDeleteSaga(action) {
         }
     } catch (error) {
         console.error("FetchDeleteSaga error: " + error);
-        yield put(logOut());
+        //yield put(logOut());
     }
 }
 

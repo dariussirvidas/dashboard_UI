@@ -8,7 +8,7 @@ function* fetchGetSaga(action) {
         if (state.refreshBlock) yield take('REFRESH_UNBLOCK');
         state = yield select();
         let response = yield call(fetchGet, action.payload.endpoint, state.token);
-        if (response.status === 401) {
+        if (response.status === 401 && state.isLogged) {
             yield put(requestRefresh());
             yield take('REFRESH_UNBLOCK');
             state = yield select();
@@ -24,7 +24,7 @@ function* fetchGetSaga(action) {
         }
     } catch (error) {
         console.error("FetchGetSaga error: " + error);
-        yield put(logOut());
+        //yield put(logOut());
     }
 }
 

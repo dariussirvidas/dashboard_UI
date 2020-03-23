@@ -24,7 +24,7 @@ function* fetchPostSaga(action) {
         }
     } catch (error) {
         console.error("FetchPostSaga error: " + error);
-        yield put(logOut());
+        //yield put(logOut());
     }
 }
 

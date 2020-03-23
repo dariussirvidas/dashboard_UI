@@ -1,8 +1,8 @@
 import {select, call, put, takeEvery} from 'redux-saga/effects';
 import {refreshTokensCall} from "../common";
-import {logInToken, logInTokenRefresh, blockRefresh, unblockRefresh, logOut} from "../actions";
+import {logInToken, logInTokenRefresh, blockRefresh, unblockRefresh/*, logOut*/} from "../actions";
 
-function* refreshTokenSaga(/*action*/) {
+function* refreshTokenSaga() {
     try {
         const state = yield select();
         if (!state.refreshBlock) {
@@ -11,10 +11,10 @@ function* refreshTokenSaga(/*action*/) {
             if (newTokens != null) {
                 yield put(logInToken(newTokens.token));
                 yield put(logInTokenRefresh(newTokens.refreshToken));
-            } else {
+            } /*else {
                 console.error("token refresh failed, logging out!");
                 yield put(logOut());   // logs out if tokens were not updated
-            }
+            }*/
             yield put(unblockRefresh());
         }
     } catch (e) {

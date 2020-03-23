@@ -1,22 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Checkbox from "../checkbox/checkbox";
-import './userMaintainList.scss'
-import Popup from "reactjs-popup";
-import { ErrorMessage } from "../elements/elements";
-import { Link, Redirect } from "react-router-dom";
-import AddDomainModal from "../addDomainModal/addDomainModal";
+import React from 'react';
+import './userMaintainList.scss';
+import { Redirect } from "react-router-dom";
 import AddUserModal from "../addUserModal/addUserModal";
-import DeleteUser from "../deleteUser/deleteUser";
-import DeleteDomain from "../deleteDomain/deleteDomain";
 import EditUserModal from "../editUserModal/editUserModal";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
 function UserMaintainList(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
-
 
     function doFilter() {
         var input, filter, table, tr, td, i, txtValue;
@@ -29,8 +20,6 @@ function UserMaintainList(props) {
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByClassName("userNameTd")[0];
             if (td) {
-                console.log(td)
-
                 try {
                     txtValue = td.querySelector('.userName').textContent;  //td.textContent || td.innerText;
                 }
@@ -56,11 +45,12 @@ function UserMaintainList(props) {
                     <div className="container d-flex searchContainer">
                         <div className="d-flex justify-content-start domainButton">
                             <AddUserModal
-                                callbackFetch={props.callbackReFetchDomains}
                                 appendUserList={props.appendUserList}
-                                endpoint={props.endpoint} />
+                                endpoint={props.endpoint}
+                                fetches={props.fetches}
+                            />
                         </div>
-                        <input className="searchBox form-control" type="text" id="usersListSearch" onKeyUp={doFilter} placeholder="Search for Services.."></input>
+                        <input className="searchBox form-control" type="text" id="usersListSearch" onKeyUp={doFilter} placeholder="Search for Users.."/>
                     </div>
                     <div className="container table-responsive space1">
                         <div className="TableDiv">
@@ -74,25 +64,16 @@ function UserMaintainList(props) {
                                     <th className="text-center" width="10%">Maintenance</th>
                                 </tr>
                                 {
-                                    props.userListError === true ?
-                                        (
-                                            <ErrorMessage
-                                                message="User List error"
-                                            />
-                                        )
-                                        :
-                                        (
-                                            Boolean(props.userList) === true &&
-                                            props.userList.map((item) => {
-                                                return <SingleUser
-                                                    user={item}
-                                                    endpoint={props.endpoint}
-                                                    changeUserList={props.changeUserList}
-                                                />
-                                            })
-                                        )
+                                    Boolean(props.userList) === true &&
+                                    props.userList.map((item) => {
+                                        return <SingleUser
+                                            user={item}
+                                            endpoint={props.endpoint}
+                                            changeUserList={props.changeUserList}
+                                            fetches={props.fetches}
+                                        />
+                                    })
                                 }
-
                             </table>
                         </div>
                     </div>
@@ -164,6 +145,7 @@ function SingleUser(props) {
                                         changeUserList={props.changeUserList}
                                         endpoint={props.endpoint}
                                         appendUserList={props.appendUserList}
+                                        fetches={props.fetches}
                                     />
                                 </div>
                             </td>
