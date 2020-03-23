@@ -8,6 +8,7 @@ import "eva-icons/style/eva-icons.css"
 import {createStore} from "redux";
 import rootReducer from "./reducers/index";
 import {Provider} from 'react-redux';
+import './assets/fonts/Roboto-Regular.ttf';
 
 //ads
 
