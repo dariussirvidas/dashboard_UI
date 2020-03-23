@@ -64,6 +64,7 @@ function UserMaintainList(props) {
                     <div className="container table-responsive space1">
                         <div className="TableDiv">
                             <table id="usersList" className="Table css-serial" align="center">
+                                <thead>
                                 <tr>
                                     <th width="2%">#</th>
                                     <th className="text-left" width="13%">Username</th>
@@ -73,6 +74,7 @@ function UserMaintainList(props) {
                                     <th className="text-left" width="7%">Role</th>
                                     <th className="text-center" width="10%">Maintenance</th>
                                 </tr>
+                                </thead>
                                 {
                                     props.userListError === true ?
                                         (
@@ -117,6 +119,7 @@ function SingleUser(props) {
                     )
                     :
                     (
+                        <tbody>
                         <tr align="center">
                             <td className="css-serialrow"></td>
                             <td className="text-truncate">
@@ -168,6 +171,7 @@ function SingleUser(props) {
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
                     )
             }
         </>

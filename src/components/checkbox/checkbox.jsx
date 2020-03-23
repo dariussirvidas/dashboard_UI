@@ -10,7 +10,7 @@ function Checkbox(props) {
 
     return (
         <>
-            <input type="checkbox" checked={props.active} onClick={changeActiveState}></input>
+            <input type="checkbox" defaultChecked={props.active} onClick={changeActiveState}></input>
         </>
     );
 
