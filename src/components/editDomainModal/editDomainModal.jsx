@@ -163,7 +163,7 @@ function EditDomain(props) {
 
     return (
         <>
-            <a class="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
+            <a className="btn btn-link btn-sm txt" variant="primary" onClick={handleShow}>
                 <i className="material-icons iconHover">&#xe254;</i>
             </a>
 

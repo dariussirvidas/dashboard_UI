@@ -7,11 +7,11 @@ function Footer() {
       <footer>
         <h1>This is a sad attempt to use Footer</h1>
         <button type="button" className="btn-hero-disabled">
-          <i class="eva eva-shopping-cart"></i>
+          <i className="eva eva-shopping-cart"></i>
           Primary Button
         </button>
         <button type="button" className="btn-hero">
-          <i class="eva eva-shopping-cart-outline"></i>
+          <i className="eva eva-shopping-cart-outline"></i>
           Primary Button
         </button>
         <button type="button" className="btn-grey">
@@ -21,16 +21,16 @@ function Footer() {
           Secondary Button
         </button>
         <button type="button" className="btn-hero-round">
-          <i class="eva  eva-2x eva-edit-outline"></i>
+          <i className="eva  eva-2x eva-edit-outline"></i>
         </button>
         <button type="button" className="btn-hero-round-disabled">
-          <i class="eva  eva-2x eva-edit"></i>
+          <i className="eva  eva-2x eva-edit"></i>
         </button>
         <button type="button" className="btn-grey-round">
-          <i class="eva  eva-2x eva-edit"></i>
+          <i className="eva  eva-2x eva-edit"></i>
         </button>
         <button type="button" className="btn-grey-round-disabled">
-          <i class="eva  eva-2x eva-edit"></i>
+          <i className="eva  eva-2x eva-edit"></i>
         </button>
         <h1>Links</h1>
         <a href="#" className="textlink-1">

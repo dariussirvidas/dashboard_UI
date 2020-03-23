@@ -22,6 +22,7 @@ function Sticker(props) {
     const [isLogsVisible, setIsLogsVisible] = useState(false);
 
     return (
+        
         <div>
             <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '19rem'}}>
                 <Card.Header
@@ -32,7 +33,7 @@ function Sticker(props) {
                     {props.item.service_Name}
                 </Card.Header>
                 <Card.Body>
-                    <Card.Text>
+                    
                         <div className="tooltip-wrap text-left">
                             <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip"
                                data-placement="top" title={props.domainPing.domainUrl}>
@@ -84,10 +85,11 @@ function Sticker(props) {
                             />
                         }
 
-                    </Card.Text>
+                    
                 </Card.Body>
             </Card>
         </div>
+        
     );
 
 }
