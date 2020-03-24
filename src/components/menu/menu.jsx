@@ -29,7 +29,7 @@ function Menu(props) {
                                      height="20"/>{userData.username}
                             </h5>
                             <div className="dropleft">
-                                <a className="offset-5" href="#" id="imageDropdown" data-toggle="dropdown">
+                                <a className="offset-5" id="imageDropdown" data-toggle="dropdown">
                                     <img src={Menu_icon} width="20" height="20" alt=""/>
                                 </a>
                                 <ul className="dropdown-menu" role="menu" aria-labelledby="imageDropdown">
