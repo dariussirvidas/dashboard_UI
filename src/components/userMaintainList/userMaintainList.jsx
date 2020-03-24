@@ -70,6 +70,7 @@ function UserMaintainList(props) {
                                     Boolean(props.userList) === true &&
                                     props.userList.map((item) => {
                                         return <SingleUser
+                                            key={item.id}
                                             user={item}
                                             endpoint={props.endpoint}
                                             changeUserList={props.changeUserList}
