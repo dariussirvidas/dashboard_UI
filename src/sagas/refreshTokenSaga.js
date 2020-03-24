@@ -18,7 +18,7 @@ function* refreshTokenSaga() {
             yield put(unblockRefresh());
         }
     } catch (e) {
-        console.log("refresh error: " + e.message);
+        console.error("refresh error: " + e.message);
         yield put(unblockRefresh());
     }
 }

@@ -120,18 +120,7 @@ function SingleService(props) {
 
     function getData() {
         fetchGetLogs()
-            .then((statusCode) => {
-                if (statusCode === 200) {
-                    console.log("status code 200");
-                } else if (statusCode === 401) {
-                    console.log("status code 401");
-                    alert('Unauthenticated')
-                } else {
-                    console.log("status code " + statusCode + ", unhandled exception")
-                }
-
-            })
-            .catch((error) => {
+            .then(() => {}).catch((error) => {
                 console.error("Error while fetching log list: " + error);
             });
     }
