@@ -1,16 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import Sticker from "../sticker/sticker";
-
 import CardDeck from "react-bootstrap/CardDeck";
 import './stickerList.scss';
-import {ErrorMessage, LoadingSpinner} from "../elements/elements";
-import {useSelector, useDispatch} from "react-redux";
-
+import {ErrorMessage} from "../elements/elements";
 
 function StickerList(props) {
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
 
     return (
         <div>
@@ -22,15 +16,18 @@ function StickerList(props) {
                                 props.domainList.status !== 404 ?
                                     (
                                         props.domainList.map((item) => {
-                                            if (item.deleted !== true)
+                                            if (item.deleted !== true) {
                                                 return (
                                                     <SingleService
                                                         item={item}
                                                         endpoint={props.endpoint}
                                                         changeDomainList={props.changeDomainList}
                                                         logs={props.logs}
+                                                        fetches={props.fetches}
                                                     />
                                                 )
+                                            }
+                                            else return <></>
                                         })
                                     )
                                     :
@@ -52,27 +49,12 @@ function StickerList(props) {
 }
 
 function SingleService(props) {
-    const [domainPingResponseCode, setDomainPingResponseCode] = useState();
+
     const [requestResponseData, setRequestResponseData] = useState({status: "No response yet"});
-    const [requestLatency,setRequestLatency] = useState({status: "No response yet"});
-    const [domainPingError, setDomainPingError] = useState("false"); //erroras isbackendo invividualiam requestui
-    const [latencyError, setLatencyError] = useState("false"); //erroras isbackendo invividualiam requestui
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
 
     useEffect(() => {
-
         pingDomain();
-
     }, []);
-
-    useEffect(() => {
-
-        pingLatency();
-
-    }, []);
-
 
     const [timer, setTimer] = useState(props.item.interval_Ms);
 
@@ -91,22 +73,16 @@ function SingleService(props) {
     }, [timer]);
 
     async function fetchFromApi(endpoint) {
-
-        const response = await fetch(endpoint, {
-            method: "GET",
-            headers: {
-                'Authorization': 'Bearer ' + token
-            }
-        });
-
-        const data = await response.json();
-        // console.log("data: ", data); 
-        // console.log("response: ", response.status);
-        setDomainPingResponseCode(response.status);
-        // console.log("response again: ", response.status);
-        return data;
+        let response = await props.fetches.fetchGet(endpoint);
+        try {
+            /*setDomainPingResponseCode(response.status);*/
+            return await response.json();
+        }
+        catch (error) {
+            console.error("fetchFromApi error: " + error);
+            return null;
+        }
     }
-
 
     function pingDomain() {
 
@@ -115,32 +91,16 @@ function SingleService(props) {
                 setRequestResponseData(data);
 
                 // if the ping response is not success, refetch that single domain to get last failure date
-                if (data.status !== "Success")
+                if (data.status >= 300)
                     fetchSingleDomain(props.endpoint)
             })
             .catch(error => {
-                console.error("error while fetching domains: " + error);
-                setDomainPingError(true);
+                console.error("error while fetching domains (#1): " + error);
+                /*setDomainPingError(true);*/
                 setRequestResponseData("error");
             });
     }
 
-    function pingLatency() {
-
-        fetchFromApi(props.endpoint + "domain/" + props.item.id) //fetchinam single service .../getservice/243
-            .then(data => {
-                setRequestLatency(data);
-
-                // if the ping response is not success, refetch that single domain to get last failure date
-                if (data.status !== "Success")
-                    fetchSingleDomain(props.endpoint)
-            })
-            .catch(error => {
-                console.error("error while fetching domains: " + error);
-                setLatencyError(true);
-                setRequestLatency("error");
-            });
-    }
 
     function fetchSingleDomain(endpoint) {
         fetchFromApi(endpoint + "domain/" + props.item.id)
@@ -156,44 +116,37 @@ function SingleService(props) {
     // new logs stuff
 
     const [logs, setLogs] = useState([]);
-    const [logsError, setLogsError] = useState();
 
     function getData() {
-        fetchGet()
+        fetchGetLogs()
             .then((statusCode) => {
                 if (statusCode === 200) {
                     console.log("status code 200");
                 } else if (statusCode === 401) {
-                    console.log("status code 401, do something else");
+                    console.log("status code 401");
                     alert('Unauthenticated')
                 } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception I guess")
+                    console.log("status code " + statusCode + ", unhandled exception")
                 }
 
             })
             .catch((error) => {
-                setLogsError(true);
                 console.error("Error while fetching log list: " + error);
             });
     }
 
-    async function fetchGet() {
-        const response = await fetch(props.endpoint + "logs/" + props.item.id, {
-                method: "GET",
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                }
-            }
-        );
-        const LogList = await response.json();
-        await setLogs(LogList);
-        return response.status;
+    async function fetchGetLogs() {
+        const response = await props.fetches.fetchGet(props.endpoint + "logs/" + props.item.id);
+        if (response.status === 200) {
+            const LogList = await response.json();
+            await setLogs(LogList);
+            return response.status;
+        }
     }
 
     useEffect(() => {
         getData();
     }, []);
-
 
     return (
 
@@ -203,9 +156,7 @@ function SingleService(props) {
                 <Sticker
                     item={props.item}
                     domainPing={requestResponseData}
-                    domainLatency={requestLatency}
                     checkIn={timer}
-                    fetshSingleDomain={fetchSingleDomain}
                     logs={logs}
                 />
             }

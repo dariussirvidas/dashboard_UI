@@ -1,5 +1,15 @@
 @import "../_ux_global_design.scss";
 
+.css-serial {
+  counter-reset: serial-number; /* Set the serial number counter to 0 */
+}
+
+.css-serialrow:before {
+  counter-increment: serial-number; /* Increment the serial number counter */
+  content: counter(serial-number); /* Display the counter */
+}
+
+
 table {
   border-collapse: collapse;
   width: 1260px !important;

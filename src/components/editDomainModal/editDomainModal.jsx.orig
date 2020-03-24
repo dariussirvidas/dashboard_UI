@@ -88,8 +88,6 @@ function EditDomain(props) {
         }
 
         function testinam(event) {
-            console.log(props.domain.auth_User)
-            console.log(props.domain.auth_Password)
             event.preventDefault();
         }
 
@@ -168,9 +166,6 @@ function EditDomain(props) {
             Latency_Threshold_Ms: parseInt(event.target.threshold.value),
             active: event.target.active.checked
         };
-        console.log("full object for sending:", dataForSending);
-        console.log("JSON string:", JSON.stringify(dataForSending));
-        console.log("domain obj: ", props.domain);
         submitData(props.endpoint, props.changeDomainList, dataForSending);
         event.preventDefault();
     }
@@ -182,7 +177,6 @@ function EditDomain(props) {
                     // creates a new object. uses the prop domain as a base and overwrites any old data with data from
                     // the input fields
                     const editedDomain = Object.assign({...props.domain}, dataForSending);
-                    console.log(response)
                     changeDomainList(editedDomain)
                     handleClose();
                     setResponse("Domain successfuly updated")

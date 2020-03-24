@@ -59,28 +59,36 @@ $clr-amber: #ffbf00;
     src: local("MetaPro"), local("MetaPro-Bold"),
       url(../assets/fonts/MetaPro-Bold.ttf) format("ttf");
   }
-  
+  @font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Roboto"), local("Roboto-Regular"),
+      url(../assets/fonts/Roboto-Regular.ttf) format("ttf");
+  }
   html {
-    font-family: "MetaPro", sans-serif;
+    font-family: "Roboto", sans-serif;
   }
   
   //Variables
   
   $fnt-mpr: "MetaPro-Regular";
   $fnt-mpb: "MetaPro-Bold";
+  $fnt-rob: "Roboto";
 
   
   //Classes
   
   .cl-h1 {
-    font-family: $fnt-mpb;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-size: 32px;
     text-align: left;
+    font-weight: bold;
   }
   
   .cl-intro {
-    font-family: $fnt-mpb;
+    font-family: $fnt-rob;
     color: $clr-icdg-1;
     font-weight: bold;
     font-size: 24px;
@@ -88,14 +96,15 @@ $clr-amber: #ffbf00;
   }
   
   .cl-h2 {
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-size: 16px;
     text-align: left;
+    font-weight: bold;
   }
   
   .cl-h3 {
-    font-family: $fnt-mpb;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-weight: bold;
     font-size: 16px;
@@ -103,14 +112,14 @@ $clr-amber: #ffbf00;
   }
   
   .cl-copy-16 {
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-size: 16px;
     text-align: left;
   }
   
   .cl-copy-14 {
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-size: 14px;
     text-align: left;
@@ -118,7 +127,7 @@ $clr-amber: #ffbf00;
   }
   
   .cl-copy-12 {
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     color: $clr-black;
     font-size: 12px;
     text-align: left;
@@ -139,7 +148,7 @@ BUTTONS
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     &:hover {
       background-color: mix($clr-black, $clr-gr-1, 10%);
     }
@@ -155,7 +164,7 @@ BUTTONS
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;
@@ -200,7 +209,7 @@ BUTTONS
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     &:hover {
       background-color: mix($clr-black, $clr-hero, 10%);
       color: mix($clr-black, $clr-white, 10%);
@@ -219,7 +228,7 @@ BUTTONS
     outline-style: none;
     box-shadow: none;
     border-color: transparent;
-    font-family: $fnt-mpr;
+    font-family: $fnt-rob;
     opacity: 0.3;
     cursor: not-allowed;
     pointer-events: none;

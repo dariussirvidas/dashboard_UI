@@ -1,27 +1,19 @@
-import React, {Component, useState} from 'react';
-import Button from "react-bootstrap/Button";
+import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import './addUserModal.scss';
-
-import AddDomainModal from "../addDomainModal/addDomainModal";
 import './addUserModal.scss';
 import {validateConfirmPassword} from "../../common";
-
-import {useSelector, useDispatch} from "react-redux";
 import { NotificationManager } from 'react-notifications';
 
 function AddUserModal(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
     return (
         <div>
             <UserModal
-                callbackFetch={props.callbackReFetchUsers}
                 appendUserList={props.appendUserList}
-                endpoint={props.endpoint}/>
+                endpoint={props.endpoint}
+                fetches={props.fetches}
+            />
         </div>
     );
 
@@ -29,18 +21,13 @@ function AddUserModal(props) {
 
 function UserModal(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
+    const [response, setResponse] = useState(); //response from server
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false);
     };
-    const handleShow = () => setShow(true);
-
-    const [response, setResponse] = useState(); //response from server
+    const handleShow = () => {setResponse(""); setShow(true); };
 
     return (
         <>
@@ -69,7 +56,6 @@ function UserModal(props) {
 
     function handleSubmit(event) {
 
-
         try {
             var dataForSending = {
                 firstName: event.target.firstName.value,
@@ -80,61 +66,35 @@ function UserModal(props) {
                 userEmail: event.target.userEmail.value
             };
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
-
-        console.log("full object for Posting:", dataForSending);
-        console.log("full object for sending JSON:", JSON.stringify(dataForSending));
         submitData(dataForSending);
         event.preventDefault();
     }
 
     function submitData(dataForSending) {
-        fetchPost(dataForSending)
-            .then((response) => {
-                console.log("POSTING USER status code = " + response.status);
-                if (response.status > 199 && response.status < 300){
-                    console.log(response.statusText)
-                    console.log("success!")
-                    setResponse("User created")
-                    let responseBody = response.json()
-                    .then((responseBody) => {
-                        dataForSending.id = responseBody.id
-                        dataForSending.role = "User" //pradzioj sukuriant userius, role buna userio.
-                        props.appendUserList(dataForSending)
-                        
-                    })
-                    handleClose();
-                    NotificationManager.success('New user added!', 'Successful!', 3000);
-                }
-                else{
-                    let duomenys = response.json()
-                    .then((duomenys) => {
-                        setResponse(duomenys.message)
-                        console.log(duomenys.message)
-                    })
-                }
-            })
-
-            .catch((error) => {
-                console.error("error while fetching users:" + error);
-                NotificationManager.error('Something went wrong!', 'Error!', 3000);
-            });
-    }
-    async function fetchPost(dataForSending) {
-        const response = await fetch(props.endpoint + "users/admin/register",
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+        props.fetches.fetchPost(props.endpoint + "users/admin/register", dataForSending).then((response) => {
+            console.log("POSTING USER status code = " + response.status);
+            if (response.status > 199 && response.status < 300) {
+                setResponse("User created");
+                response.json().then((responseBody) => {
+                    dataForSending.id = responseBody.id;
+                    dataForSending.role = "User"; //pradzioj sukuriant userius, role buna userio.
+                    props.appendUserList(dataForSending)
+                });
+                handleClose();
+                NotificationManager.success('New user added!', 'Successful!', 3000);
+            } else {
+                response.json().then((duomenys) => {
+                    setResponse(duomenys.message);
+                })
             }
-        );
-        const data = response;
-        return data;
+        }).catch((error) => {
+            console.error("error while fetching users:" + error);
+            NotificationManager.error('Something went wrong!', 'Error!', 3000);
+        });
     }
+
 }
 
 export default AddUserModal;

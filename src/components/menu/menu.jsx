@@ -1,17 +1,16 @@
-import React, {Component, useState} from 'react';
+import React from 'react';
 import Logo from '../../Content/Festo logo.svg';
 import Menu_icon from '../../Content/hamburger_menu.png';
 import Dropdown from 'react-bootstrap/Dropdown';
 import './menu.scss';
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
 import User_icon from '../../Content/user_icon.png';
-import {logIn, logOut} from "../../actions";
+import {logOut} from "../../actions";
 
 function Menu(props) {
 
     const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
     const userData = useSelector(state => state.userData);
     const dispatch = useDispatch();
 
@@ -51,7 +50,6 @@ function Menu(props) {
                                     </Dropdown.Item>
                                     <Dropdown.Item>
                                         <button className="btn text-left" type="button" onClick={() => {
-
                                             dispatch(logOut());
                                             props.purgeLocalState();
                                         }}>Log Out
@@ -66,14 +64,5 @@ function Menu(props) {
         </>
     );
 }
-
-// <ul className="menu">
-//     <li><Link to="/">Home Page</Link></li>
-//     <li><Link to="/domains">Maintaining list</Link></li>
-//     <li><Link to="/topics">Comment</Link></li>
-//     <li><Link to="/login">Login</Link></li>
-//     <li><Link to="/users">User maintaining list</Link></li>
-// </ul>
-
 
 export default Menu;
