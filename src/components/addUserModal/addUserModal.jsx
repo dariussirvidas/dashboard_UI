@@ -27,7 +27,7 @@ function UserModal(props) {
     const handleClose = () => {
         setShow(false);
     };
-    const handleShow = () => setShow(true);
+    const handleShow = () => {setResponse(""); setShow(true); };
 
     return (
         <>
