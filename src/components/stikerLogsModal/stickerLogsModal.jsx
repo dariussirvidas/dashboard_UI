@@ -42,6 +42,7 @@ function StickerModal(props) {
                                         {
                                             props.logs.slice(0, 9).map((item) => {
                                                 return <SingleLog
+                                                    key={item.id}
                                                     log={item}
                                                 />
                                             })

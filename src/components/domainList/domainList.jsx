@@ -72,6 +72,7 @@ function DomainList(props) {
                                             (
                                                 props.domainList.map((item) => {
                                                     return <SingleDomain
+                                                        key={item.id}
                                                         d={item}
                                                         endpoint={props.endpoint}
                                                         changeDomainList={props.changeDomainList}
