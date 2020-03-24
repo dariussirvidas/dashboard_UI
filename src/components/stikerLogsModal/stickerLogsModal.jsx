@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {useSelector} from "react-redux";
 import Modal from "react-bootstrap/Modal";
 import './stickerLogsModal.scss';
 import Col from "react-bootstrap/Col";

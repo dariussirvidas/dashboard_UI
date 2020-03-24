@@ -1,25 +1,17 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import "./sticker.scss";
 import Card from 'react-bootstrap/Card';
-import ListGroup from "react-bootstrap/ListGroup";
-import ListGroupItem from "react-bootstrap/ListGroupItem";
-import {useSelector} from "react-redux";
 import StickerLogsModal from "../stikerLogsModal/stickerLogsModal";
 
 function Sticker(props) {
     function getClassNameFromStatus() {
         if (props.domainPing.status >= 200 && props.domainPing.status <= 299) {
-            if (props.domainPing.requestTime > props.domainLatency.latency_Threshold_Ms)
+            if (props.domainPing.requestTime > props.item.latency_Threshold_Ms)
                 return "tile-amber";
             else return "tile-success";
         } else
             return "tile-fail";
     }
-
-
-    // log stuff
-
-    const [isLogsVisible, setIsLogsVisible] = useState(false);
 
     return (
         
@@ -36,9 +28,9 @@ function Sticker(props) {
                     
                         <div className="tooltip-wrap text-left">
                             <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip"
-                               data-placement="top" title={props.domainPing.domainUrl}>
+                               data-placement="top" title={props.item.url}>
                                 {
-                                    props.domainPing.domainUrl
+                                    props.item.url
                                 }
                             </p>
                         </div>
@@ -93,6 +85,5 @@ function Sticker(props) {
     );
 
 }
-
 
 export default Sticker;

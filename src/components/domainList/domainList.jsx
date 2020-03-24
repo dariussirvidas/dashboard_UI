@@ -1,24 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import './domainList.scss';
 import Checkbox from "../checkbox/checkbox";
-import {ErrorMessage, LoadingSpinner} from "../elements/elements";
+import {ErrorMessage} from "../elements/elements";
 import AddDomainModal from "../addDomainModal/addDomainModal";
 import EditDomainModal from "../editDomainModal/editDomainModal"
-import DeleteDomain from "../deleteDomain/deleteDomain";
-
-import {useSelector, useDispatch} from "react-redux";
-import StickerLogsModal from "../stikerLogsModal/stickerLogsModal";
-
 
 function DomainList(props) {
-
-    function PopUp() {
-
-        const [show, setShow] = useState(false);
-        const handleClose = () => setShow(false);
-        const handleShow = () => setShow(true);
-
-    }
 
     function doFilter() {
         var input, filter, table, tr, td, i, txtValue;
@@ -31,7 +18,6 @@ function DomainList(props) {
         for (i = 0; i < tr.length; i++) {
             td = tr[i].getElementsByClassName("serviceNameTd")[0];
             if (td) {
-
                 try {
                     txtValue = td.querySelector('.serviceName').textContent;  //td.textContent || td.innerText;
                 } catch (error) {
@@ -55,10 +41,11 @@ function DomainList(props) {
                 <div className="d-flex domainButton">
                     <AddDomainModal
                         appendDomainList={props.appendDomainList}
-                        endpoint={props.endpoint}/>
+                        endpoint={props.endpoint}
+                        fetches={props.fetches}
+                    />
                 </div>
-                <input className="searchBox form-control" type="text" id="domainsListSearch" onKeyUp={doFilter}
-                       placeholder="Search for Services.."></input>
+                <input className="searchBox form-control" type="text" id="domainsListSearch" onKeyUp={doFilter} placeholder="Search for Services.."/>
             </div>
             <div className="container table-responsive spaceTable">
                 <div className="TableDiv">
@@ -77,33 +64,34 @@ function DomainList(props) {
                         </tr>
                         </thead>
                         <tbody>
-                        {
-                            // checks for errors, if there are any, do not render domains
-                            props.domainList !== "error" ?
-                                (
-                                    props.domainList.status !== 404 ?
-                                        (
-                                            props.domainList.map((item) => {
-                                                return <SingleDomain
-                                                    d={item}
-                                                    endpoint={props.endpoint}
-                                                    changeDomainList={props.changeDomainList}
-                                                />
-                                            })
-                                        )
-                                        :
-                                        (
-                                            <>
-                                            </>
-                                        )
-                                )
-                                :
-                                (
-                                    <ErrorMessage
-                                        message="Error while fetching list"
-                                    />
-                                )
-                        }
+                            {
+                                // checks for errors, if there are any, do not render domains
+                                props.domainList !== "error" ?
+                                    (
+                                        props.domainList.status !== 404 ?
+                                            (
+                                                props.domainList.map((item) => {
+                                                    return <SingleDomain
+                                                        d={item}
+                                                        endpoint={props.endpoint}
+                                                        changeDomainList={props.changeDomainList}
+                                                        fetches={props.fetches}
+                                                    />
+                                                })
+                                            )
+                                            :
+                                            (
+                                                <>
+                                                </>
+                                            )
+                                    )
+                                    :
+                                    (
+                                        <ErrorMessage
+                                            message="Error while fetching list"
+                                        />
+                                    )
+                            }
                         </tbody>
                     </table>
                 </div>
@@ -115,68 +103,10 @@ function DomainList(props) {
 
 function SingleDomain(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
-
-    // this is currently fetching one by one, very sluggish if theres a lot of domains
-    const [editBox, setEditBox] = useState(false);
-
-    //  will need to edit this when we get the final edit form
-    async function fetchPut(endpoint, dataForSending) {
-        const response = await fetch(endpoint,
-            {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // 'Content-Type': 'application/x-www-form-urlencoded',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
-            }
-        );
-        const data = await response.json();
-        return data;
-    }
-
-    function submitData(endpoint, changeDomainList, dataForSending) {
-        fetchPut(endpoint + "domain/" + dataForSending.id, dataForSending)
-            .then((data) => {
-                changeDomainList(data)
-            })
-
-            .catch((error) => {
-                console.error("error while fetching domains:" + error);
-            });
-    }
-
-
-    function handleSubmit(event) {
-
-        let dataForSending = Object.assign({}, props.d);
-
-        dataForSending.url = event.target.Url_.value;
-        dataForSending.service_Name = event.target.Url_.value;
-        dataForSending.notification_Email = event.target.Email.value;
-        dataForSending.interval_Ms = parseInt(event.target.IntervalMs.value);
-        dataForSending.service_Type = event.target.domain_type.value;
-        dataForSending.parameters = event.target.Parameters.value;
-        submitData(props.endpoint, props.changeDomainList, dataForSending);
-        event.preventDefault();
-    }
-
-
     function getDefaultSelectionServiceType(name) {
         let data;
-        switch (name) {
-            case 0:
-                data = 'Rest';
-                break;
-            case 1:
-                data = 'Soap';
-                break
-        }
+        if (name === 0) data = 'Rest';
+        else data = 'Soap';
         return data;
     }
 
@@ -199,6 +129,7 @@ function SingleDomain(props) {
                             // requires the whole domain to work...
 
                             domain={props.d}
+                            fetches={props.fetches}
                         />
                     </td>
                     <td className="text-truncate serviceNameTd">
@@ -238,6 +169,7 @@ function SingleDomain(props) {
                                 domain={props.d}
                                 changeDomainList={props.changeDomainList}
                                 endpoint={props.endpoint}
+                                fetches={props.fetches}
                             />
                         </div>
                     </td>

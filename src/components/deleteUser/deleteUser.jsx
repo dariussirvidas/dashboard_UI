@@ -1,32 +1,13 @@
-import React, {Component, useState} from 'react';
-
-
-import Button from "react-bootstrap/Button";
+import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import './deleteUser.scss';
 import { NotificationManager } from 'react-notifications';
-import {useSelector, useDispatch} from "react-redux";
 
 function DeleteUser(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
-
-    console.log(props.user)
     async function fetchPutDelete() {
-        const response = await fetch(props.endpoint + 'users/' + props.user.id, {
-                headers: {
-                    // 'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                method: 'DELETE',
-            // body: JSON.stringify(props.user.id)
-            }
-        );
-        let statusCode = response.status;
-        return statusCode;
+        const response = await props.fetches.fetchDelete(props.endpoint + 'users/' + props.user.id);
+        return response.status;
     }
     function deleteUser() {
         fetchPutDelete()
@@ -37,10 +18,8 @@ function DeleteUser(props) {
                     NotificationManager.success('User deleted!', 'Successful!', 3000);
                     props.changeUserList(dataForSending)
 
-                } else if (statusCode === 400) {
-                    console.log("status code 400, do something else");
-                } else {
-                    console.log("status code " + statusCode + ", this is an unhandled exception")
+                } else  {
+                    NotificationManager.error('Failed to delete user!', 'Error!', 3000);
                 }
 
             })
