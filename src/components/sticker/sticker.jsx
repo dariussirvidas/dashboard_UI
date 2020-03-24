@@ -14,8 +14,9 @@ function Sticker(props) {
     }
 
     return (
+        
         <div>
-            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '20rem'}}>
+            <Card className="cardMargin" border="secondary" style={{width: '18rem', height: '19rem'}}>
                 <Card.Header
                     className={
                         "text-truncate cl-h3 text-center Card " + getClassNameFromStatus()
@@ -24,7 +25,7 @@ function Sticker(props) {
                     {props.item.service_Name}
                 </Card.Header>
                 <Card.Body>
-                    <Card.Text>
+                    
                         <div className="tooltip-wrap text-left">
                             <p className="text-truncate cl-copy-14 FixedSize text-left" data-toggle="tooltip"
                                data-placement="top" title={props.item.url}>
@@ -76,10 +77,11 @@ function Sticker(props) {
                             />
                         }
 
-                    </Card.Text>
+                    
                 </Card.Body>
             </Card>
         </div>
+        
     );
 
 }

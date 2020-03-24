@@ -20,8 +20,7 @@ function DomainList(props) {
             if (td) {
                 try {
                     txtValue = td.querySelector('.serviceName').textContent;  //td.textContent || td.innerText;
-                }
-                catch (error) {
+                } catch (error) {
                     txtValue = '';
                 }
 
@@ -50,18 +49,19 @@ function DomainList(props) {
             </div>
             <div className="container table-responsive spaceTable">
                 <div className="TableDiv">
-                    <table id="domainsList" className="Table table-hover" align="center">
+                    <table id="domainsList" className="Table table-hover css-serial" align="center">
                         <thead>
-                            <tr>
-                                <th className="text-center" width="5%">Active</th>
-                                <th className="text-left" width="9%">Service Name</th>
-                                <th className="text-center" width="7%">Service Type</th>
-                                <th className="text-left" data-field="url" data-filter-control="input" width="15%">URL</th>
-                                <th className="text-left" width="15%">Emails</th>
-                                <th className="text-center" width="8%">Check interval</th>
-                                <th className="text-center" width="6%">Threshold</th>
-                                <th className="text-center" width="7%">Maintenance</th>
-                            </tr>
+                        <tr>
+                            <th width="2%">#</th>
+                            <th className="text-center" width="5%">Active</th>
+                            <th className="text-left" width="9%">Service Name</th>
+                            <th className="text-center" width="7%">Service Type</th>
+                            <th className="text-left" data-field="url" data-filter-control="input" width="15%">URL</th>
+                            <th className="text-left" width="15%">Emails</th>
+                            <th className="text-center" width="8%">Check interval</th>
+                            <th className="text-center" width="6%">Threshold</th>
+                            <th className="text-center" width="7%">Maintenance</th>
+                        </tr>
                         </thead>
                         <tbody>
                             {
@@ -116,8 +116,8 @@ function SingleDomain(props) {
             {
                 // checks if the domain is flagged as deleted, if it is not, render it
                 props.d.deleted === false &&
-
                 <tr align="center">
+                    <td className="css-serialrow"></td>
                     <td className="text-center">
                         <Checkbox
                             endpoint={props.endpoint}
@@ -135,7 +135,7 @@ function SingleDomain(props) {
                     <td className="text-truncate serviceNameTd">
 
                         <p className="text-truncate serviceName" data-toggle="tooltip" data-placement="top"
-                            title={props.d.service_Name}>
+                           title={props.d.service_Name}>
                             {props.d.service_Name}
                         </p>
 
@@ -146,7 +146,7 @@ function SingleDomain(props) {
                         <div className="text-truncate">
                             <div className="tooltip-wrap">
                                 <p className="text-truncate" data-toggle="tooltip" data-placement="top"
-                                    title={props.d.url}>
+                                   title={props.d.url}>
                                     {props.d.url}
                                 </p>
                             </div>
@@ -156,7 +156,7 @@ function SingleDomain(props) {
                     <td className="text-left" title="Email">
                         <div className="tooltip-wrap">
                             <p className="text-truncate" data-toggle="tooltip" data-placement="top"
-                                title={props.d.notification_Email}>{props.d.notification_Email}
+                               title={props.d.notification_Email}>{props.d.notification_Email}
                             </p>
                         </div>
                     </td>

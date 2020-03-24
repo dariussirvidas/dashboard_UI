@@ -54,8 +54,10 @@ function UserMaintainList(props) {
                     </div>
                     <div className="container table-responsive space1">
                         <div className="TableDiv">
-                            <table id="usersList" className="Table" align="center">
+                            <table id="usersList" className="Table css-serial" align="center">
+                                <thead>
                                 <tr>
+                                    <th width="2%">#</th>
                                     <th className="text-left" width="13%">Username</th>
                                     <th className="text-left" width="12%">Name</th>
                                     <th className="text-left" width="12%">Surname</th>
@@ -63,6 +65,7 @@ function UserMaintainList(props) {
                                     <th className="text-left" width="7%">Role</th>
                                     <th className="text-center" width="10%">Maintenance</th>
                                 </tr>
+                                </thead>
                                 {
                                     Boolean(props.userList) === true &&
                                     props.userList.map((item) => {
@@ -84,7 +87,6 @@ function UserMaintainList(props) {
                 <Redirect to="/">
                 </Redirect>
             )
-
     );
 }
 
@@ -99,7 +101,9 @@ function SingleUser(props) {
                     )
                     :
                     (
+                        <tbody>
                         <tr align="center">
+                            <td className="css-serialrow"></td>
                             <td className="text-truncate">
                                 <div className="tooltip-wrap text-left">
                                     <p className="text-truncate" data-toggle="tooltip" data-placement="top"
@@ -150,6 +154,7 @@ function SingleUser(props) {
                                 </div>
                             </td>
                         </tr>
+                        </tbody>
                     )
             }
         </>

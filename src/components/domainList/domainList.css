@@ -17,20 +17,27 @@ COLORS
   font-weight: 700;
   src: local("MetaPro"), local("MetaPro-Bold"), url(../assets/fonts/MetaPro-Bold.ttf) format("ttf");
 }
-
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: local("Roboto"), local("Roboto-Regular"), url(../assets/fonts/Roboto-Regular.ttf) format("ttf");
+}
 html {
-  font-family: "MetaPro", sans-serif;
+  font-family: "Roboto", sans-serif;
 }
 
 .cl-h1 {
-  font-family: "MetaPro-Bold";
+  font-family: "Roboto";
+  font-weight: bold;
   color: #333333;
   font-size: 32px;
   text-align: left;
 }
 
 .cl-intro {
-  font-family: "MetaPro-Bold";
+  font-family: "Roboto";
+  font-weight: bold;
   color: #b6bec6;
   font-weight: bold;
   font-size: 24px;
@@ -38,14 +45,16 @@ html {
 }
 
 .cl-h2 {
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
+  font-weight: bold;
   color: #333333;
   font-size: 16px;
   text-align: left;
 }
 
 .cl-h3 {
-  font-family: "MetaPro-Bold";
+  font-family: "Roboto";
+  font-weight: bold;
   color: #333333;
   font-weight: bold;
   font-size: 16px;
@@ -53,21 +62,21 @@ html {
 }
 
 .cl-copy-16 {
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
   color: #333333;
   font-size: 16px;
   text-align: left;
 }
 
 .cl-copy-14 {
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
   color: #333333;
   font-size: 14px;
   text-align: left;
 }
 
 .cl-copy-12 {
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
   color: #333333;
   font-size: 12px;
   text-align: left;
@@ -85,7 +94,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
 }
 
 .btn-grey:hover {
@@ -105,7 +114,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -154,7 +163,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
 }
 
 .btn-hero:hover {
@@ -176,7 +185,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "MetaPro-Regular";
+  font-family: "Roboto";
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
