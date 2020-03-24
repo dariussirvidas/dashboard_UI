@@ -33,27 +33,23 @@ function Menu(props) {
                                     <img src={Menu_icon} width="20" height="20" alt=""/>
                                 </a>
                                 <ul className="dropdown-menu" role="menu" aria-labelledby="imageDropdown">
-                                    <Dropdown.Item><Link className="btn text-left"
-                                                         to="/">Home</Link></Dropdown.Item>
-                                    <Dropdown.Item><Link className="btn text-left" to="/domains">Maintaining
-                                        List</Link></Dropdown.Item>
+                                    <Dropdown.Item className="btn text-left" href="/">Home</Dropdown.Item>
+                                    <Dropdown.Item className="btn text-left" href="/domains">Maintaining
+                                        List</Dropdown.Item>
                                     {
                                         userData.role === "Admin" &&
-                                        <Dropdown.Item><Link className="btn text-left" to="/users">User
+                                        <Dropdown.Item className="btn text-left" href="/users">User
                                             Maintaining
-                                            List</Link></Dropdown.Item>
+                                            List</Dropdown.Item>
                                     }
-                                    <Dropdown.Item>
-                                        <Link className="btn text-left" to="/logs">
+                                    <Dropdown.Item className="btn text-left" href="/logs">
                                             Logs
-                                        </Link>
                                     </Dropdown.Item>
-                                    <Dropdown.Item>
-                                        <button className="btn text-left" type="button" onClick={() => {
-                                            dispatch(logOut());
-                                            props.purgeLocalState();
-                                        }}>Log Out
-                                        </button>
+                                    <Dropdown.Item className="btn text-left" type="button" onClick={() => {
+                                        dispatch(logOut());
+                                        props.purgeLocalState();
+                                    }}>
+                                        Log Out
                                     </Dropdown.Item>
                                 </ul>
                             </div>

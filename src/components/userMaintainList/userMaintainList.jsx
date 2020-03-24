@@ -66,6 +66,7 @@ function UserMaintainList(props) {
                                     <th className="text-center" width="10%">Maintenance</th>
                                 </tr>
                                 </thead>
+                                <tbody>
                                 {
                                     Boolean(props.userList) === true &&
                                     props.userList.map((item) => {
@@ -78,6 +79,7 @@ function UserMaintainList(props) {
                                         />
                                     })
                                 }
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -102,7 +104,6 @@ function SingleUser(props) {
                     )
                     :
                     (
-                        <tbody>
                         <tr align="center">
                             <td className="css-serialrow"></td>
                             <td className="text-truncate">
@@ -155,7 +156,6 @@ function SingleUser(props) {
                                 </div>
                             </td>
                         </tr>
-                        </tbody>
                     )
             }
         </>

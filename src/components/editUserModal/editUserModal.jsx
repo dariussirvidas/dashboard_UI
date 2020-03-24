@@ -49,18 +49,10 @@ function EditUser(props) {
                                pattern="^[a-zA-Z]{1,64}$" title="Must be between 1 and 64 letters" required/>
                         <input type="email" placeholder="Email" defaultValue={props.user.userEmail} name="userEmail"
                                required maxLength="256"/>
-                        {
-                            props.user.role === "Admin" ?
-                                <select name="role" className="SelectFrom" required>
-                                    <option value="User">User</option>
-                                    <option value="Admin" selected={true}>Admin</option>
-                                </select>
-                                :
-                                <select name="role" className="SelectFrom" required>
-                                    <option value="User" selected={true}>User</option>
-                                    <option value="Admin">Admin</option>
-                                </select>
-                        }
+                        <select name="role" className="SelectFrom" defaultValue={props.user.role} required>
+                            <option value="User">User</option>
+                            <option value="Admin">Admin</option>
+                        </select>
                         <input id="password" type="password" placeholder="Password" name="password"
                                pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
                                title="Mininum 10 chars and at least one uppercase, lowercase, special character and a number"
@@ -75,7 +67,7 @@ function EditUser(props) {
                             endpoint={props.endpoint}
                             fetches={props.fetches}
                         />
-                        <div>{putResponse}</div>
+                        <div>{putResponse === "You can't change your role" ? putResponse : ""}</div>
                     </form>
                 </div>
             </Modal>
