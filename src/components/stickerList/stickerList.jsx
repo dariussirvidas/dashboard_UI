@@ -19,6 +19,7 @@ function StickerList(props) {
                                             if (item.deleted !== true) {
                                                 return (
                                                     <SingleService
+                                                        key={item.id}
                                                         item={item}
                                                         endpoint={props.endpoint}
                                                         changeDomainList={props.changeDomainList}
