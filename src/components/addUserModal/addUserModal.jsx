@@ -74,7 +74,6 @@ function UserModal(props) {
 
     function submitData(dataForSending) {
         props.fetches.fetchPost(props.endpoint + "users/admin/register", dataForSending).then((response) => {
-            console.log("POSTING USER status code = " + response.status);
             if (response.status > 199 && response.status < 300) {
                 setResponse("User created");
                 response.json().then((responseBody) => {

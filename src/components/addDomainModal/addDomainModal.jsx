@@ -187,7 +187,7 @@ function DomainModal(props) {
 
             };
         } catch (error) {
-            console.log(error)
+            console.error(error);
         }
 
         submitData(props.endpoint, props.appendDomainList, dataForSending);
