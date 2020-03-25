@@ -7,29 +7,33 @@ function Logs(props) {
             <div className="container table-responsive space">
                 <div className="TableDiv">
                     <table className="Table table-hover css-serial" align="center">
-                        <tr>
-                            <th width="2%">#</th>
-                            <th className="text-left">Service Name</th>
-                            <th className="text-center">Date</th>
-                            <th className="text-center">Time</th>
-                            <th className="text-center">Error</th>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th width="2%">#</th>
+                                <th className="text-left">Service Name</th>
+                                <th className="text-center">Date</th>
+                                <th className="text-center">Time</th>
+                                <th className="text-center">Error</th>
+                            </tr>
+                        </thead>
+                        <tbody>
                         {
                             Boolean(props.logs) === false ?
                                 (
                                     <>
-                                        <h1>NO LOGS TO SHOW</h1>
                                     </>
                                 )
                                 :
                                 (
                                     props.logs.slice(0, 9).map((item) => {
                                         return <SingleLog
+                                            key={item.id}
                                             logs={item}
                                         />
                                     })
                                 )
                         }
+                        </tbody>
                     </table>
                 </div>
             </div>

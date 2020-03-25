@@ -33,7 +33,6 @@ function EditDomain(props) {
         setBasicAuth(props.domain.basic_Auth);
         setShow(true);
         setTestResult("");
-        setResponse();
     };
 
     // GET/POST and REST/SOAP states
@@ -116,8 +115,6 @@ function EditDomain(props) {
         document.getElementById("myForm").style.visibility = "hidden";
     }
 
-    const [response, setResponse] = useState(); //response from server
-
     useEffect(()=>{validateParameters();}, [getIsRestSoapSelected]); //validates parameters on serviceType change
 
     return (
@@ -131,13 +128,13 @@ function EditDomain(props) {
                     <form className="login-form" onSubmit={handleSubmit}>
                         <input name="serviceName" defaultValue={props.domain.service_Name} type="text"
                             placeholder="Service name" required max="64" />
-                        <select name="method" className="SelectFrom" onChange={changeMethodOption} required>
-                            <option selected={getIsGetPostSelected === 0} value={0}>GET</option>
-                            <option selected={getIsGetPostSelected === 1} value={1}>POST</option>
+                        <select name="method" className="SelectFrom" value={getIsGetPostSelected} onChange={changeMethodOption} required>
+                            <option value={0}>GET</option>
+                            <option value={1}>POST</option>
                         </select>
-                        <select name="serviceType" className="SelectFrom" onChange={changeServiceTypeOption} required>
-                            <option selected={getIsRestSoapSelected === 0} value={0}>Service - REST</option>
-                            <option selected={getIsRestSoapSelected === 1} value={1}>Service - SOAP</option>
+                        <select name="serviceType" className="SelectFrom" value={getIsRestSoapSelected} onChange={changeServiceTypeOption} required>
+                            <option value={0}>Service - REST</option>
+                            <option value={1}>Service - SOAP</option>
                         </select>
                         <input name="url" defaultValue={props.domain.url} type="url" placeholder="URL" required max="1024" />
                         <input name="email" defaultValue={props.domain.notification_Email} type="email"
@@ -170,7 +167,6 @@ function EditDomain(props) {
                                 endpoint={props.endpoint}
                                 fetches={props.fetches}
                             />
-                            {response}
                         <button onClick={testService} >Test</button>
                         </div>
                         <div id="myForm">
@@ -189,7 +185,6 @@ function EditDomain(props) {
     );
 
     function handleSubmit(event) {
-        setResponse("waiting...");
 
         let dataForSending = {
             service_Name: event.target.serviceName.value,
@@ -217,10 +212,8 @@ function EditDomain(props) {
                 const editedDomain = Object.assign({...props.domain}, dataForSending);
                 changeDomainList(editedDomain);
                 handleClose();
-                setResponse("Domain successfuly updated");
                 NotificationManager.success('Domain changes saved!', 'Edit Successful!', 3000);
             } else {
-                setResponse("Something went wrong");
                 NotificationManager.error('Failed to save changes!', 'Error!', 3000);
             }
         }).catch(() => {

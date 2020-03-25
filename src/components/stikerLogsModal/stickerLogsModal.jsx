@@ -26,7 +26,7 @@ function StickerModal(props) {
 
     return (
         <>
-            <a href="#" className="hlink" onClick={handleShow}>Logs</a>
+            <a className="hlink" onClick={handleShow}>Logs</a>
             <Modal size="md" show={show} onHide={handleClose}>
                 <div className="forma">
                         {
