@@ -28,22 +28,22 @@ function EditDomain(props) {
 
     const handleClose = () => setShow(false);
     const handleShow = () => { //kai atsiranda modalas, kad restartintu value.
-        setGetPostSelected(props.domain.method); //kai atidarom pakeiciam, uzdarom, vel atidarius buna vis dar seni propsai. Jie nepasiupdatina
-        setRestSoapSelected(props.domain.service_Type);
+        setGetPostSelected(String(props.domain.method)); //kai atidarom pakeiciam, uzdarom, vel atidarius buna vis dar seni propsai. Jie nepasiupdatina
+        setRestSoapSelected(String(props.domain.service_Type));
         setBasicAuth(props.domain.basic_Auth);
         setShow(true);
         setTestResult("");
     };
 
     // GET/POST and REST/SOAP states
-    const [getIsGetPostSelected, setGetPostSelected] = useState(props.domain.method); //jei 0 GET, jei 1 POST
-    const [getIsRestSoapSelected, setRestSoapSelected] = useState(props.domain.serviceType);//jei 0 REST, jei 1 SOAP
+    const [getIsGetPostSelected, setGetPostSelected] = useState(String(props.domain.method)); //jei 0 GET, jei 1 POST
+    const [getIsRestSoapSelected, setRestSoapSelected] = useState(String(props.domain.serviceType));//jei 0 REST, jei 1 SOAP
     const [getBasicAuth, setBasicAuth] = useState(props.domain.basic_Auth);
 
     // onChange functions for input fields:
 
     function changeMethodOption(event) { //<select name="method"
-        setGetPostSelected(event.target.value)
+        setGetPostSelected(event.target.value);
     }
     function changeServiceTypeOption(event) { //<select name="serviceType"
         setRestSoapSelected(event.target.value);
@@ -60,7 +60,7 @@ function EditDomain(props) {
     };
 
     const isParametersDisabled = function checkIfDisabled() {
-        return getIsGetPostSelected === 0;
+        return getIsGetPostSelected === "0";
     };
 
     const [getTestResult, setTestResult] = useState("");
@@ -175,7 +175,7 @@ function EditDomain(props) {
                         {getTestResult}
                         <br/>
                         <button type="button" onClick={closeForm}>Close</button>
-                        
+
                         </div>
                         </div>
                     </form>
