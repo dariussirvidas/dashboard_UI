@@ -4,6 +4,7 @@ import './signup.scss';
 import {validateConfirmPassword} from "../../common";
 import {Link, Redirect} from "react-router-dom";
 import { NotificationManager } from 'react-notifications';
+import './signup.scss';
 
 function Signup(props) {
 

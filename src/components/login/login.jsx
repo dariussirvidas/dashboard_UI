@@ -4,6 +4,7 @@ import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import {logIn, logInToken, authRole, logInTokenRefresh} from "../../actions/index";
 import { NotificationManager } from 'react-notifications';
+import './login.scss';
 
 function Login(props) {
 
