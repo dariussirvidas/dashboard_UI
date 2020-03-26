@@ -1,5 +1,6 @@
 import React from 'react';
 import {NotificationManager} from "react-notifications";
+import './checkbox.scss';
 
 function Checkbox(props) {
 

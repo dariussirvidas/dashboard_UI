@@ -55,10 +55,10 @@ function DomainList(props) {
                             <th width="2%">#</th>
                             <th className="text-center" width="5%">Active</th>
                             <th className="text-left" width="9%">Service Name</th>
-                            <th className="text-center" width="7%">Service Type</th>
+                            <th className="text-center" width="9%">Service Type</th>
                             <th className="text-left" data-field="url" data-filter-control="input" width="15%">URL</th>
                             <th className="text-left" width="15%">Emails</th>
-                            <th className="text-center" width="8%">Check interval</th>
+                            <th className="text-center" width="9%">Check interval</th>
                             <th className="text-center" width="6%">Threshold</th>
                             <th className="text-center" width="7%">Maintenance</th>
                         </tr>

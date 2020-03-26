@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import './addDomainModal.scss';
 import {validateParameters} from "../../common";
 import {NotificationManager} from 'react-notifications';
-
+import './addDomainModal.scss';
 function AddDomainModal(props) {
 
     return (

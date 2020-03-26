@@ -1,4 +1,5 @@
 import React from 'react';
+import './logs.scss';
 
 function Logs(props) {
 
