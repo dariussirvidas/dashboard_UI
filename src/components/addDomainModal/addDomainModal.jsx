@@ -24,13 +24,13 @@ function DomainModal(props) {
     const handleShow = () => {
         setShow(true);
         setTestResult("");
-        setSelectedMethod(0);
-        setSelectedServiceType(0);
+        setSelectedMethod("0");
+        setSelectedServiceType("0");
         setBasicAuth(false);
     };
     //disabled inputs states:
-    const [getSelectedMethod, setSelectedMethod] = useState(0);
-    const [getSelectedServiceType, setSelectedServiceType] = useState(0);
+    const [getSelectedMethod, setSelectedMethod] = useState("0");
+    const [getSelectedServiceType, setSelectedServiceType] = useState("0");
     const [getBasicAuth, setBasicAuth] = useState(false);
 
 
@@ -50,7 +50,7 @@ function DomainModal(props) {
     };
 
     const isParametersDisabled = function checkIfDisabled() {
-        return getSelectedMethod === 0;
+        return getSelectedMethod === "0";
     };
 
     //test button functionality
