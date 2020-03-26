@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
 import './addUserModal.scss';
-import './addUserModal.scss';
 import {validateConfirmPassword} from "../../common";
 import { NotificationManager } from 'react-notifications';
 

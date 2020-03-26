@@ -3,13 +3,11 @@ import 'react-redux';
 import './app.scss';
 import {useDispatch, useSelector} from 'react-redux';
 import {BrowserRouter as Router, Redirect, Route} from "react-router-dom";
-
 import Main from '../main/main';
 import Menu from "../menu/menu";
 import {ErrorMessage, LoadingSpinner} from "../elements/elements";
 import Login from '../login/login'
 import Signup from "../signup/signup";
-
 import 'react-notifications/lib/notifications.css';
 import {NotificationContainer} from 'react-notifications';
 import {
