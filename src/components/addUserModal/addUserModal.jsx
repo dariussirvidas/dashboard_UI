@@ -1,25 +1,19 @@
-import React, {Component, useState} from 'react';
-import Button from "react-bootstrap/Button";
+import React, {useState} from 'react';
 import Modal from "react-bootstrap/Modal";
-
-import AddDomainModal from "../addDomainModal/addDomainModal";
 import './addUserModal.scss';
-
-import {useSelector, useDispatch} from "react-redux";
+import './addUserModal.scss';
+import {validateConfirmPassword} from "../../common";
 import { NotificationManager } from 'react-notifications';
 
 function AddUserModal(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
     return (
         <div>
             <UserModal
-                callbackFetch={props.callbackReFetchUsers}
                 appendUserList={props.appendUserList}
-                endpoint={props.endpoint}/>
+                endpoint={props.endpoint}
+                fetches={props.fetches}
+            />
         </div>
     );
 
@@ -27,26 +21,13 @@ function AddUserModal(props) {
 
 function UserModal(props) {
 
-    const isLogged = useSelector(state => state.isLogged);
-    const token = useSelector(state => state.token);
-    const userData = useSelector(state => state.userData);
-
+    const [response, setResponse] = useState(); //response from server
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false);
-        setPasswordsMatch(true) //after we close and re-enter Modal to have password state reset to default.
     };
-    const handleShow = () => setShow(true);
-
-    //Check if passwords match
-    
-    const [passwordsMatch, setPasswordsMatch] = useState(true);
-
-    const checkPasswordMatch = function check(){
-        setPasswordsMatch(document.getElementById("confirmPassword").value == document.getElementById("password").value)
-    }
-    const [response, setResponse] = useState(); //response from server
+    const handleShow = () => {setResponse(""); setShow(true); };
 
     return (
         <>
@@ -57,15 +38,14 @@ function UserModal(props) {
                 <div className="forma">
                     <form className="login-form" onSubmit={handleSubmit} id="formForPost">
                         <div className="form-group"/>
-                        <input type="text" placeholder="Username" name="userName" min="6" max="64" required/>
-                        <input type="text" placeholder="First Name" name="firstName" required max="64"/>
-                        <input type="text" placeholder="Last Name" name="lastName" required max="64"/>
-                        <input type="email" placeholder="Email" name="userEmail" required max="256"/>
-                        <input id="password" type="password" placeholder="Password" name="password" onChange={checkPasswordMatch} pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$" title="Mininum 10 chars and: atleast one uppercase, lowercase, special character and a number" required/>
-                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={checkPasswordMatch} required/>
-                        {passwordsMatch ? "":"Passwords don't match"}
-                        <br/>
-                        <button type="submit" value="send POST" disabled={!passwordsMatch}>Add</button> 
+                        <input type="text" placeholder="Username" name="userName" pattern="^[a-zA-Z0-9]{6,64}$" title="Must be between 6 and 64 letters or numbers" required/>
+                        <input type="text" placeholder="First Name" name="firstName" pattern="^[a-zA-Z]{1,64}$" title="Must be between 1 and 64 letters" required/>
+                        <input type="text" placeholder="Last Name" name="lastName" pattern="^[a-zA-Z]{1,64}$" title="Must be between 1 and 64 letters" required/>
+                        <input type="email" placeholder="Email" name="userEmail" required maxLength="256"/>
+                        <input id="password" type="password" placeholder="Password" name="password"  pattern="^(?=\S*[a-z])(?=\S*[A-Z])(?=\S*\d)(?=\S*[\W_])\S{10,128}$"
+                               title="Mininum 10 chars and at least one uppercase, lowercase, special character and a number" onChange={validateConfirmPassword} required/>
+                        <input id="confirmPassword" type="password" placeholder="Confirm Password" name="confirmPassword" onChange={validateConfirmPassword} required/>
+                        <button type="submit" value="send POST">Add</button>
                         <button onClick={handleClose} >Cancel</button>
                         <div>{response}</div>
                     </form>
@@ -75,7 +55,6 @@ function UserModal(props) {
     );
 
     function handleSubmit(event) {
-
 
         try {
             var dataForSending = {
@@ -87,61 +66,34 @@ function UserModal(props) {
                 userEmail: event.target.userEmail.value
             };
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
-
-        console.log("full object for Posting:", dataForSending);
-        console.log("full object for sending JSON:", JSON.stringify(dataForSending));
         submitData(dataForSending);
         event.preventDefault();
     }
 
     function submitData(dataForSending) {
-        fetchPost(dataForSending)
-            .then((response) => {
-                console.log("POSTING USER status code = " + response.status);
-                if (response.status > 199 && response.status < 300){
-                    console.log(response.statusText)
-                    console.log("success!")
-                    setResponse("User created")
-                    let responseBody = response.json()
-                    .then((responseBody) => {
-                        dataForSending.id = responseBody.id
-                        dataForSending.role = "User" //pradzioj sukuriant userius, role buna userio.
-                        props.appendUserList(dataForSending)
-                        
-                    })
-                    handleClose();
-                    NotificationManager.success('New user added!', 'Successful!', 3000);
-                }
-                else{
-                    let duomenys = response.json()
-                    .then((duomenys) => {
-                        setResponse(duomenys.message)
-                        console.log(duomenys.message)
-                    })
-                }
-            })
-
-            .catch((error) => {
-                console.error("error while fetching users:" + error);
-                NotificationManager.error('Something went wrong!', 'Error!', 3000);
-            });
-    }
-    async function fetchPost(dataForSending) {
-        const response = await fetch(props.endpoint + "users/admin/register",
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
-                },
-                body: JSON.stringify(dataForSending) // body data type must match "Content-Type" header
+        props.fetches.fetchPost(props.endpoint + "users/admin/register", dataForSending).then((response) => {
+            if (response.status > 199 && response.status < 300) {
+                setResponse("User created");
+                response.json().then((responseBody) => {
+                    dataForSending.id = responseBody.id;
+                    dataForSending.role = "User"; //pradzioj sukuriant userius, role buna userio.
+                    props.appendUserList(dataForSending)
+                });
+                handleClose();
+                NotificationManager.success('New user added!', 'Successful!', 3000);
+            } else {
+                response.json().then((duomenys) => {
+                    setResponse(duomenys.message);
+                })
             }
-        );
-        const data = response;
-        return data;
+        }).catch((error) => {
+            console.error("error while fetching users:" + error);
+            NotificationManager.error('Something went wrong!', 'Error!', 3000);
+        });
     }
+
 }
 
 export default AddUserModal;

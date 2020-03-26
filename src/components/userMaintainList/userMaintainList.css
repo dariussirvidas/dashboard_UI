@@ -17,27 +17,20 @@ COLORS
   font-weight: 700;
   src: local("MetaPro"), local("MetaPro-Bold"), url(../assets/fonts/MetaPro-Bold.ttf) format("ttf");
 }
-@font-face {
-  font-family: "Roboto";
-  font-style: normal;
-  font-weight: 400;
-  src: local("Roboto"), local("Roboto-Regular"), url(../assets/fonts/Roboto-Regular.ttf) format("ttf");
-}
+
 html {
-  font-family: "Roboto", sans-serif;
+  font-family: "MetaPro", sans-serif;
 }
 
 .cl-h1 {
-  font-family: "Roboto";
-  font-weight: bold;
+  font-family: "MetaPro-Bold";
   color: #333333;
   font-size: 32px;
   text-align: left;
 }
 
 .cl-intro {
-  font-family: "Roboto";
-  font-weight: bold;
+  font-family: "MetaPro-Bold";
   color: #b6bec6;
   font-weight: bold;
   font-size: 24px;
@@ -45,16 +38,14 @@ html {
 }
 
 .cl-h2 {
-  font-family: "Roboto";
-  font-weight: bold;
+  font-family: "MetaPro-Regular";
   color: #333333;
   font-size: 16px;
   text-align: left;
 }
 
 .cl-h3 {
-  font-family: "Roboto";
-  font-weight: bold;
+  font-family: "MetaPro-Bold";
   color: #333333;
   font-weight: bold;
   font-size: 16px;
@@ -62,21 +53,21 @@ html {
 }
 
 .cl-copy-16 {
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
   color: #333333;
   font-size: 16px;
   text-align: left;
 }
 
 .cl-copy-14 {
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
   color: #333333;
   font-size: 14px;
   text-align: left;
 }
 
 .cl-copy-12 {
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
   color: #333333;
   font-size: 12px;
   text-align: left;
@@ -94,7 +85,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
 }
 
 .btn-grey:hover {
@@ -114,7 +105,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -163,7 +154,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
 }
 
 .btn-hero:hover {
@@ -185,7 +176,7 @@ BUTTONS
   -webkit-box-shadow: none;
           box-shadow: none;
   border-color: transparent;
-  font-family: "Roboto";
+  font-family: "MetaPro-Regular";
   opacity: 0.3;
   cursor: not-allowed;
   pointer-events: none;
@@ -304,8 +295,19 @@ tr:nth-child(even) {
   vertical-align: middle;
 }
 
-.domainButton {
-  margin-bottom: 15px;
+th, td {
+  text-align: center;
+  padding: 1.5%;
+  vertical-align: top;
+}
+
+tr:nth-child(even) {
+  background-color: #e5e8eb;
+}
+
+.button {
+  padding-right: 120px;
+  float: right;
 }
 
 .txt {
@@ -313,7 +315,7 @@ tr:nth-child(even) {
 }
 
 .editDomainModal {
-  margin-top: 0px;
+  margin-top: 17px;
 }
 
 .tooltip-wrap {
@@ -334,41 +336,11 @@ tr:nth-child(even) {
   display: block;
 }
 
+.userButton {
+  margin-right: 328px;
+}
+
 .space {
   margin-top: 50px !important;
 }
-
-@media only screen and (max-width: 600px) {
-  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    margin-right: 0;
-    margin-left: 0;
-  }
-  .container {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-  /*Hides navbar on mobile res*/
-  h5 {
-    display: none !important;
-  }
-}
-
-@media only screen and (max-width: 320px) {
-  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-    margin-right: auto;
-    margin-left: auto;
-  }
-  .container {
-    padding-right: 0 !important;
-    padding-left: 0 !important;
-  }
-  /*Hides navbar on mobile res*/
-  h5 {
-    display: none !important;
-  }
-}
-/*# sourceMappingURL=domainList.css.map */
+/*# sourceMappingURL=userMaintainList.css.map */

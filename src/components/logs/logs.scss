@@ -28,6 +28,7 @@ th, td {
   text-align: left !important;
   vertical-align: center !important;
 }
+
 tr:nth-child(even) {
   background-color: $clr-sucanul;
 }
@@ -36,30 +37,22 @@ tr:nth-child(even) {
   vertical-align: middle;
 }
 
-th, td {
-  text-align: center;
-  padding: 1.5%;
-  vertical-align: top;
+.domainButton {
+  margin-bottom: 15px;
 }
 
-tr:nth-child(even) {
-  background-color: $clr-sucanul;
-}
-
-.button {
-  padding-right: 120px;
-  float: right;
-}
 .txt {
   cursor: pointer;
 }
-.editDomainModal{
+
+.editDomainModal {
   margin-top: 17px;
 }
 
 .tooltip-wrap {
   position: relative !important;
 }
+
 .tooltip-wrap .tooltip-content {
   display: none;
   position: absolute;
@@ -70,12 +63,44 @@ tr:nth-child(even) {
   padding: .5em;
 
 }
+
 .tooltip-wrap:hover .tooltip-content {
   display: block;
 }
-.userButton{
-  margin-right: 328px;
+
+.space {
+  margin-top: 50px !important;
 }
-.space1 {
-  margin-top: 10px !important;
+@media only screen and (max-width: 600px) {
+  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .container{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  /*Hides navbar on mobile res*/
+  h5 {
+    display: none !important;
+  }
+
+}
+@media only screen and (max-width: 320px) {
+  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .container{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  /*Hides navbar on mobile res*/
+  h5 {
+    display: none !important;
+  }
 }

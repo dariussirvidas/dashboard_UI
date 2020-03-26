@@ -1,5 +1,14 @@
 @import "../_ux_global_design.scss";
 
+.css-serial {
+  counter-reset: serial-number; /* Set the serial number counter to 0 */
+}
+
+.css-serialrow:before {
+  counter-increment: serial-number; /* Increment the serial number counter */
+  content: counter(serial-number); /* Display the counter */
+}
+
 table {
   border-collapse: collapse;
   width: 1260px !important;
@@ -29,6 +38,7 @@ tr:nth-child(even) {
 
 .domainButton {
   margin-bottom: 15px;
+  width: 8rem;
 }
 
 .txt {
@@ -36,7 +46,7 @@ tr:nth-child(even) {
 }
 
 .editDomainModal {
-  margin-top: 17px;
+  margin-top: 0px !important;
 }
 
 .tooltip-wrap {
@@ -58,6 +68,53 @@ tr:nth-child(even) {
   display: block;
 }
 
-.space {
-  margin-top: 50px !important;
+.searchContainer {
+  height: 41px !important;
+  margin-top: 15px !important;
+  margin-bottom: 20px !important;
+}
+
+.searchBox {
+  height: 41px !important;
+  margin-top: 5px;
+  margin-left: 20px;
+  width: 100% !important;
+}
+
+.spaceTable {
+  margin-top: 10px !important;
+}
+
+@media only screen and (max-width: 600px) {
+  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0;
+    margin-left: 0;
+  }
+  .container{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  /*Hides navbar on mobile res*/
+  h5 {
+    display: none !important;
+  }
+  
+}
+@media only screen and (max-width: 320px) {
+  .container-fluid, .container-lg, .container-md, .container-sm, .container-xl {
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .container{
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+  }
+  /*Hides navbar on mobile res*/
+  h5 {
+    display: none !important;
+  }
 }
